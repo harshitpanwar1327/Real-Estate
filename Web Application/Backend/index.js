@@ -23,17 +23,17 @@ app.use(limiter);
 
 // app.use(authMiddleware);
 
-app.use((req,res,next)=>{
-    return res.status(404).json("Route not found");
+app.use((req, res, next)=>{
+    return res.status(404).json({message: "Route not found!"});
 });
 
-app.use((err,req,res,next)=>{
+app.use((err, req, res, next)=>{
     console.error(err.stack);
-    return res.status(500).json({message:"Internal Server Error!"});
+    return res.status(500).json({message: "Internal Server Error!"});
 });
 
 
-app.listen(PORT, async()=>{
+app.listen(PORT, async() => {
     console.log(`Listening to the port ${PORT}`);
     try {
         await checkConnection();

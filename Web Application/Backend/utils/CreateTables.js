@@ -15,7 +15,7 @@ const properties = `CREATE TABLE IF NOT EXISTS properties(
     title VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
     price DECIMAL(12,2) NOT NULL,
-    property_type ENUM('apartment', 'villa', 'plot', 'etc') NOT NULL,
+    property_type ENUM('apartment', 'villa', 'plot') NOT NULL,
     bedrooms INT,
     bathrooms INT,
     area_sqft INT NOT NULL,
@@ -50,15 +50,17 @@ const admins = `CREATE TABLE IF NOT EXISTS admins(
 const media_files = `CREATE TABLE IF NOT EXISTS media_files(
     id INT AUTO_INCREMENT PRIMARY KEY,
     type ENUM('project', 'property') NOT NULL,
-    property_id INT NOT NULL,
+    property_id INT,
+    project_id INT,
     url TEXT NOT NULL,
     caption VARCHAR(255),
     is_cover BOOLEAN,
     uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (property_id) REFERENCES properties(id)
+    FOREIGN KEY (property_id) REFERENCES properties(id),
+    FOREIGN KEY (project_id) REFERENCES project(id)
 );`;
 
-const createTable = async(tableName, query)=>{
+const createTable = async (tableName, query) => {
     try {
         await pool.query(query);
         console.log(`${tableName} table created successfully`);
@@ -69,11 +71,11 @@ const createTable = async(tableName, query)=>{
 
 const createAllTables = async()=>{
     try {
-        await createTable("projects",projects);
-        await createTable("properties",properties);
-        await createTable("enquiries",enquiries);
-        await createTable("admins",admins);
-        await createTable("media_files",media_files);
+        await createTable("Projects", projects);
+        await createTable("Properties", properties);
+        await createTable("Enquiries", enquiries);
+        await createTable("Admins", admins);
+        await createTable("Media_files", media_files);
     } catch (error) {
         console.log(error);
     }

@@ -9,14 +9,14 @@ const pool = createPool({
     database: process.env.DB_NAME,
     password: process.env.DB_PASS,
     connectionLimit: 10,
-    queueLimit: 0,
+    queueLimit: 5,
     waitForConnections: true
 });
 
 const checkConnection = async()=>{
     try {
         let connection = await pool.getConnection();
-        console.log("Connection successfull!");
+        console.log("Connection successfull");
         connection.release();
     } catch (error) {
         console.log(error);
