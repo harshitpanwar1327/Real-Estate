@@ -1,7 +1,7 @@
 import { EnquiriesModels } from '../models/EnquiriesModels.js'
 import { getEnquiriesLogic, postEnquiriesLogic, deleteEnquiriesLogic} from '../services/EnquiriesServices.js'
 
-export const getEnquiries = async(req,res)=>{
+export const getEnquiries = async (req,res) => {
     try {
         let response = await getEnquiriesLogic();
         if(response.success){
@@ -11,15 +11,15 @@ export const getEnquiries = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal Server Error!"});
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
     }
 }
 
 export const postEnquiries = async(req,res)=>{
     const { name, email, phone, subject, message, property_id } = req.body;
     
-    if(!name || !email || !subject || !message){
-        return res.status(400).json({success:false,message:"All fields required!"});
+    if(!name || !email || !message || !property_id){
+        return res.status(400).json({success: false, message: "Fill all the required fields!"});
     }
     
     const enquiriesData = new EnquiriesModels({name, email, subject, message, phone, property_id});
@@ -33,7 +33,7 @@ export const postEnquiries = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal server error!"});
+        return res.status(500).json({success: false, message: "Internal server error!"});
     }
 }
 
@@ -41,7 +41,7 @@ export const deleteEnquiries = async(req,res)=>{
     const {id} = req.params;    
 
     if(!id){
-        return res.status(400).json({success:false,message:"Enquiry id not found!"});
+        return res.status(400).json({success: false, message: "Enquiry id not found!"});
     }
 
     try {
@@ -53,6 +53,6 @@ export const deleteEnquiries = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal Server error!"});
+        return res.status(500).json({success: false, message: "Internal Server error!"});
     }
 }

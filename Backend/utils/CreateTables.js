@@ -39,13 +39,6 @@ const enquiries = `CREATE TABLE IF NOT EXISTS enquiries(
     FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
 );`;
 
-const admins = `CREATE TABLE IF NOT EXISTS admins(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);`;
-
 const media_files = `CREATE TABLE IF NOT EXISTS media_files(
     id INT AUTO_INCREMENT PRIMARY KEY,
     type ENUM('project', 'property') NOT NULL,
@@ -57,6 +50,13 @@ const media_files = `CREATE TABLE IF NOT EXISTS media_files(
     uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+);`;
+
+const admins = `CREATE TABLE IF NOT EXISTS admins(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );`;
 
 const users = `CREATE TABLE IF NOT EXISTS users(
@@ -80,9 +80,9 @@ const createAllTables = async()=>{
         await createTable("Projects", projects);
         await createTable("Properties", properties);
         await createTable("Enquiries", enquiries);
-        await createTable("Admins", admins);
         await createTable("Media_files", media_files);
-        await createTable("Users",users);
+        await createTable("Admins", admins);
+        await createTable("Users", users);
     } catch (error) {
         console.log(error);
     }

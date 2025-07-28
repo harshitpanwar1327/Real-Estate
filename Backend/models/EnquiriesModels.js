@@ -5,5 +5,6 @@ export class EnquiriesModels {
         this.phone = enquiriesData.phone;
         this.subject = enquiriesData.subject;
         this.message = enquiriesData.message;
+        this.property_id = enquiriesData.property_id;
     }
 }
