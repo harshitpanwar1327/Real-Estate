@@ -25,7 +25,7 @@ const properties = `CREATE TABLE IF NOT EXISTS properties(
     project_id INT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (project_id) REFERENCES projects(id)
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
 );`;
 
 const enquiries = `CREATE TABLE IF NOT EXISTS enquiries(
@@ -37,7 +37,7 @@ const enquiries = `CREATE TABLE IF NOT EXISTS enquiries(
     message TEXT NOT NULL,
     property_id INT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (property_id) REFERENCES properties(id)
+    FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
 );`;
 
 const admins = `CREATE TABLE IF NOT EXISTS admins(
@@ -56,8 +56,15 @@ const media_files = `CREATE TABLE IF NOT EXISTS media_files(
     caption VARCHAR(255),
     is_cover BOOLEAN,
     uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (property_id) REFERENCES properties(id),
-    FOREIGN KEY (project_id) REFERENCES project(id)
+    FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE,
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+);`;
+
+const users = `CREATE TABLE IF NOT EXISTS users(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );`;
 
 const createTable = async (tableName, query) => {
@@ -76,6 +83,7 @@ const createAllTables = async()=>{
         await createTable("Enquiries", enquiries);
         await createTable("Admins", admins);
         await createTable("Media_files", media_files);
+        await createTable("Users",users);
     } catch (error) {
         console.log(error);
     }

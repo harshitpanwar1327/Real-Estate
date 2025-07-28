@@ -5,6 +5,11 @@ import helmet from 'helmet'
 import { rateLimit } from 'express-rate-limit'
 import { checkConnection } from './config/Database.js'
 import createAllTables from './utils/CreateTables.js'
+import AdminsRoutes from './routes/AdminsRoutes.js'
+import ProjectsRoutes from './routes/ProjectsRoutes.js'
+import UsersRoutes from './routes/UsersRoutes.js'
+import EnquiriesRoutes from './routes/EnquiriesRoutes.js'
+import PropertiesRoutes from './routes/PropertiesRoutes.js'
 
 dotenv.config();
 
@@ -21,7 +26,14 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+app.use('/api/admin',AdminsRoutes);
+app.use('/api/user', UsersRoutes);
+
 // app.use(authMiddleware);
+
+app.use('/api/project', ProjectsRoutes);
+app.use('/api/enquiry', EnquiriesRoutes);
+app.use('/api/property', PropertiesRoutes);
 
 app.use((req, res, next)=>{
     return res.status(404).json({message: "Route not found!"});
