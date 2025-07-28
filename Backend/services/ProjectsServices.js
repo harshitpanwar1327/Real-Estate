@@ -4,10 +4,10 @@ export const getProjectsLogic = async()=>{
     try {
         let [rows] = await pool.query(`SELECT * FROM projects;`);
 
-        return {success:true, data:rows};
+        return {success: true, data: rows};
     } catch (error) {
         console.log(error);
-        return {success:false,message:"Project details not fetched!"};
+        return {success: false, message: "Projects not found!"};
     }
 };
 
@@ -17,33 +17,34 @@ export const postProjectsLogic = async(projectData)=>{
         const values = [projectData.name, projectData.location, projectData.status, projectData.description];
         await pool.query(query,values);
         
-        return {success:true,message:"Data save successfully"};
+        return {success: true, message: "Project saved successfully."};
     } catch (error) {
         console.log(error);
-        return {success:false,message:"Data not saved"};
+        return {success: false, message: "Project not saved!"};
     }
 };
 
 export const updateProjectsLogic = async(id,projectData)=>{
     try {
-        let response = await pool.query(`UPDATE projects SET name=?,location=?,status=?, description=? WHERE id=?;`,
-        [projectData.name,projectData.location,projectData.status,projectData.description,id]
-        );
+        let query = `UPDATE projects SET name=?,location=?,status=?, description=? WHERE id=?;`;
+        let values = [projectData.name, projectData.location, projectData.status, projectData.description, id];
 
-        return {success:true,message:"Field updated successfully"};
+        await pool.query(query, values);
+
+        return {success: true, message: "Project updated successfully."};
     } catch (error) {
         console.log(error);
-        return {success:false,message:"Field not updated!"};
+        return {success: false, message: "Project details not updated!"};
     }
 };
 
 export const deleteProjectsLogic = async(id)=>{
     try {
-        let response = await pool.query(`DELETE FROM projects WHERE id=?`,[id]);
+        let response = await pool.query(`DELETE FROM projects WHERE id= ?`,[id]);
         
-        return {success:true,message:"Field deleted successfully"};
+        return {success: true, message: "Project deleted successfully"};
     } catch (error) {
         console.log(error);
-        return {success:false,message:"Field not deleted!"};
+        return {success: false, message: "Prooject not deleted!"};
     }
 };

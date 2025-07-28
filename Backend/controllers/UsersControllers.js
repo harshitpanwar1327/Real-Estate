@@ -1,9 +1,8 @@
-import {UsersModels} from '../models/UsersModels.js'
+import { UsersModels } from '../models/UsersModels.js'
 import { registerUserLogic, loginUserLogic } from '../services/UsersServices.js'
 
 export const registerUser = async (req, res) => {
     const {email, password_hash} = req.body;
-
 
     if(!email || !password_hash){
         return res.status(400).json({success: false, message: "Fill all the required fields!"});

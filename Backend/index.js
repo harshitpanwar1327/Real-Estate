@@ -32,8 +32,8 @@ app.use('/api/user', UsersRoutes);
 // app.use(authMiddleware);
 
 app.use('/api/project', ProjectsRoutes);
-app.use('/api/enquiry', EnquiriesRoutes);
 app.use('/api/property', PropertiesRoutes);
+app.use('/api/enquiry', EnquiriesRoutes);
 
 app.use((req, res, next)=>{
     return res.status(404).json({message: "Route not found!"});

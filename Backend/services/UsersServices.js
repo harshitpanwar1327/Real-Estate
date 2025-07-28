@@ -9,7 +9,7 @@ export const registerUserLogic = async (userData) => {
     try {
         const [rows] = await pool.query(`SELECT email FROM users WHERE email = ?;`,[userData.email]);
 
-        if(rows.length>0){
+        if(rows.length > 0){
             return { success:false, message:"User already exists" };
         }
 
@@ -25,11 +25,11 @@ export const registerUserLogic = async (userData) => {
     }
 }
 
-export const loginUserLogic = async(userData)=>{
+export const loginUserLogic = async (userData) => {
     try {
         const [rows] = await pool.query(`SELECT * FROM users WHERE email = ?`, [userData.email]);
 
-        if(rows.length===0){
+        if(rows.length === 0){
             return {success:false,message:"Email not exist!"};
         }
 

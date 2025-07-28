@@ -9,8 +9,8 @@ export const registerAdminLogic = async (adminData) => {
     try {
         const [rows] = await pool.query(`SELECT email FROM admins WHERE email = ?;`,[adminData.email]);
 
-        if(rows.length>0){
-            return { success:false, message:"Admin already exists" };
+        if(rows.length > 0){
+            return { success: false, message: "Admin already exists!" };
         }
 
         const hashedPassword = await bcrypt.hash(adminData.password_hash, 10);
@@ -29,8 +29,8 @@ export const loginAdminLogic = async(adminData)=>{
     try {
         const [rows] = await pool.query(`SELECT * FROM admins WHERE email = ?`, [adminData.email]);
 
-        if(rows.length===0){
-            return {success:false,message:"Email not exist!"};
+        if(rows.length === 0){
+            return {success: false, message: "Invalid Credentials!"};
         }
 
         const admin = rows[0];
@@ -41,7 +41,7 @@ export const loginAdminLogic = async(adminData)=>{
         }
         
         const token = jwt.sign(
-            {id:admin.id, email:admin.email},
+            {id: admin.id, email: admin.email},
             process.env.JWT_SECRET,
             {expiresIn:'3h'}
         );

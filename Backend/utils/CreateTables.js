@@ -20,9 +20,8 @@ const properties = `CREATE TABLE IF NOT EXISTS properties(
     bathrooms INT,
     area_sqft INT NOT NULL,
     status ENUM('active', 'sold', 'draft') NOT NULL,
-    featured BOOLEAN,
     description TEXT,
-    project_id INT,
+    project_id INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
@@ -33,9 +32,9 @@ const enquiries = `CREATE TABLE IF NOT EXISTS enquiries(
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     phone VARCHAR(20),
-    subject VARCHAR(255) NOT NULL,
+    subject VARCHAR(255),
     message TEXT NOT NULL,
-    property_id INT,
+    property_id INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
 );`;
@@ -62,7 +61,7 @@ const media_files = `CREATE TABLE IF NOT EXISTS media_files(
 
 const users = `CREATE TABLE IF NOT EXISTS users(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );`;

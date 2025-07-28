@@ -8,7 +8,7 @@ export class PropertiesModels {
         this.bathrooms = propertiesData.bathrooms;
         this.area_sqft = propertiesData.area_sqft;
         this.status = propertiesData.status;
-        this.featured = propertiesData.featured;
+        this.description = propertiesData.description;
         this.project_id = propertiesData.project_id;
     }
 }

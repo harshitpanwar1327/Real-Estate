@@ -1,7 +1,7 @@
 import { ProjectsModels } from '../models/ProjectsModels.js'
 import { getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic} from '../services/ProjectsServices.js'
 
-export const getProjects = async(req,res)=>{
+export const getProjects = async (req,res) => {
     try {
         let response = await getProjectsLogic();
         if(response.success){
@@ -11,7 +11,7 @@ export const getProjects = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal Server Error!"});
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
     }
 }
 
@@ -19,7 +19,7 @@ export const postProjects = async(req,res)=>{
     const { name, location, status, description } = req.body;
     
     if(!name || !location || !status){
-        return res.status(400).json({success:false,message:"All fields required!"});
+        return res.status(400).json({success: false, message: "All fields required!"});
     }
     
     const projectData = new ProjectsModels({name, location, status, description});
@@ -33,7 +33,7 @@ export const postProjects = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal server error!"});
+        return res.status(500).json({success: false, message: "Internal server error!"});
     }
 }
 
@@ -41,14 +41,14 @@ export const updateProjects = async(req,res)=>{
     const id = req.params.id;
     const {name, location, status, description} = req.body;
 
-    const projectData = new ProjectsModels({name, location, status, description});
-
     if(!id){
-        return res.status(400).json({success:false,message:"Project id not found!"});
+        return res.status(400).json({success: false, message: "Project id not found!"});
     }
+
+    const projectData = new ProjectsModels({name, location, status, description});
     
     try {
-        let response = await updateProjectsLogic(id,projectData);
+        let response = await updateProjectsLogic(id, projectData);
         if(response.success){
             return res.status(200).json(response);
         }else{
@@ -56,7 +56,7 @@ export const updateProjects = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({status:false,message:"Internal server error!"});
+        return res.status(500).json({status: false, message: "Internal server error!"});
     }
 }
 
@@ -64,7 +64,7 @@ export const deleteProjects = async(req,res)=>{
     const {id} = req.params;    
 
     if(!id){
-        return res.status(400).json({success:false,message:"Project id not found!"});
+        return res.status(400).json({success: false, message: "Project id not found!"});
     }
 
     try {

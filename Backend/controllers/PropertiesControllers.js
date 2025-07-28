@@ -1,7 +1,7 @@
 import { PropertiesModels } from '../models/PropertiesModels.js'
-import { getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic} from '../services/PropertiesServices.js'
+import { getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
 
-export const getProperties = async(req,res)=>{
+export const getProperties = async (req,res) => {
     try {
         let response = await getPropertiesLogic();
         if(response.success){
@@ -11,18 +11,18 @@ export const getProperties = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal Server Error!"});
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
     }
 }
 
 export const postProperties = async(req,res)=>{
-    const { title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, featured, description, project_id } = req.body;
+    const { title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id } = req.body;
     
-    if(!title || !location || !price || !property_type || !area_sqft || !status){
-        return res.status(400).json({success:false,message:"All fields required!"});
+    if(!title || !location || !price || !property_type || !area_sqft || !status || !project_id){
+        return res.status(400).json({success: false, message: "All fields required!"});
     }
     
-    const propertiesData = new PropertiesModels({title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, featured, description, project_id});
+    const propertiesData = new PropertiesModels({title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id});
     
     try {
         const response = await postPropertiesLogic(propertiesData);
@@ -33,22 +33,22 @@ export const postProperties = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal server error!"});
+        return res.status(500).json({success: false, message: "Internal server error!"});
     }
 }
 
 export const updateProperties = async(req,res)=>{
     const id = req.params.id;
-    const {title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, featured, description, project_id} = req.body;
-
-    const propertiesData = new PropertiesModels({title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, featured, description, project_id});
+    const {title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id} = req.body;
 
     if(!id){
-        return res.status(400).json({success:false,message:"Property id not found!"});
+        return res.status(400).json({success: false, message: "Property id not found!"});
     }
+
+    const propertiesData = new PropertiesModels({title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id});
     
     try {
-        let response = await updatePropertiesLogic(id,propertiesData);
+        let response = await updatePropertiesLogic(id, propertiesData);
         if(response.success){
             return res.status(200).json(response);
         }else{
@@ -56,7 +56,7 @@ export const updateProperties = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({status:false,message:"Internal server error!"});
+        return res.status(500).json({status: false, message: "Internal server error!"});
     }
 }
 
@@ -64,7 +64,7 @@ export const deleteProperties = async(req,res)=>{
     const {id} = req.params;    
 
     if(!id){
-        return res.status(400).json({success:false,message:"Property id not found!"});
+        return res.status(400).json({success: false, message: "Property id not found!"});
     }
 
     try {
@@ -76,6 +76,6 @@ export const deleteProperties = async(req,res)=>{
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json({success:false,message:"Internal Server error!"});
+        return res.status(500).json({success: false, message: "Internal Server error!"});
     }
 }
