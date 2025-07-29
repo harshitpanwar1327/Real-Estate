@@ -2,7 +2,7 @@ import React from 'react'
 
 const Navigation = () => {
   return (
-    <div>Navigation</div>
+    <div className='fixed top-0 left-0'>Navigation</div>
   )
 }
 
