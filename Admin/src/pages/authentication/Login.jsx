@@ -31,9 +31,8 @@ const Login = () => {
   }
 
   return (
-    <div className='grow flex justify-center items-center'>
-      <form className = "flex flex-col items-center w-1/4 border border-[#cdcdcd] rounded-[10px] p-5 shadow-lg gap-2" onSubmit={handleLogin}
-      >
+    <div className='grow flex justify-center items-center bg-[url(/src/assets/login.jpg)] bg-cover'>
+      <form className = "flex flex-col items-center w-1/4 backdrop-blur bg-white/30 rounded p-5 shadow-lg gap-2" onSubmit={handleLogin}>
         <h2 className="mb-2 text-2xl font-semibold">Login</h2>
         <div className="flex flex-col w-full">
           <label htmlFor="email">Email:</label>

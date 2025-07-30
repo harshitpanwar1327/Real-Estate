@@ -1,68 +1,72 @@
 import { useState, useEffect } from 'react'
 import API from '../../util/Api.js'
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import ModeEditIcon from '@mui/icons-material/ModeEdit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditProject from '../../modals/EditProject.jsx'
+import Menubar from '../../components/Menubar.jsx'
 
 const Projects = () => {
-  let [tableData, setTableData] = useState([]);
+  let [projectsData, setProjectsData] = useState([]);
+  let [openModal, setOpenModal] = useState(false);
+  let [selectedProject, setSelectedProject] = useState({});
 
-  let fetchData = async()=>{
+  let fetchProjects = async () => {
     try {
       let response = await API.get(`http://localhost:5000/api/project/projects`);
-      setTableData(response.data.data);
-      
+      setProjectsData(response.data.data);
     } catch (error) {
-      console.log(error);
+      console.log(response?.error?.data?.message || error);
     }
   }
 
   useEffect(()=>{
-    fetchData();
+    fetchProjects();
   },[]);
 
-  let deleteData = async(id)=>{
+  let handleDelete = async (id) => {
     try {
         let response = await API.delete(`http://localhost:5000/api/project/projects/${id}`);
-        
-        fetchData();
+        fetchProjects();
     } catch (error) {
         console.log(error);
     }
   }
 
+  let handleEdit = (project)=>{
+    setOpenModal(true);
+    setSelectedProject(project);
+  }
+
   return (
-    <div className='grow border-6'>
-      <div className='w-90vw h-[50px]'>
-        <button className='absolute top-2 right-5 bg-gray-400 text-white hover:bg-white hover:text-gray-400 hover:border hover:border-gray-400 hover:border-2'>Add Project</button>
-      </div>
-      <div className='!p-4 !w-full'>
-        <table className='border-black w-full'>
-          <thead className='h-[2.5rem]'>
-            <tr className='bg-gray-200'>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Status</th>
-              <th>Description</th>
-              <th>Edit</th>
-              <th>Delete</th>
+    <div className='grow flex flex-col gap-4'>
+      <Menubar heading='Projects'/>
+      <div className='mx-4 p-2 bg-white rounded-md grow'>
+        <table className='w-full'>
+          <thead>
+            <tr className='bg-[#f5f3ff] border-b border-[#434343]'>
+              <th className='text-start text-[#4a3f99] p-2'>Name</th>
+              <th className='text-start text-[#4a3f99] p-2'>Location</th>
+              <th className='text-start text-[#4a3f99] p-2'>Status</th>
+              <th className='text-start text-[#4a3f99] p-2'>Description</th>
+              <th className='text-start text-[#4a3f99] p-2'>Edit</th>
+              <th className='text-start text-[#4a3f99] p-2'>Delete</th>
             </tr>
           </thead>
           <tbody>
-           {tableData.map((data,index)=>(
-              <tr key={index}>
-                <td className='text-center'>{data.id}</td>
-                <td className='text-center'>{data.name}</td>
-                <td className='text-center'>{data.location}</td>
-                <td className='text-center'>{data.status}</td>
-                <td className='text-center'>{data.description}</td>
-                <td className='text-center'><ModeEditIcon className='cursor-pointer text-green-600 m-4'/></td>
-                <td className='text-center'><DeleteIcon className='cursor-pointer text-red-600 m-4' onClick={()=>deleteData(data.id)}/></td>
+           {projectsData.map((data,index)=>(
+              <tr className='hover:bg-[#f8f7ff] border-b border-[#848484]' key={index}>
+                <td className='p-2'>{data.name}</td>
+                <td className='p-2'>{data.location}</td>
+                <td className='p-2'>{data.status}</td>
+                <td className='p-2'>{data.description}</td>
+                <td className='p-2'><ModeEditIcon className='cursor-pointer text-green-500 hover:text-green-700' onClick={()=>handleEdit(data)}/></td>
+                <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {openModal && <EditProject setOpenModal ={setOpenModal} selectedProject={selectedProject} fetchProjects={fetchProjects}/>}
     </div>
   )
 }
