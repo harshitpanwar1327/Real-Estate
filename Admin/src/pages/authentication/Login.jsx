@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import API from '../../util/Api.js'
 import {toast} from 'react-toastify'
+import { ClimbingBoxLoader } from "react-spinners";
 
 const Login = () => {
   let [email, setEmail] = useState('');
   let [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -13,6 +15,7 @@ const Login = () => {
     e.preventDefault(e);
     
     try {
+      setLoading(true);
       let response = await API.post('/admin/login', {
         email: email,
         password_hash: password
@@ -21,10 +24,14 @@ const Login = () => {
       let token = response.data.token;
       sessionStorage.setItem('AuthToken', token);
       sessionStorage.setItem('isAuthenticated', true);
+      setTimeout(() => {
+        setLoading(false);
+        toast.success(`Login Successfull`);
+        navigate('/projects');
+      }, 2000);
       
-      toast.success(`Login Successfull`);
-      navigate('/projects');
     } catch (error) {
+      setLoading(false);
       console.log(error);
       toast.error(response?.error?.data?.message || `Login Failed!`);
     }
@@ -32,6 +39,11 @@ const Login = () => {
 
   return (
     <div className='grow flex justify-center items-center bg-[url(/src/assets/login.jpg)] bg-cover'>
+      {loading && (
+        <div className='fixed h-screen w-screen top-0 left-0 flex justify-center items-center bg-black/25 z-[100]'>
+          <ClimbingBoxLoader />
+        </div>
+      )}
       <form className = "flex flex-col items-center w-1/4 backdrop-blur bg-white/30 rounded p-5 shadow-lg gap-2" onSubmit={handleLogin}>
         <h2 className="mb-2 text-2xl font-semibold">Login</h2>
         <div className="flex flex-col w-full">

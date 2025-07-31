@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import API from '../util/Api'
+import {toast} from 'react-toastify'
 
 const AddProject = ({setOpenModal}) => {
   let [name, setName] = useState('');
@@ -17,6 +18,7 @@ const AddProject = ({setOpenModal}) => {
         description
       });
       setOpenModal(false);
+      toast.success('Project added successfully');
     } catch (error) {
       console.log(error);
     }
@@ -31,23 +33,24 @@ const AddProject = ({setOpenModal}) => {
             <label htmlFor="name">Name: </label>
             <input type="text"  name="name" id="name" value={name} onChange={(e)=>setName(e.target.value)} placeholder='Project name' className='p-1 mb-2 ml-2 border-black' required/>
           </div>
-         <div>
+          <div>
            <label htmlFor="location">Location: </label>
             <input type="text" name="location" id="location" value={location} onChange={(e)=>setLocation(e.target.value)} placeholder='Location' className='p-1 mb-2 ml-2 border-black' required/>
-         </div>
-         <div>
-           <label htmlFor="status">Status: </label>
+          </div>
+          <div>
+            <label htmlFor="status">Status: </label>
             <select name="status" id="status" value={status} onChange={(e)=>setStatus(e.target.value)} className='p-1 mb-2 ml-2 border-black' required>
               <option value="">Select Status</option>
               <option value="completed">Completed</option>
               <option value="ongoing">Ongoing</option>
               <option value="upcoming">Upcoming</option>
             </select>
-         </div>
+          </div>
           <div>
             <label htmlFor="description">Description: </label>
             <input type="text" name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Description' className='p-1 border-black' required/>
           </div>
+
           <button className='!w-[100px] bg-blue-400 text-white border-2 hover:bg-white hover:text-black hover:border hover:border-2 m-2 ml-auto'>Add</button>
         </form>
       </div>

@@ -4,6 +4,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditProject from '../../modals/EditProject.jsx'
 import Menubar from '../../components/Menubar.jsx'
+import Swal from 'sweetalert2'
 
 const Projects = () => {
   let [projectsData, setProjectsData] = useState([]);
@@ -25,8 +26,27 @@ const Projects = () => {
 
   let handleDelete = async (id) => {
     try {
-        let response = await API.delete(`http://localhost:5000/api/project/projects/${id}`);
-        fetchProjects();
+      Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            let response = await API.delete(`http://localhost:5000/api/project/projects/${id}`);
+        
+            fetchProjects();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Project has been deleted.",
+              icon: "success"
+            });
+          }
+        });
+
     } catch (error) {
         console.log(error);
     }
@@ -35,6 +55,7 @@ const Projects = () => {
   let handleEdit = (project)=>{
     setOpenModal(true);
     setSelectedProject(project);
+    fetchProjects();
   }
 
   return (
@@ -67,6 +88,7 @@ const Projects = () => {
         </table>
       </div>
       {openModal && <EditProject setOpenModal ={setOpenModal} selectedProject={selectedProject} fetchProjects={fetchProjects}/>}
+      
     </div>
   )
 }
