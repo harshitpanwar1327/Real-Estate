@@ -1,9 +1,14 @@
 import { PropertiesModels } from '../models/PropertiesModels.js'
 import { getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
 
-export const getProperties = async (req,res) => {
+export const getProperties = async (req, res) => {
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 15;
+    let offset = (page - 1) * limit;
+    let search = req.query.search.trim() || '';
+
     try {
-        let response = await getPropertiesLogic();
+        let response = await getPropertiesLogic(limit, offset, search);
         if(response.success){
             return res.status(200).json(response);
         }else{
@@ -15,7 +20,7 @@ export const getProperties = async (req,res) => {
     }
 }
 
-export const postProperties = async(req,res)=>{
+export const postProperties = async (req, res) => {
     const { title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id } = req.body;
     
     if(!title || !location || !price || !property_type || !area_sqft || !status || !project_id){
@@ -37,7 +42,7 @@ export const postProperties = async(req,res)=>{
     }
 }
 
-export const updateProperties = async(req,res)=>{
+export const updateProperties = async (req, res) => {
     const id = req.params.id;
     const {title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id} = req.body;
 
@@ -60,7 +65,7 @@ export const updateProperties = async(req,res)=>{
     }
 }
 
-export const deleteProperties = async(req,res)=>{
+export const deleteProperties = async (req, res) => {
     const {id} = req.params;    
 
     if(!id){

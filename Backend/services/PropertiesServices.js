@@ -1,10 +1,14 @@
 import { pool } from '../config/Database.js'
 
-export const getPropertiesLogic = async () => {
-    try {
-        let [rows] = await pool.query(`SELECT * FROM properties;`);
+export const getPropertiesLogic = async (limit, offset, search) => {
+    let searchQuery = `%${search}%`;
 
-        return {success: true, data: rows};
+    try {
+        let [rows] = await pool.query(`SELECT * FROM properties WHERE title LIKE ? OR location LIKE ? LIMIT ? OFFSET ?;`, [searchQuery, searchQuery, limit, offset]);
+        let [totalCount] = await pool.query(`SELECT COUNT(*) AS total FROM properties WHERE title LIKE ? OR location LIKE ?;`, [searchQuery, searchQuery]);
+        let total = totalCount[0].total;
+        
+        return {success: true, data: rows, total};
     } catch (error) {
         console.log(error);
         return {success: false, message: "Property not found!"};
