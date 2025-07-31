@@ -5,24 +5,36 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditProperty from '../../modals/EditProperty.jsx'
 import Swal from 'sweetalert2'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const Properties = () => {
   let [propertyData, setPropertyData] = useState([]);
   let [openEditModal, setOpenEditModal] = useState(false);
   let [selectedProperty, setSelectedProperty] = useState({});
+  let [totalData, setTotalData] = useState(1);
+  let [currentPage, setCurrentPage] = useState(1);
+  let itemsPerPage = 15;
 
-  let fetchProperties = async () => {
+  let fetchProperties = async (currentPage, itemsPerPage) => {
     try {
-      let response = await API.get(`http://localhost:5000/api/property/properties`);
+      let response = await API.get(`/property/properties?page=${currentPage}&limit=${itemsPerPage}`);
       setPropertyData(response.data.data);
+      setTotalData(response.data.total);
     } catch (error) {
-      console.log(response?.error?.data?.message || error);
+      console.log(error.response?.data?.message || error);
     }
   }
 
   useEffect(()=>{
-    fetchProperties();
-  },[]);
+    fetchProperties(currentPage, itemsPerPage);
+  }, [currentPage]);
+
+  let handleEdit = (property)=>{
+    setOpenEditModal(true);
+    setSelectedProperty(property);
+    fetchProperties(currentPage, itemsPerPage);
+  }
 
   let handleDelete = async (id) => {
     try {
@@ -36,9 +48,8 @@ const Properties = () => {
         confirmButtonText: "Yes, delete it!"
       }).then(async (result) => {
         if (result.isConfirmed) {
-          let response = await API.delete(`http://localhost:5000/api/property/properties/${id}`);
-      
-          fetchProperties();
+          let response = await API.delete(`/property/properties/${id}`);
+          fetchProperties(currentPage, itemsPerPage);
           Swal.fire({
             title: "Deleted!",
             text: "Property has been deleted.",
@@ -52,15 +63,13 @@ const Properties = () => {
     }
   }
 
-  let handleEdit = (property)=>{
-    setOpenEditModal(true);
-    setSelectedProperty(property);
-    fetchProperties();
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   }
 
   return (
     <div className='grow flex flex-col gap-4'>
-      <Menubar heading='Properties'/>
+      <Menubar heading='Properties' projectButton={false} propertyButton={true}/>
       <div className='mx-4 p-2 bg-white rounded-md grow'>
         <table className='w-full'>
           <thead>
@@ -88,7 +97,9 @@ const Properties = () => {
         </table>
       </div>
       {openEditModal && <EditProperty setOpenEditModal ={setOpenEditModal} selectedProperty={selectedProperty} fetchProperties={fetchProperties}/>}
-
+      <Stack spacing={2} className='p-4'>
+        <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />
+      </Stack>
     </div>
   )
 }

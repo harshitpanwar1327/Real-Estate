@@ -5,7 +5,7 @@ export const getProperties = async (req, res) => {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 15;
     let offset = (page - 1) * limit;
-    let search = req.query.search.trim() || '';
+    let search = req.query.search?.trim() || '';
 
     try {
         let response = await getPropertiesLogic(limit, offset, search);

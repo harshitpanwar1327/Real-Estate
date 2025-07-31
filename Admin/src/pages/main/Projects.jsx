@@ -60,8 +60,8 @@ const Projects = () => {
 
   return (
     <div className='grow flex flex-col gap-4'>
-      <Menubar heading='Projects'/>
-      <div className='mx-4 p-2 bg-white rounded-md grow'>
+      <Menubar heading='Projects' projectButton={true} propertyButton={false}/>
+      <div className='mx-4 p-2 bg-white rounded-md grow overflow-x-auto'>
         <table className='w-full'>
           <thead>
             <tr className='bg-[#f5f3ff] border-b border-[#434343]'>

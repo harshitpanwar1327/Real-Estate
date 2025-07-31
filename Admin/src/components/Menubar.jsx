@@ -6,10 +6,10 @@ import Swal from 'sweetalert2'
 import { ClimbingBoxLoader } from "react-spinners";
 import AddProperty from '../modals/AddProperty'
 
-const Menubar = ({heading}) => {
+const Menubar = ({heading, projectButton, propertyButton}) => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [openAddModal, setOpenAddModal] = useState(false);
+  const [openPropertyModal, setOpenPropertyModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,12 +48,16 @@ const Menubar = ({heading}) => {
       )}
         <h2 className='font-semibold text-xl'>{heading}</h2>
         <div className='flex gap-4'>
-            <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:text-[#fdc940] hover:bg-white hover:border hover:border-2 hover:border-[#fdc940]' onClick={(e)=>setOpenModal(true)}>+ New Project</button>
-            <button className='bg-[#6D088F] text-sm text-white font-semibold p-2 border-2 border-[#6D088F] rounded hover:text-[#6D088F] hover:bg-white hover:border hover:border-2 hover:border-[#6D088F]' onClick={(e)=>setOpenAddModal(true)}>+ New Property</button>
-            <button className='bg-red-500 text-white text-sm font-semibold p-2 rounded flex items-center border-2 border-red-500 hover:text-red-500 hover:bg-white hover:border hover:border-2 hover:border-red-500' onClick={handleLogout}><LogoutOutlinedIcon sx={{fontSize: '16px'}}/>Logout</button>
+          {projectButton && 
+            <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenModal(true)}>+ New Project</button>
+          }
+          {propertyButton &&
+            <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenPropertyModal(true)}>+ New Property</button>
+          }
+          <button className='bg-red-500 text-white text-sm font-semibold p-2 rounded flex items-center border-2 border-red-500 hover:scale-105 transition-all duration-300 ease-in-out' onClick={handleLogout}><LogoutOutlinedIcon sx={{fontSize: '16px'}}/>Logout</button>
         </div>
         {openModal && <AddProject setOpenModal={setOpenModal}/>}
-        {openAddModal && <AddProperty setOpenAddModal={setOpenAddModal}/>}
+        {openPropertyModal && <AddProperty setOpenPropertyModal={setOpenPropertyModal}/>}
     </div>
   )
 }
