@@ -2,8 +2,12 @@ import { ProjectsModels } from '../models/ProjectsModels.js'
 import { getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic} from '../services/ProjectsServices.js'
 
 export const getProjects = async (req,res) => {
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 15;
+    let offset = (page - 1) * limit;
+
     try {
-        let response = await getProjectsLogic();
+        let response = await getProjectsLogic(limit, offset);
         if(response.success){
             return res.status(200).json(response);
         }else{

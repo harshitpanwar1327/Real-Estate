@@ -9,7 +9,7 @@ import AddProperty from '../modals/AddProperty'
 const Menubar = ({heading, projectButton, propertyButton}) => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [openPropertyModal, setOpenPropertyModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -52,12 +52,12 @@ const Menubar = ({heading, projectButton, propertyButton}) => {
             <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenModal(true)}>+ New Project</button>
           }
           {propertyButton &&
-            <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenPropertyModal(true)}>+ New Property</button>
+            <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenAddModal(true)}>+ New Property</button>
           }
           <button className='bg-red-500 text-white text-sm font-semibold p-2 rounded flex items-center border-2 border-red-500 hover:scale-105 transition-all duration-300 ease-in-out' onClick={handleLogout}><LogoutOutlinedIcon sx={{fontSize: '16px'}}/>Logout</button>
         </div>
         {openModal && <AddProject setOpenModal={setOpenModal}/>}
-        {openPropertyModal && <AddProperty setOpenPropertyModal={setOpenPropertyModal}/>}
+        {openAddModal && <AddProperty setOpenAddModal={setOpenAddModal}/>}
     </div>
   )
 }
