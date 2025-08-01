@@ -2,13 +2,16 @@ import { PropertiesModels } from '../models/PropertiesModels.js'
 import { getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
 
 export const getProperties = async (req, res) => {
-    let page = parseInt(req.query.page) || 1;
-    let limit = parseInt(req.query.limit) || 15;
+    let page = parseInt(req.body.page) || 1;
+    let limit = parseInt(req.body.limit) || 15;
     let offset = (page - 1) * limit;
-    let search = req.query.search?.trim() || '';
+    let search = req.body.search?.trim() || '';
+    let propertyType = req.body.propertyType || '';
+    let bedrooms = parseInt(req.body.bedrooms) || '';
+    let bathrooms = parseInt(req.body.bathrooms) || '';
 
     try {
-        let response = await getPropertiesLogic(limit, offset, search);
+        let response = await getPropertiesLogic(limit, offset, search, propertyType, bedrooms, bathrooms);
         if(response.success){
             return res.status(200).json(response);
         }else{

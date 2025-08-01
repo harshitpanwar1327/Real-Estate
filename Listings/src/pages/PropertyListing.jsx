@@ -14,10 +14,18 @@ const PropertyListing = () => {
   const [totalData, setTotalData] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
+  const [filters, setFilters] = useState({propertyType: '', bedrooms: '', bathrooms: ''});
 
-  const fetchProperties = async (currentPage, itemsPerPage, search) => {
+  const fetchProperties = async (currentPage, itemsPerPage, search, filters = {}) => {
     try {
-      let response = await API.get(`/property/properties?page=${currentPage}&limit=${itemsPerPage}&search=${search}`);
+      let response = await API.post(`/property/get-properties`, {
+        page: currentPage,
+        limit: itemsPerPage,
+        search,
+        propertyType: filters.propertyType || '',
+        bedrooms: filters.bedrooms || '',
+        bathrooms: filters.bathrooms || ''
+      });
       setPropertiesData(response.data.data);
       setTotalData(response.data.total);
     } catch (error) {
@@ -27,16 +35,21 @@ const PropertyListing = () => {
 
   useEffect(()=>{
     setCurrentPage(1);
-    fetchProperties(1, itemsPerPage, search);
-  }, [search]);
+    fetchProperties(1, itemsPerPage, search, filters);
+  }, [search, filters]);
   
   useEffect(()=>{
-    fetchProperties(currentPage, itemsPerPage, search);
+    fetchProperties(currentPage, itemsPerPage, search, filters);
   }, [currentPage]);
+
+  const applyFilter = (newFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1);
+    fetchProperties(1, itemsPerPage, search, filters);
+  }
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
-    fetchProperties(value, itemsPerPage, search);
   }
 
   return (
@@ -47,17 +60,17 @@ const PropertyListing = () => {
         </div>
         <div className="absolute top-2/3 left-1/2 w-2/3 py-20 bg-white -translate-x-1/2 -translate-y-1/2 rounded shadow-md flex justify-center items-center">
           <div className='w-2/3 p-3 border-t-2 border-l-2 border-b-2 border-gray-300 flex justify-between'>
-            <input className='w-2/3 focus-visible:outline-0' type="text" placeholder='Try a location or property title' value={search} onChange={(e)=>setSearch(e.target.value)}/>
+            <input className='w-2/3 focus-visible:outline-0' type="text" placeholder='Try a location or title' value={search} onChange={(e)=>setSearch(e.target.value)}/>
             <button className='border text-[#5c5c5c] py-1 px-2 rounded cursor-pointer' onClick={()=>setOpenModal(true)}><TuneRoundedIcon /> Filters</button>
           </div>
           <button className='bg-green-600 text-white text-xl font-semibold p-4 border-2 border-green-600 cursor-pointer flex items-center gap-1'><SearchRoundedIcon />Search</button>
         </div>
-        {openModal && <Filter setOpenModal={setOpenModal} />}
+        {openModal && <Filter setOpenModal={setOpenModal} applyFilter={applyFilter} />}
       </div>
 
       <div className='w-2/3 flex flex-col'>
         <h2 className='text-2xl font-semibold'>Dream Homes</h2>
-        <div className='py-4 px-1 grid grid-cols-3 gap-10 overflow-x-auto'>
+        <div className='py-4 px-1 grid grid-cols-3 gap-5 overflow-x-auto'>
           {propertiesData.length > 0 ? (
             propertiesData.map((data, index) => (
               <PropertyCard key={index} data={data}/>

@@ -3,7 +3,7 @@ import { getProperties, postProperties, updateProperties, deleteProperties } fro
 
 let router = express.Router();
 
-router.get('/properties', getProperties);
+router.post('/get-properties', getProperties);
 router.post('/properties', postProperties);
 router.put('/properties/:id', updateProperties);
 router.delete('/properties/:id', deleteProperties);

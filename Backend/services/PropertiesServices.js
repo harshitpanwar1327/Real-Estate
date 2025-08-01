@@ -1,17 +1,48 @@
 import { pool } from '../config/Database.js'
 
-export const getPropertiesLogic = async (limit, offset, search) => {
-    let searchQuery = `%${search}%`;
+export const getPropertiesLogic = async (limit, offset, search, propertyType, bedrooms, bathrooms) => {
+    const searchQuery = `%${search}%`;
+
+    const conditions = [];
+    const params = [];
+
+    if (search) {
+        conditions.push(`(title LIKE ? OR location LIKE ?)`);
+        params.push(searchQuery, searchQuery);
+    }
+
+    if (propertyType) {
+        conditions.push(`property_type = ?`);
+        params.push(propertyType);
+    }
+
+    if (bedrooms) {
+        conditions.push(`bedrooms = ?`);
+        params.push(bedrooms);
+    }
+
+    if (bathrooms) {
+        conditions.push(`bathrooms = ?`);
+        params.push(bathrooms);
+    }
+
+    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
     try {
-        let [rows] = await pool.query(`SELECT * FROM properties WHERE title LIKE ? OR location LIKE ? LIMIT ? OFFSET ?;`, [searchQuery, searchQuery, limit, offset]);
-        let [totalCount] = await pool.query(`SELECT COUNT(*) AS total FROM properties WHERE title LIKE ? OR location LIKE ?;`, [searchQuery, searchQuery]);
-        let total = totalCount[0].total;
-        
-        return {success: true, data: rows, total};
+        const [rows] = await pool.query(
+            `SELECT * FROM properties ${whereClause} LIMIT ? OFFSET ?`,
+            [...params, limit, offset]
+        );
+
+        const [totalCount] = await pool.query(
+            `SELECT COUNT(*) AS total FROM properties ${whereClause}`,
+            params
+        );
+
+        return { success: true, data: rows, total: totalCount[0].total };
     } catch (error) {
-        console.log(error);
-        return {success: false, message: "Property not found!"};
+        console.error(error);
+        return { success: false, message: "Property not found!" };
     }
 };
 
