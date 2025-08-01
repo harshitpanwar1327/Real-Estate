@@ -7,6 +7,7 @@ import EditProperty from '../../modals/EditProperty.jsx'
 import Swal from 'sweetalert2'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import { motion } from 'motion/react'
 
 const Properties = () => {
   let [propertyData, setPropertyData] = useState([]);
@@ -75,9 +76,22 @@ const Properties = () => {
   }
 
   return (
-    <div className='grow flex flex-col'>
+    <div className='grow flex flex-col gap-2'>
       <Menubar heading='Properties' projectButton={false} propertyButton={true}/>
-      <div className='m-2 p-2 bg-white rounded-md grow overflow-auto'>
+
+      <div className='mx-2 flex gap-2'>
+        <div className='w-2/3 h-10 bg-white rounded-md rounded-tr-4xl'></div>
+        <div className='w-1/3 h-10 bg-[#fdc940] rounded-md rounded-bl-4xl flex justify-center items-center font-semibold'>
+          <motion.p
+            animate={{ x: ['-10px', '10px', '-10px'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            PROPERTY SHELL
+          </motion.p>
+        </div>
+      </div>
+
+      <div className='mx-2 p-2 bg-white rounded-md grow overflow-auto'>
         <table className='w-full'>
           <thead>
             <tr className='bg-[#f5f3ff] border-b border-[#434343]'>

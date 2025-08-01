@@ -7,9 +7,12 @@ import Menubar from '../../components/Menubar.jsx'
 import Swal from 'sweetalert2'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import { motion } from 'motion/react'
 
 const Projects = () => {
   let [projectsData, setProjectsData] = useState([]);
+  let [search, setSearch] = useState('');
   let [openModal, setOpenModal] = useState(false);
   let [selectedProject, setSelectedProject] = useState({});
   let [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +21,7 @@ const Projects = () => {
 
   let fetchProjects = async (currentPage, itemsPerPage) => {
     try {
-      let response = await API.get(`/project/projects?page=${currentPage}&limit=${itemsPerPage}`);
+      let response = await API.get(`/project/projects?page=${currentPage}&limit=${itemsPerPage}&search=${search}`);
       setProjectsData(response.data.data);
       setTotalData(response.data.total);
     } catch (error) {
@@ -28,7 +31,7 @@ const Projects = () => {
 
   useEffect(()=>{
     fetchProjects(currentPage, itemsPerPage);
-  },[currentPage]);
+  },[currentPage, search]);
 
   let handleEdit = (project)=>{
     setOpenModal(true);
@@ -69,9 +72,40 @@ const Projects = () => {
   }
 
   return (
-    <div className='grow flex flex-col'>
+    <div className='grow flex flex-col gap-2'>
       <Menubar heading='Projects' projectButton={true} propertyButton={false} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage)}/>
-      <div className='m-2 p-2 bg-white rounded-md grow overflow-auto'>
+
+      <div className='mx-2 flex gap-2'>
+        <div className='w-1/3 py-1 bg-white rounded-md rounded-tr-4xl flex justify-center items-center gap-2'>
+          <input type="text" placeholder='Search here...' name='search' id='search' value={search} onChange={(e)=>setSearch(e.target.value)} className='w-1/2 p-1 border border-[#cdcdcd] rounded focus-visible:outline-0'/>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white p-1 rounded'><SearchRoundedIcon/></button>
+        </div>
+        <div className='w-2/3 bg-[#fdc940] rounded-md rounded-bl-4xl grid grid-cols-3 place-items-center font-semibold'>
+          <motion.p
+            animate={{ x: ['-10px', '10px', '-10px'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            PROPERTY SHELL
+          </motion.p>
+
+          <motion.p
+            className='text-white'
+            animate={{ x: ['-10px', '10px', '-10px'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+          >
+            PROPERTY SHELL
+          </motion.p>
+
+          <motion.p
+            animate={{ x: ['-10px', '10px', '-10px'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+          >
+            PROPERTY SHELL
+          </motion.p>
+        </div>
+      </div>
+
+      <div className='mx-2 p-2 bg-white rounded-md grow overflow-auto'>
         <table className='w-full'>
           <thead>
             <tr className='bg-[#f5f3ff] border-b border-[#434343]'>
@@ -97,7 +131,7 @@ const Projects = () => {
           </tbody>
         </table>
       </div>
-      {openModal && <EditProject setOpenModal={setOpenModal} selectedProject={selectedProject} />}
+      {openModal && <EditProject setOpenModal={setOpenModal} selectedProject={selectedProject} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage)} />}
 
       <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />

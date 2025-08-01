@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import API from '../util/Api'
 
-const EditProject = ({setOpenModal, selectedProject, loadProjects}) => {
+const EditProject = ({setOpenModal, selectedProject, fetchProjects}) => {
   let [name, setName] = useState(selectedProject.name);
   let [location, setLocation] = useState(selectedProject.location);
   let [status, setStatus] = useState(selectedProject.status);
@@ -10,12 +10,13 @@ const EditProject = ({setOpenModal, selectedProject, loadProjects}) => {
   let handleForm = async(e)=>{
     e.preventDefault();
     try {
-      let response = await API.put(`http://localhost:5000/api/project/projects/${selectedProject.id}`,{name,location,status,description});
-
+      let response = await API.put(`/project/projects/${selectedProject.id}`,{name,location,status,description});
       setOpenModal(false);
-      loadProjects();
+      fetchProjects();
+      toast.success('Project edited successfully');
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || 'Unable to edit project!');
     }
   }
 
@@ -24,22 +25,22 @@ const EditProject = ({setOpenModal, selectedProject, loadProjects}) => {
       <form className='w-1/3 bg-white p-4 rounded shadow-md flex flex-col gap-2' onSubmit={handleForm} onClick={(e)=>e.stopPropagation()}>
         <h2 className='p-2 font-semibold text-xl text-center text-[#fdc940]'>Update Project</h2>
         
-          <label htmlFor="name">Name: </label>
-          <input type="text"  name="name" id="name" value={name} onChange={(e)=>setName(e.target.value)} placeholder='Project name' className='p-2 border border-[#cdcdcd] rounded' required/>
+        <label htmlFor="name">Name</label>
+        <input type="text"  name="name" id="name" value={name} onChange={(e)=>setName(e.target.value)} placeholder='Project name' className='p-2 border border-[#cdcdcd] rounded' required/>
         
-          <label htmlFor="location">Location: </label>
-          <input type="text" name="location" id="location" value={location} onChange={(e)=>setLocation(e.target.value)} placeholder='Location' className='p-2 border border-[#cdcdcd] rounded' required/>
+        <label htmlFor="location">Location</label>
+        <input type="text" name="location" id="location" value={location} onChange={(e)=>setLocation(e.target.value)} placeholder='Location' className='p-2 border border-[#cdcdcd] rounded' required/>
         
-          <label htmlFor="status">Status: </label>
-          <select name="status" id="status" value={status} onChange={(e)=>setStatus(e.target.value)} className='p-2 border border-[#cdcdcd] rounded' required>
-            <option value="">Select Status</option>
-            <option value="completed">Completed</option>
-            <option value="ongoing">Ongoing</option>
-            <option value="upcoming">Upcoming</option>
-          </select>
+        <label htmlFor="status">Status</label>
+        <select name="status" id="status" value={status} onChange={(e)=>setStatus(e.target.value)} className='p-2 border border-[#cdcdcd] rounded' required>
+          <option value="">Select Status</option>
+          <option value="completed">Completed</option>
+          <option value="ongoing">Ongoing</option>
+          <option value="upcoming">Upcoming</option>
+        </select>
         
-          <label htmlFor="description">Description: </label>
-          <input type="text" name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Description' className='p-2 border border-[#cdcdcd] rounded' required/>
+        <label htmlFor="description">Description</label>
+        <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Description' className='p-2 border border-[#cdcdcd] rounded' required/>
         
         <button className='p-1.5 w-[100px] bg-blue-400 text-white font-bold border-3 border-blue-400 hover:bg-blue-500 hover:border hover:border-3 m-2 ml-auto rounded'>Edit</button>
       </form>

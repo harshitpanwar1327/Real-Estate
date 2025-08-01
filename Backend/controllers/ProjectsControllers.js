@@ -5,9 +5,10 @@ export const getProjects = async (req,res) => {
     let page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 15;
     let offset = (page - 1) * limit;
+    let search = req.query.search || '';
 
     try {
-        let response = await getProjectsLogic(limit, offset);
+        let response = await getProjectsLogic(limit, offset, search);
         if(response.success){
             return res.status(200).json(response);
         }else{

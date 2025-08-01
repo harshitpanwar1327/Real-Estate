@@ -1,9 +1,10 @@
 import { pool } from '../config/Database.js'
 
-export const getProjectsLogic = async (limit, offset) => {
+export const getProjectsLogic = async (limit, offset, search) => {
+    let searchQuery = `%${search}%`;
     try {
-        let [rows] = await pool.query(`SELECT * FROM projects LIMIT ? OFFSET ?;`, [limit, offset]);
-        let [totalCount] = await pool.query(`SELECT COUNT(*) AS total FROM projects;`);
+        let [rows] = await pool.query(`SELECT * FROM projects WHERE name LIKE ? OR location LIKE ? OR status LIKE ? OR description LIKE ? LIMIT ? OFFSET ?;`, [searchQuery, searchQuery, searchQuery, searchQuery, limit, offset]);
+        let [totalCount] = await pool.query(`SELECT COUNT(*) AS total FROM projects WHERE name LIKE ? OR location LIKE ? OR status LIKE ? OR description LIKE ?;`, [searchQuery, searchQuery, searchQuery, searchQuery]);
 
         return {success: true, data: rows, total: totalCount[0].total};
     } catch (error) {
