@@ -5,24 +5,31 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditProject from '../../modals/EditProject.jsx'
 import Menubar from '../../components/Menubar.jsx'
 import Swal from 'sweetalert2'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
 
 const Projects = () => {
   let [projectsData, setProjectsData] = useState([]);
   let [openModal, setOpenModal] = useState(false);
   let [selectedProject, setSelectedProject] = useState({});
+  let [currentPage, setCurrentPage] = useState(1);
+  let [totalData, setTotalData] = useState(1);
+  let itemsPerPage = 15;
 
-  let fetchProjects = async () => {
+
+  let fetchProjects = async (currentPage, itemsPerPage) => {
     try {
-      let response = await API.get(`http://localhost:5000/api/project/projects`);
+      let response = await API.get(`/project/projects?page=${currentPage}&limit=${itemsPerPage}`);
       setProjectsData(response.data.data);
+      setTotalData(response.data.total);
     } catch (error) {
       console.log(response?.error?.data?.message || error);
     }
   }
 
   useEffect(()=>{
-    fetchProjects();
-  },[]);
+    fetchProjects(currentPage, itemsPerPage);
+  },[currentPage]);
 
   let handleDelete = async (id) => {
     try {
@@ -36,9 +43,9 @@ const Projects = () => {
           confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
           if (result.isConfirmed) {
-            let response = await API.delete(`http://localhost:5000/api/project/projects/${id}`);
-        
-            fetchProjects();
+            let response = await API.delete(`/project/projects/${id}`);
+
+            fetchProjects(currentPage, itemsPerPage);
             Swal.fire({
               title: "Deleted!",
               text: "Project has been deleted.",
@@ -55,7 +62,11 @@ const Projects = () => {
   let handleEdit = (project)=>{
     setOpenModal(true);
     setSelectedProject(project);
-    fetchProjects();
+    fetchProjects(currentPage, itemsPerPage);
+  }
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   }
 
   return (
@@ -88,6 +99,9 @@ const Projects = () => {
         </table>
       </div>
       {openModal && <EditProject setOpenModal ={setOpenModal} selectedProject={selectedProject} fetchProjects={fetchProjects}/>}
+      <Stack spacing={2} className='p-4'>
+        <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />
+      </Stack>
       
     </div>
   )
