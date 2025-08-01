@@ -8,7 +8,7 @@ const NavigationBar = () => {
     `px-6 my-8 flex items-center gap-2 transition-all duration-200 ${isActive ? 'border-l-4 border-white !text-white' : 'border-l-4 border-transparent !text-white/70'}`
 
   return (
-    <div className="h-screen w-[220px] flex flex-col items-center py-8 bg-black text-white">
+    <div className="h-screen min-w-[220px] flex flex-col items-center py-8 bg-black text-white">
       <h2 className="w-full px-6 font-semibold italic text-2xl">PS</h2>
       <div className="grow w-full">
         <NavLink to="/projects" className={getNavClass}>

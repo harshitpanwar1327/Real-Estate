@@ -3,7 +3,7 @@ import Menubar from '../../components/Menubar'
 
 const Enquiries = () => {
   return (
-    <div className='grow flex flex-col gap-4'>
+    <div className='grow flex flex-col'>
       <Menubar heading='Enquiries' projectButton={false} propertyButton={false}/>
     </div>
   )
