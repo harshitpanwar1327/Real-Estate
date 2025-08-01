@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import API from '../util/Api'
 
-const EditProject = ({setOpenModal, selectedProject, fetchProjects}) => {
+const EditProject = ({setOpenModal, selectedProject, loadProjects}) => {
   let [name, setName] = useState(selectedProject.name);
   let [location, setLocation] = useState(selectedProject.location);
   let [status, setStatus] = useState(selectedProject.status);
@@ -13,7 +13,7 @@ const EditProject = ({setOpenModal, selectedProject, fetchProjects}) => {
       let response = await API.put(`http://localhost:5000/api/project/projects/${selectedProject.id}`,{name,location,status,description});
 
       setOpenModal(false);
-      fetchProjects();
+      loadProjects();
     } catch (error) {
       console.log(error);
     }

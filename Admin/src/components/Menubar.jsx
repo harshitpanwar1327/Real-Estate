@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { ClimbingBoxLoader } from "react-spinners";
 import AddProperty from '../modals/AddProperty'
 
-const Menubar = ({heading, projectButton, propertyButton}) => {
+const Menubar = ({heading, projectButton, propertyButton, fetchProjects}) => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -34,7 +34,7 @@ const Menubar = ({heading, projectButton, propertyButton}) => {
             text: "You have been successfully logged out.",
             icon: "success"
           });
-        }, 2000);
+        }, 1000);
       }
     });
   }
@@ -42,7 +42,7 @@ const Menubar = ({heading, projectButton, propertyButton}) => {
   return (
     <div className='w-full bg-white p-4 flex justify-between items-center'>
       {loading && (
-        <div className='fixed h-screen w-screen top-0 left-0 flex justify-center items-center bg-black/25'>
+        <div className='fixed h-screen w-screen top-0 left-0 flex justify-center items-center backdrop-blur-md bg-black/25 z-200'>
           <ClimbingBoxLoader />
         </div>
       )}
@@ -56,7 +56,7 @@ const Menubar = ({heading, projectButton, propertyButton}) => {
           }
           <button className='bg-red-500 text-white text-sm font-semibold p-2 rounded flex items-center border-2 border-red-500 hover:scale-105 transition-all duration-300 ease-in-out' onClick={handleLogout}><LogoutOutlinedIcon sx={{fontSize: '16px'}}/>Logout</button>
         </div>
-        {openModal && <AddProject setOpenModal={setOpenModal}/>}
+        {openModal && <AddProject setOpenModal={setOpenModal} fetchProjects={fetchProjects}/>}
         {openAddModal && <AddProperty setOpenAddModal={setOpenAddModal}/>}
     </div>
   )

@@ -16,20 +16,25 @@ const Projects = () => {
   let [totalData, setTotalData] = useState(1);
   let itemsPerPage = 15;
 
-
   let fetchProjects = async (currentPage, itemsPerPage) => {
     try {
       let response = await API.get(`/project/projects?page=${currentPage}&limit=${itemsPerPage}`);
       setProjectsData(response.data.data);
       setTotalData(response.data.total);
     } catch (error) {
-      console.log(response?.error?.data?.message || error);
+      console.log(error.response?.data?.message || error);
     }
   }
 
   useEffect(()=>{
     fetchProjects(currentPage, itemsPerPage);
   },[currentPage]);
+
+  let handleEdit = (project)=>{
+    setOpenModal(true);
+    setSelectedProject(project);
+    fetchProjects(currentPage, itemsPerPage);
+  }
 
   let handleDelete = async (id) => {
     try {
@@ -59,20 +64,14 @@ const Projects = () => {
     }
   }
 
-  let handleEdit = (project)=>{
-    setOpenModal(true);
-    setSelectedProject(project);
-    fetchProjects(currentPage, itemsPerPage);
-  }
-
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   }
 
   return (
-    <div className='grow flex flex-col gap-4'>
-      <Menubar heading='Projects' projectButton={true} propertyButton={false}/>
-      <div className='mx-4 p-2 bg-white rounded-md grow overflow-x-auto'>
+    <div className='grow flex flex-col'>
+      <Menubar heading='Projects' projectButton={true} propertyButton={false} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage)}/>
+      <div className='m-2 p-2 bg-white rounded-md grow overflow-auto'>
         <table className='w-full'>
           <thead>
             <tr className='bg-[#f5f3ff] border-b border-[#434343]'>
@@ -98,11 +97,11 @@ const Projects = () => {
           </tbody>
         </table>
       </div>
-      {openModal && <EditProject setOpenModal ={setOpenModal} selectedProject={selectedProject} fetchProjects={fetchProjects}/>}
-      <Stack spacing={2} className='p-4'>
+      {openModal && <EditProject setOpenModal={setOpenModal} selectedProject={selectedProject} />}
+
+      <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />
       </Stack>
-      
     </div>
   )
 }

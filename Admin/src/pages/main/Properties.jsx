@@ -18,7 +18,14 @@ const Properties = () => {
 
   let fetchProperties = async (currentPage, itemsPerPage) => {
     try {
-      let response = await API.get(`/property/properties?page=${currentPage}&limit=${itemsPerPage}`);
+      let response = await API.post(`/property/get-properties`, {
+        page: currentPage,
+        limit: itemsPerPage,
+        search: '',
+        propertyType: '',
+        bedrooms: '',
+        bathrooms: ''
+      });
       setPropertyData(response.data.data);
       setTotalData(response.data.total);
     } catch (error) {
@@ -68,9 +75,9 @@ const Properties = () => {
   }
 
   return (
-    <div className='grow flex flex-col gap-4'>
+    <div className='grow flex flex-col'>
       <Menubar heading='Properties' projectButton={false} propertyButton={true}/>
-      <div className='mx-4 p-2 bg-white rounded-md grow'>
+      <div className='m-2 p-2 bg-white rounded-md grow overflow-auto'>
         <table className='w-full'>
           <thead>
             <tr className='bg-[#f5f3ff] border-b border-[#434343]'>
@@ -97,7 +104,8 @@ const Properties = () => {
         </table>
       </div>
       {openEditModal && <EditProperty setOpenEditModal ={setOpenEditModal} selectedProperty={selectedProperty} fetchProperties={fetchProperties}/>}
-      <Stack spacing={2} className='p-4'>
+
+      <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />
       </Stack>
     </div>

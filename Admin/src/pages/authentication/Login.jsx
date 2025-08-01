@@ -24,12 +24,12 @@ const Login = () => {
       let token = response.data.token;
       sessionStorage.setItem('AuthToken', token);
       sessionStorage.setItem('isAuthenticated', true);
+
       setTimeout(() => {
         setLoading(false);
         toast.success(`Login Successfull`);
         navigate('/projects');
-      }, 2000);
-      
+      }, 1000);
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <div className='grow flex justify-center items-center bg-[url(/src/assets/login.jpg)] bg-cover'>
       {loading && (
-        <div className='fixed h-screen w-screen top-0 left-0 flex justify-center items-center bg-black/25 z-[100]'>
+        <div className='fixed top-0 left-0 h-screen w-screen flex justify-center items-center backdrop-blur-md bg-black/25 z-100'>
           <ClimbingBoxLoader />
         </div>
       )}
