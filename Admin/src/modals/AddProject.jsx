@@ -27,7 +27,7 @@ const AddProject = ({ setOpenModal, fetchProjects }) => {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a] z-[1]' onClick={()=>setOpenModal(false)}>
+    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a] z-1' onClick={()=>setOpenModal(false)}>
       <form className='w-1/3 bg-white p-4 rounded shadow-md flex flex-col gap-2' onSubmit={handleForm} onClick={(e)=>e.stopPropagation()}>
         <h2 className='p-2 font-semibold text-xl text-center text-[#fdc940]'>Let's add a Project</h2>
 
@@ -36,7 +36,7 @@ const AddProject = ({ setOpenModal, fetchProjects }) => {
 
         <label htmlFor="location">Location</label>
         <input type="text" name="location" id="location" value={location} onChange={(e)=>setLocation(e.target.value)} placeholder='Location' className='p-2 border border-[#cdcdcd] rounded' required/>
-        
+
         <label htmlFor="status">Status</label>
         <select name="status" id="status" value={status} onChange={(e)=>setStatus(e.target.value)} className='p-2 border border-[#cdcdcd] rounded' required>
           <option value="">Select Status</option>
@@ -44,11 +44,11 @@ const AddProject = ({ setOpenModal, fetchProjects }) => {
           <option value="ongoing">Ongoing</option>
           <option value="upcoming">Upcoming</option>
         </select>
-        
+
         <label htmlFor="description">Description</label>
-        <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Description' className='p-2 border border-[#cdcdcd] rounded' required/>
-        
-        <button className='p-1.5 w-[100px] bg-blue-400 text-white font-bold border-3 border-blue-400 hover:bg-blue-500 hover:border hover:border-3 m-2 ml-auto rounded'>Add</button>
+        <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Description' className='p-2 border border-[#cdcdcd] rounded'/>
+
+        <button className='py-1 px-4 bg-blue-400 text-white font-semibold hover:bg-blue-500 rounded self-end'>Add</button>
       </form>
     </div>
   )

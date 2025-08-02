@@ -2,16 +2,21 @@ import React, { useState } from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
+import Slider from '@mui/material/Slider'
 import { toast } from 'react-toastify'
 
 const propertyTypes = ['', 'Apartment', 'Villa', 'Plot'];
 const bedroomsArray = ['', '1', '2', '3', '4', '5'];
 const bathroomsArray = ['', '1', '2', '3', '4', '5'];
+function priceValue(value) {
+  return `Rs. ${value}`;
+}
 
 const Filter = ({setOpenModal, applyFilter}) => {
   const [propertyType, setPropertyType] = useState(propertyTypes[0]);
   const [bedrooms, setBedrooms] = useState(bedroomsArray[0]);
   const [bathrooms, setBathrooms] = useState(bathroomsArray[0]);
+  const [price, setPrice] = useState([2000000, 50000000]);
 
   const handlePropertyTypeChange = (event, newValue) => {
     setPropertyType(propertyTypes[newValue]);
@@ -30,6 +35,10 @@ const Filter = ({setOpenModal, applyFilter}) => {
   };
 
   const selectedBathroomsArrayChange = bathroomsArray.indexOf(bathrooms);
+
+  const handlePriceChange = (event, newValue) => {
+    setPrice(newValue);
+  };
 
   const handleFilter = (e) => {
     e.preventDefault();
@@ -63,9 +72,21 @@ const Filter = ({setOpenModal, applyFilter}) => {
           </Tabs>
         </Box>
         <hr className='text-[#cdcdcd]'/>
+
         <h2 className='font-semibold'>Price</h2>
-        <div className="py-4"></div>
+        <div className="py-4">
+          <Box sx={{ width: 300 }}>
+            <Slider
+              getAriaLabel={() => 'Price range'}
+              value={price}
+              onChange={handlePriceChange}
+              valueLabelDisplay="auto"
+              getAriaValueText={priceValue}
+            />
+          </Box>
+        </div>
         <hr className='text-[#cdcdcd]'/>
+
         <h2 className='font-semibold'>Bedrooms</h2>
         <Box sx={{ maxWidth: { xs: 320, sm: 480, md: 787, lg: 1024 }, bgcolor: 'background.paper' }} className="border border-[#cdcdcd] rounded-md">
           <Tabs
@@ -81,6 +102,7 @@ const Filter = ({setOpenModal, applyFilter}) => {
           </Tabs>
         </Box>
         <hr className='text-[#cdcdcd]'/>
+
         <h2 className='font-semibold'>Bathrooms</h2>
         <Box sx={{ maxWidth: { xs: 320, sm: 480, md: 787, lg: 1024 }, bgcolor: 'background.paper' }} className="border border-[#cdcdcd] rounded-md">
           <Tabs
@@ -95,9 +117,7 @@ const Filter = ({setOpenModal, applyFilter}) => {
             ))}
           </Tabs>
         </Box>
-        <hr className='text-[#cdcdcd]'/>
-        <h2 className='font-semibold'>Property Size</h2>
-        <div className="py-4"></div>
+
         <button className='bg-[#106c50] text-white py-2 rounded cursor-pointer'>Apply Filter</button>
       </form>
     </div>

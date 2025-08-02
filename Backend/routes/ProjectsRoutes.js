@@ -1,5 +1,5 @@
 import express from 'express';
-import { getProjects, postProjects, updateProjects, deleteProjects, allProjects } from '../controllers/ProjectsControllers.js'
+import { allProjects, getProjects, postProjects, updateProjects, deleteProjects } from '../controllers/ProjectsControllers.js'
 
 let router = express.Router();
 

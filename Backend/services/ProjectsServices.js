@@ -2,7 +2,7 @@ import { pool } from '../config/Database.js'
 
 export const allProjectsLogic = async ()=> {
     try {
-        let [rows] = await pool.query(`SELECT name,id FROM projects;`);
+        let [rows] = await pool.query(`SELECT id, name FROM projects;`);
 
         return {success: true, data: rows};
     } catch (error) {

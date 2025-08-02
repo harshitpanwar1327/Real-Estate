@@ -1,7 +1,7 @@
 import { ProjectsModels } from '../models/ProjectsModels.js'
-import { getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic, allProjectsLogic } from '../services/ProjectsServices.js'
+import { allProjectsLogic, getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic } from '../services/ProjectsServices.js'
 
-export const allProjects = async (req,res)=>{
+export const allProjects = async (req,res) => {
     try {
         let response = await allProjectsLogic();
         if(response.success){

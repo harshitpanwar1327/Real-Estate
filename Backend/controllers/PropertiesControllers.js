@@ -5,11 +5,11 @@ export const getProperties = async (req, res) => {
     let page = parseInt(req.body.page) || 1;
     let limit = parseInt(req.body.limit) || 15;
     let offset = (page - 1) * limit;
-    let search = req.query.search || '';
+    let search = req.body.search || '';
     let propertyType = req.body.propertyType || '';
     let bedrooms = parseInt(req.body.bedrooms) || '';
     let bathrooms = parseInt(req.body.bathrooms) || '';
-
+    
     try {
         let response = await getPropertiesLogic(limit, offset, search, propertyType, bedrooms, bathrooms);
         if(response.success){

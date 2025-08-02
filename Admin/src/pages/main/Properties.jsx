@@ -19,12 +19,12 @@ const Properties = () => {
   let [currentPage, setCurrentPage] = useState(1);
   let itemsPerPage = 15;
 
-  let fetchProperties = async (currentPage, itemsPerPage) => {
+  let fetchProperties = async (currentPage, itemsPerPage, search) => {
     try {
-      let response = await API.post(`/property/get-properties?search=${search}`, {
+      let response = await API.post(`/property/get-properties`, {
         page: currentPage,
         limit: itemsPerPage,
-        search: '',
+        search: search || '',
         propertyType: '',
         bedrooms: '',
         bathrooms: ''
@@ -37,13 +37,12 @@ const Properties = () => {
   }
 
   useEffect(()=>{
-    fetchProperties(currentPage, itemsPerPage);
+    fetchProperties(currentPage, itemsPerPage, search);
   }, [currentPage, search]);
 
   let handleEdit = (property)=>{
     setOpenEditModal(true);
     setSelectedProperty(property);
-    fetchProperties(currentPage, itemsPerPage);
   }
 
   let handleDelete = async (id) => {
@@ -59,7 +58,7 @@ const Properties = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           let response = await API.delete(`/property/properties/${id}`);
-          fetchProperties(currentPage, itemsPerPage);
+          fetchProperties(currentPage, itemsPerPage, search);
           Swal.fire({
             title: "Deleted!",
             text: "Property has been deleted.",
@@ -67,9 +66,8 @@ const Properties = () => {
           });
         }
       });
-
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
@@ -79,17 +77,17 @@ const Properties = () => {
 
   return (
     <div className='grow flex flex-col gap-2'>
-      <Menubar heading='Properties' projectButton={false} propertyButton={true} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage)}/>
+      <Menubar heading='Properties' projectButton={false} propertyButton={true} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage, search)}/>
 
       <div className='mx-2 flex gap-2'>
         <div className='w-1/3 py-1 bg-white rounded-md rounded-tr-4xl flex justify-center items-center gap-2'>
           <input type="text" placeholder='Search here...' name='search' id='search' value={search} onChange={(e)=>setSearch(e.target.value)} className='w-1/2 p-1 border border-[#cdcdcd] rounded focus-visible:outline-0'/>
           <button className='bg-blue-500 hover:bg-blue-700 text-white p-1 rounded'><SearchRoundedIcon/></button>
         </div>
-        <div className='w-2/3 h-10 bg-[#fdc940] rounded-md rounded-bl-4xl flex justify-center items-center font-semibold'>
+        <div className='w-2/3 bg-[#fdc940] rounded-md rounded-bl-4xl flex justify-center items-center font-semibold'>
           <motion.p
-            animate={{ x: ['-10px', '10px', '-10px'] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            animate={{ x: ['-50px', '50px', '-50px'] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
             PROPERTY SHELL
           </motion.p>
@@ -122,7 +120,7 @@ const Properties = () => {
           </tbody>
         </table>
       </div>
-      {openEditModal && <EditProperty setOpenEditModal ={setOpenEditModal} selectedProperty={selectedProperty} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage)}/>}
+      {openEditModal && <EditProperty setOpenEditModal={setOpenEditModal} selectedProperty={selectedProperty} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage, search)}/>}
 
       <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />

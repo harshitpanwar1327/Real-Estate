@@ -21,7 +21,7 @@ const EditProject = ({setOpenModal, selectedProject, fetchProjects}) => {
   }
 
   return (
-    <div className='fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-[#0000005a]' onClick={()=>setOpenModal(false)}>
+    <div className='fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-[#0000005a] z-1' onClick={()=>setOpenModal(false)}>
       <form className='w-1/3 bg-white p-4 rounded shadow-md flex flex-col gap-2' onSubmit={handleForm} onClick={(e)=>e.stopPropagation()}>
         <h2 className='p-2 font-semibold text-xl text-center text-[#fdc940]'>Update Project</h2>
         
@@ -40,9 +40,9 @@ const EditProject = ({setOpenModal, selectedProject, fetchProjects}) => {
         </select>
         
         <label htmlFor="description">Description</label>
-        <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Description' className='p-2 border border-[#cdcdcd] rounded' required/>
+        <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Description' className='p-2 border border-[#cdcdcd] rounded'/>
         
-        <button className='p-1.5 w-[100px] bg-blue-400 text-white font-bold border-3 border-blue-400 hover:bg-blue-500 hover:border hover:border-3 m-2 ml-auto rounded'>Edit</button>
+        <button className='py-1 px-4 bg-blue-400 text-white font-semibold hover:bg-blue-500 rounded self-end'>Edit</button>
       </form>
     </div>
   )

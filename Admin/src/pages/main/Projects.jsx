@@ -36,7 +36,6 @@ const Projects = () => {
   let handleEdit = (project)=>{
     setOpenModal(true);
     setSelectedProject(project);
-    fetchProjects(currentPage, itemsPerPage);
   }
 
   let handleDelete = async (id) => {
@@ -52,7 +51,6 @@ const Projects = () => {
         }).then(async (result) => {
           if (result.isConfirmed) {
             let response = await API.delete(`/project/projects/${id}`);
-
             fetchProjects(currentPage, itemsPerPage);
             Swal.fire({
               title: "Deleted!",
@@ -80,25 +78,10 @@ const Projects = () => {
           <input type="text" placeholder='Search here...' name='search' id='search' value={search} onChange={(e)=>setSearch(e.target.value)} className='w-1/2 p-1 border border-[#cdcdcd] rounded focus-visible:outline-0'/>
           <button className='bg-blue-500 hover:bg-blue-700 text-white p-1 rounded'><SearchRoundedIcon/></button>
         </div>
-        <div className='w-2/3 bg-[#fdc940] rounded-md rounded-bl-4xl grid grid-cols-3 place-items-center font-semibold'>
+        <div className='w-2/3 bg-[#fdc940] rounded-md rounded-bl-4xl flex justify-center items-center font-semibold'>
           <motion.p
-            animate={{ x: ['-10px', '10px', '-10px'] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            PROPERTY SHELL
-          </motion.p>
-
-          <motion.p
-            className='text-white'
-            animate={{ x: ['-10px', '10px', '-10px'] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-          >
-            PROPERTY SHELL
-          </motion.p>
-
-          <motion.p
-            animate={{ x: ['-10px', '10px', '-10px'] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+            animate={{ x: ['-50px', '50px', '-50px'] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
             PROPERTY SHELL
           </motion.p>
