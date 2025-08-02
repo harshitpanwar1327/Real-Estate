@@ -1,5 +1,19 @@
 import { ProjectsModels } from '../models/ProjectsModels.js'
-import { getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic} from '../services/ProjectsServices.js'
+import { getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic, allProjectsLogic } from '../services/ProjectsServices.js'
+
+export const allProjects = async (req,res)=>{
+    try {
+        let response = await allProjectsLogic();
+        if(response.success){
+            return res.status(200).json(response);
+        }else{
+            return res.status(400).json(response);
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
+    }
+}
 
 export const getProjects = async (req,res) => {
     let page = parseInt(req.query.page) || 1;

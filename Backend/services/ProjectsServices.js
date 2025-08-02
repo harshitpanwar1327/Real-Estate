@@ -1,5 +1,16 @@
 import { pool } from '../config/Database.js'
 
+export const allProjectsLogic = async ()=> {
+    try {
+        let [rows] = await pool.query(`SELECT name,id FROM projects;`);
+
+        return {success: true, data: rows};
+    } catch (error) {
+        console.log(error);
+        return {success: false, message: "Projects not found!"};
+    }
+};
+
 export const getProjectsLogic = async (limit, offset, search) => {
     let searchQuery = `%${search}%`;
     try {

@@ -27,7 +27,7 @@ const AddProject = ({ setOpenModal, fetchProjects }) => {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a]' onClick={()=>setOpenModal(false)}>
+    <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a] z-[1]' onClick={()=>setOpenModal(false)}>
       <form className='w-1/3 bg-white p-4 rounded shadow-md flex flex-col gap-2' onSubmit={handleForm} onClick={(e)=>e.stopPropagation()}>
         <h2 className='p-2 font-semibold text-xl text-center text-[#fdc940]'>Let's add a Project</h2>
 

@@ -8,18 +8,20 @@ import Swal from 'sweetalert2'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { motion } from 'motion/react'
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 
 const Properties = () => {
   let [propertyData, setPropertyData] = useState([]);
   let [openEditModal, setOpenEditModal] = useState(false);
   let [selectedProperty, setSelectedProperty] = useState({});
+  let [search, setSearch] = useState('');
   let [totalData, setTotalData] = useState(1);
   let [currentPage, setCurrentPage] = useState(1);
   let itemsPerPage = 15;
 
   let fetchProperties = async (currentPage, itemsPerPage) => {
     try {
-      let response = await API.post(`/property/get-properties`, {
+      let response = await API.post(`/property/get-properties?search=${search}`, {
         page: currentPage,
         limit: itemsPerPage,
         search: '',
@@ -36,7 +38,7 @@ const Properties = () => {
 
   useEffect(()=>{
     fetchProperties(currentPage, itemsPerPage);
-  }, [currentPage]);
+  }, [currentPage, search]);
 
   let handleEdit = (property)=>{
     setOpenEditModal(true);
@@ -77,11 +79,14 @@ const Properties = () => {
 
   return (
     <div className='grow flex flex-col gap-2'>
-      <Menubar heading='Properties' projectButton={false} propertyButton={true}/>
+      <Menubar heading='Properties' projectButton={false} propertyButton={true} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage)}/>
 
       <div className='mx-2 flex gap-2'>
-        <div className='w-2/3 h-10 bg-white rounded-md rounded-tr-4xl'></div>
-        <div className='w-1/3 h-10 bg-[#fdc940] rounded-md rounded-bl-4xl flex justify-center items-center font-semibold'>
+        <div className='w-1/3 py-1 bg-white rounded-md rounded-tr-4xl flex justify-center items-center gap-2'>
+          <input type="text" placeholder='Search here...' name='search' id='search' value={search} onChange={(e)=>setSearch(e.target.value)} className='w-1/2 p-1 border border-[#cdcdcd] rounded focus-visible:outline-0'/>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white p-1 rounded'><SearchRoundedIcon/></button>
+        </div>
+        <div className='w-2/3 h-10 bg-[#fdc940] rounded-md rounded-bl-4xl flex justify-center items-center font-semibold'>
           <motion.p
             animate={{ x: ['-10px', '10px', '-10px'] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
@@ -117,7 +122,7 @@ const Properties = () => {
           </tbody>
         </table>
       </div>
-      {openEditModal && <EditProperty setOpenEditModal ={setOpenEditModal} selectedProperty={selectedProperty} fetchProperties={fetchProperties}/>}
+      {openEditModal && <EditProperty setOpenEditModal ={setOpenEditModal} selectedProperty={selectedProperty} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage)}/>}
 
       <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />

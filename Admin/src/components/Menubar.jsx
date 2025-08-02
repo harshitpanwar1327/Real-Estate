@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { ClimbingBoxLoader } from "react-spinners";
 import AddProperty from '../modals/AddProperty'
 
-const Menubar = ({heading, projectButton, propertyButton, fetchProjects}) => {
+const Menubar = ({heading, projectButton, propertyButton, fetchProjects, fetchProperties}) => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -57,7 +57,7 @@ const Menubar = ({heading, projectButton, propertyButton, fetchProjects}) => {
           <button className='bg-red-500 text-white text-sm font-semibold p-2 rounded flex items-center border-2 border-red-500 hover:scale-105 transition-all duration-300 ease-in-out' onClick={handleLogout}><LogoutOutlinedIcon sx={{fontSize: '16px'}}/>Logout</button>
         </div>
         {openModal && <AddProject setOpenModal={setOpenModal} fetchProjects={fetchProjects}/>}
-        {openAddModal && <AddProperty setOpenAddModal={setOpenAddModal}/>}
+        {openAddModal && <AddProperty setOpenAddModal={setOpenAddModal}  fetchProperties={fetchProperties}/>}
     </div>
   )
 }
