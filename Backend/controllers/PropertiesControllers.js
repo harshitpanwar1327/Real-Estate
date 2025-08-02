@@ -9,9 +9,13 @@ export const getProperties = async (req, res) => {
     let propertyType = req.body.propertyType || '';
     let bedrooms = parseInt(req.body.bedrooms) || '';
     let bathrooms = parseInt(req.body.bathrooms) || '';
+    let minPrice = parseInt(req.body.minPrice) || 0;
+    let maxPrice = parseInt(req.body.maxPrice) || 100000000;
+    let minArea = parseInt(req.body.minArea) || 0;
+    let maxArea = parseInt(req.body.maxArea) || 10000;
     
     try {
-        let response = await getPropertiesLogic(limit, offset, search, propertyType, bedrooms, bathrooms);
+        let response = await getPropertiesLogic(limit, offset, search, propertyType, bedrooms, bathrooms, minPrice, maxPrice, minArea, maxArea);
         if(response.success){
             return res.status(200).json(response);
         }else{

@@ -8,15 +8,13 @@ import { toast } from 'react-toastify'
 const propertyTypes = ['', 'Apartment', 'Villa', 'Plot'];
 const bedroomsArray = ['', '1', '2', '3', '4', '5'];
 const bathroomsArray = ['', '1', '2', '3', '4', '5'];
-function priceValue(value) {
-  return `Rs. ${value}`;
-}
 
 const Filter = ({setOpenModal, applyFilter}) => {
   const [propertyType, setPropertyType] = useState(propertyTypes[0]);
   const [bedrooms, setBedrooms] = useState(bedroomsArray[0]);
   const [bathrooms, setBathrooms] = useState(bathroomsArray[0]);
-  const [price, setPrice] = useState([2000000, 50000000]);
+  const [price, setPrice] = useState([2500000, 100000000]);
+  const [area, setArea] = useState([250, 10000]);
 
   const handlePropertyTypeChange = (event, newValue) => {
     setPropertyType(propertyTypes[newValue]);
@@ -40,11 +38,15 @@ const Filter = ({setOpenModal, applyFilter}) => {
     setPrice(newValue);
   };
 
+  const handleAreaChange = (event, newValue) => {
+    setArea(newValue);
+  };
+
   const handleFilter = (e) => {
     e.preventDefault();
 
     try {
-      applyFilter({propertyType, bedrooms, bathrooms});
+      applyFilter({propertyType, bedrooms, bathrooms, minPrice: price[0], maxPrice: price[1], minArea: area[0], maxArea: area[1]});
       toast.success('Filter applied');
       setOpenModal(false);
     } catch (error) {
@@ -75,14 +77,19 @@ const Filter = ({setOpenModal, applyFilter}) => {
 
         <h2 className='font-semibold'>Price</h2>
         <div className="py-4">
-          <Box sx={{ width: 300 }}>
+          <Box sx={{ width: '100%' }}>
             <Slider
-              getAriaLabel={() => 'Price range'}
               value={price}
               onChange={handlePriceChange}
               valueLabelDisplay="auto"
-              getAriaValueText={priceValue}
+              min={2500000}
+              max={100000000}
+              step={2500000}
             />
+            <div className="flex justify-between text-sm text-gray-600 mt-2">
+              <span>Min: ₹{price[0].toLocaleString()}</span>
+              <span>Max: ₹{price[1].toLocaleString()}</span>
+            </div>
           </Box>
         </div>
         <hr className='text-[#cdcdcd]'/>
@@ -117,6 +124,25 @@ const Filter = ({setOpenModal, applyFilter}) => {
             ))}
           </Tabs>
         </Box>
+        <hr className='text-[#cdcdcd]'/>
+
+        <h2 className='font-semibold'>Area Sqft</h2>
+        <div className="py-4">
+          <Box sx={{ width: '100%' }}>
+            <Slider
+              value={area}
+              onChange={handleAreaChange}
+              valueLabelDisplay="auto"
+              min={250}
+              max={10000}
+              step={250}
+            />
+            <div className="flex justify-between text-sm text-gray-600 mt-2">
+              <span>Min: {area[0].toLocaleString()} sq.ft.</span>
+              <span>Max: {area[1].toLocaleString()} sq.ft.</span>
+            </div>
+          </Box>
+        </div>
 
         <button className='bg-[#106c50] text-white py-2 rounded cursor-pointer'>Apply Filter</button>
       </form>

@@ -1,6 +1,6 @@
 import { pool } from '../config/Database.js'
 
-export const getPropertiesLogic = async (limit, offset, search, propertyType, bedrooms, bathrooms) => {
+export const getPropertiesLogic = async (limit, offset, search, propertyType, bedrooms, bathrooms, minPrice, maxPrice, minArea, maxArea) => {
     const searchQuery = `%${search}%`;
 
     const conditions = [];
@@ -24,6 +24,16 @@ export const getPropertiesLogic = async (limit, offset, search, propertyType, be
     if (bathrooms) {
         conditions.push(`bathrooms = ?`);
         params.push(bathrooms);
+    }
+
+    if (minPrice !== undefined && maxPrice !== undefined) {
+        conditions.push(`price BETWEEN ? AND ?`);
+        params.push(minPrice, maxPrice);
+    }
+
+    if (minArea !== undefined && maxArea !== undefined) {
+        conditions.push(`area_sqft BETWEEN ? AND ?`);
+        params.push(minArea, maxArea);
     }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';

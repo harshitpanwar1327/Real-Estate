@@ -14,7 +14,7 @@ const PropertyListing = () => {
   const [totalData, setTotalData] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
-  const [filters, setFilters] = useState({propertyType: '', bedrooms: '', bathrooms: ''});
+  const [filters, setFilters] = useState({propertyType: '', bedrooms: '', bathrooms: '', minPrice: 0, maxPrice: 100000000, minArea: 0, maxArea: 10000});
 
   const fetchProperties = async (currentPage, itemsPerPage, search, filters = {}) => {
     try {
@@ -24,7 +24,11 @@ const PropertyListing = () => {
         search,
         propertyType: filters.propertyType || '',
         bedrooms: filters.bedrooms || '',
-        bathrooms: filters.bathrooms || ''
+        bathrooms: filters.bathrooms || '',
+        minPrice: filters.minPrice,
+        maxPrice: filters.maxPrice,
+        minArea: filters.minArea,
+        maxArea: filters.maxArea
       });
       setPropertiesData(response.data.data);
       setTotalData(response.data.total);
