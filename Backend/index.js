@@ -10,6 +10,7 @@ import ProjectsRoutes from './routes/ProjectsRoutes.js'
 import UsersRoutes from './routes/UsersRoutes.js'
 import EnquiriesRoutes from './routes/EnquiriesRoutes.js'
 import PropertiesRoutes from './routes/PropertiesRoutes.js'
+import MediaRoutes from './routes/MediaRoutes.js'
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api/user', UsersRoutes);
 app.use('/api/project', ProjectsRoutes);
 app.use('/api/property', PropertiesRoutes);
 app.use('/api/enquiry', EnquiriesRoutes);
+app.use('/api/media', MediaRoutes);
 
 app.use((req, res, next)=>{
     return res.status(404).json({message: "Route not found!"});
