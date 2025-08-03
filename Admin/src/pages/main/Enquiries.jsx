@@ -8,9 +8,13 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Swal from 'sweetalert2'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import InfoIcon from '@mui/icons-material/Info';
+import PropertyInfo from '../../modals/PropertyInfo.jsx'
 
 const Enquiries = () => {
   let [search, setSearch] = useState('');
+  let [openInfoModal, setOpenInfoModal] = useState(false);
+  let [selectedInfo ,setSelectedInfo] = useState('');
   let [enquiryData, setEnquiryData] = useState([]);
   let [currentPage, setCurrentPage] = useState(1);
   let [totalData, setTotalData] = useState(1);
@@ -57,6 +61,11 @@ const Enquiries = () => {
     }
   }
 
+  let handleInfo = (id)=>{
+    setOpenInfoModal(true);
+    setSelectedInfo(id);
+  }
+
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   }
@@ -87,6 +96,7 @@ const Enquiries = () => {
               <th className='text-start text-[#4a3f99] p-2'>Phone No.</th>
               <th className='text-start text-[#4a3f99] p-2'>Subject</th>
               <th className='text-start text-[#4a3f99] p-2'>Message</th>
+              <th className='text-start text-[#4a3f99] p-2'>Property</th>
               <th className='text-start text-[#4a3f99] p-2'>Delete</th>
             </tr>
           </thead>
@@ -98,12 +108,14 @@ const Enquiries = () => {
                 <td className='p-2'>{data.phone}</td>
                 <td className='p-2'>{data.subject}</td>
                 <td className='p-2'>{data.message}</td>
+                <td className='p-2'><button className='border-2 border-blue-600 bg-blue-600 pl-5 pr-5 rounded hover:bg-blue-500'><InfoIcon className='text-white' onClick={()=>handleInfo(data.id)}/></button></td>
                 <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {openInfoModal && <PropertyInfo setOpenInfoModal={setOpenInfoModal} selectedInfo={selectedInfo}/>}
 
       <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />

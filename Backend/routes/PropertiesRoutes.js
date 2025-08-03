@@ -1,8 +1,9 @@
 import express from 'express';
-import { getProperties, postProperties, updateProperties, deleteProperties } from '../controllers/PropertiesControllers.js'
+import { propertyDetails, getProperties, postProperties, updateProperties, deleteProperties } from '../controllers/PropertiesControllers.js'
 
 let router = express.Router();
 
+router.get('/properties/:id', propertyDetails);
 router.post('/get-properties', getProperties);
 router.post('/properties', postProperties);
 router.put('/properties/:id', updateProperties);
