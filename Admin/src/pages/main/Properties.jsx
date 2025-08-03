@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { motion } from 'motion/react'
+import { toast } from 'react-toastify'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 
 const Properties = () => {
@@ -37,8 +38,13 @@ const Properties = () => {
   }
 
   useEffect(()=>{
+    setCurrentPage(1);
     fetchProperties(currentPage, itemsPerPage, search);
-  }, [currentPage, search]);
+  }, [search])
+
+  useEffect(()=>{
+    fetchProperties(currentPage, itemsPerPage, search);
+  }, [currentPage]);
 
   let handleEdit = (property)=>{
     setOpenEditModal(true);
@@ -68,6 +74,7 @@ const Properties = () => {
       });
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || 'Property not deleted!');
     }
   }
 

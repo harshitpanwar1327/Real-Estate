@@ -9,6 +9,7 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { motion } from 'motion/react'
+import { toast } from 'react-toastify'
 
 const Projects = () => {
   let [projectsData, setProjectsData] = useState([]);
@@ -19,7 +20,7 @@ const Projects = () => {
   let [totalData, setTotalData] = useState(1);
   let itemsPerPage = 15;
 
-  let fetchProjects = async (currentPage, itemsPerPage) => {
+  let fetchProjects = async (currentPage, itemsPerPage, search) => {
     try {
       let response = await API.get(`/project/projects?page=${currentPage}&limit=${itemsPerPage}&search=${search}`);
       setProjectsData(response.data.data);
@@ -30,8 +31,12 @@ const Projects = () => {
   }
 
   useEffect(()=>{
-    fetchProjects(currentPage, itemsPerPage);
-  },[currentPage, search]);
+    fetchProjects(currentPage, itemsPerPage, search);
+  }, [search]);
+
+  useEffect(()=>{
+    fetchProjects(currentPage, itemsPerPage, search);
+  },[currentPage]);
 
   let handleEdit = (project)=>{
     setOpenModal(true);
@@ -51,7 +56,7 @@ const Projects = () => {
         }).then(async (result) => {
           if (result.isConfirmed) {
             let response = await API.delete(`/project/projects/${id}`);
-            fetchProjects(currentPage, itemsPerPage);
+            fetchProjects(currentPage, itemsPerPage, search);
             Swal.fire({
               title: "Deleted!",
               text: "Project has been deleted.",
@@ -59,9 +64,9 @@ const Projects = () => {
             });
           }
         });
-
     } catch (error) {
-        console.log(error);
+      console.log(error);
+      toast.error(error.response?.data?.message || 'Project not deleted!');
     }
   }
 
@@ -71,7 +76,7 @@ const Projects = () => {
 
   return (
     <div className='grow flex flex-col gap-2'>
-      <Menubar heading='Projects' projectButton={true} propertyButton={false} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage)}/>
+      <Menubar heading='Projects' projectButton={true} propertyButton={false} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage, search)}/>
 
       <div className='mx-2 flex gap-2'>
         <div className='w-1/3 py-1 bg-white rounded-md rounded-tr-4xl flex justify-center items-center gap-2'>
@@ -114,7 +119,7 @@ const Projects = () => {
           </tbody>
         </table>
       </div>
-      {openModal && <EditProject setOpenModal={setOpenModal} selectedProject={selectedProject} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage)} />}
+      {openModal && <EditProject setOpenModal={setOpenModal} selectedProject={selectedProject} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage, search)} />}
 
       <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />

@@ -1,8 +1,8 @@
-import React from 'react'
 import { useState, useEffect } from 'react'
 import Menubar from '../../components/Menubar'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 import { motion } from 'motion/react'
+import { toast } from 'react-toastify'
 import API from '../../util/Api.js'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Swal from 'sweetalert2'
@@ -16,7 +16,7 @@ const Enquiries = () => {
   let [totalData, setTotalData] = useState(1);
   let itemsPerPage = 15;
 
-  let fetchEnquiries = async(currentPage, itemsPerPage)=>{
+  let fetchEnquiries = async (currentPage, itemsPerPage, search) => {
     try {
       let response = await API.get(`/enquiry/enquiries?page=${currentPage}&limit=${itemsPerPage}&search=${search}`);
       setEnquiryData(response.data.data);
@@ -27,8 +27,13 @@ const Enquiries = () => {
   }
 
   useEffect(()=>{
-    fetchEnquiries(currentPage, itemsPerPage);
-  },[currentPage, search]);
+    setCurrentPage(1);
+    fetchEnquiries(currentPage, itemsPerPage, search);
+  }, [search])
+
+  useEffect(()=>{
+    fetchEnquiries(currentPage, itemsPerPage, search);
+  }, [currentPage]);
 
   let handleDelete = async (id) => {
     try {
@@ -43,7 +48,7 @@ const Enquiries = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           let response = await API.delete(`/enquiry/enquiries/${id}`);
-          fetchEnquiries(currentPage, itemsPerPage);
+          fetchEnquiries(currentPage, itemsPerPage, search);
           Swal.fire({
             title: "Deleted!",
             text: "Project has been deleted.",
@@ -51,9 +56,9 @@ const Enquiries = () => {
           });
         }
       });
-
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || 'Enquiry not deleted!');
     }
   }
 
@@ -78,6 +83,7 @@ const Enquiries = () => {
           </motion.p>
         </div>
       </div>
+      
       <div className='mx-2 p-2 bg-white rounded-md grow overflow-auto'>
         <table className='w-full'>
           <thead>
