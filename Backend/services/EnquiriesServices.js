@@ -1,13 +1,16 @@
 import { pool } from '../config/Database.js'
 
-export const getEnquiriesLogic = async()=>{
+export const getEnquiriesLogic = async(limit, offset, search)=>{
+    let searchQuery = `%${search}%`;
     try {
-        let [rows] = await pool.query(`SELECT * FROM enquiries;`);
+        let [rows] = await pool.query(`SELECT * FROM enquiries  WHERE name LIKE ? OR email LIKE ? OR phone LIKE ? LIMIT ? OFFSET ?;`,[searchQuery, searchQuery, searchQuery, limit, offset]);
 
-        return {success: true, data: rows};
+        let [totalCount] = await pool.query(`SELECT COUNT(*) AS total FROM enquiries WHERE name LIKE ? OR email LIKE ? OR phone LIKE ?;`, [searchQuery, searchQuery, searchQuery]);
+
+        return {success: true, data: rows, total: totalCount[0].total};
     } catch (error) {
         console.log(error);
-        return {success: false, message: "Enquiries not found!"};
+        return {success: false, message: "Enquiry not found!"};
     }
 };
 
