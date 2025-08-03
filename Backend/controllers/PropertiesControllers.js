@@ -1,5 +1,20 @@
 import { PropertiesModels } from '../models/PropertiesModels.js'
-import { getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
+import { propertyDetailsLogic, getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
+
+export const propertyDetails = async (req,res) => {
+    try {
+        const {id} = req.params;
+        let response = await propertyDetailsLogic(id);
+        if(response.success){
+            return res.status(200).json(response);
+        }else{
+            return res.status(400).json(response);
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
+    }
+}
 
 export const getProperties = async (req, res) => {
     let page = parseInt(req.body.page) || 1;

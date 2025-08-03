@@ -1,5 +1,16 @@
 import { pool } from '../config/Database.js'
 
+export const propertyDetailsLogic = async (id)=> {
+    try {
+        let [rows] = await pool.query(`SELECT * FROM properties WHERE id=?;`,[id]);
+
+        return {success: true, data: rows};
+    } catch (error) {
+        console.log(error);
+        return {success: false, message: "Property not found!"};
+    }
+};
+
 export const getPropertiesLogic = async (limit, offset, search, propertyType, bedrooms, bathrooms, minPrice, maxPrice, minArea, maxArea) => {
     const searchQuery = `%${search}%`;
 
