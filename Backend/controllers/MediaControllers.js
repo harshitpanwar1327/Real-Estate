@@ -1,5 +1,5 @@
 import { MediaModels } from '../models/MediaModels.js'
-import { addMediaLogic, getMediaLogic, updateMediaLogic, deleteMediaLogic } from '../services/MediaServices.js'
+import { addMediaLogic, getMediaLogic, updateMediaLogic } from '../services/MediaServices.js'
 
 export const addMedia = async (req, res) => {
     let { type, projectId, propertyId, caption1, caption2, caption3, caption4, caption5 } = req.body;

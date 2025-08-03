@@ -2,8 +2,13 @@ import { PropertiesModels } from '../models/PropertiesModels.js'
 import { propertyDetailsLogic, getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
 
 export const propertyDetails = async (req,res) => {
+    const {id} = req.params;
+
+    if(!id) {
+        return res.status(400).json({success: false, message: 'Property id not found!'});
+    }
+
     try {
-        const {id} = req.params;
         let response = await propertyDetailsLogic(id);
         if(response.success){
             return res.status(200).json(response);
@@ -43,7 +48,9 @@ export const getProperties = async (req, res) => {
 }
 
 export const postProperties = async (req, res) => {
-    const { title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id } = req.body;
+    const { title, location, price, property_type, area_sqft, status, description, project_id } = req.body;
+    const bedrooms = req.body.bedrooms || null;
+    const bathrooms = req.body.bathrooms || null;
     
     if(!title || !location || !price || !property_type || !area_sqft || !status || !project_id){
         return res.status(400).json({success: false, message: "All fields required!"});
@@ -66,7 +73,9 @@ export const postProperties = async (req, res) => {
 
 export const updateProperties = async (req, res) => {
     const id = req.params.id;
-    const {title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id} = req.body;
+    const {title, location, price, property_type, area_sqft, status, description, project_id} = req.body;
+    const bedrooms = req.body.bedrooms || null;
+    const bathrooms = req.body.bathrooms || null;
 
     if(!id){
         return res.status(400).json({success: false, message: "Property id not found!"});

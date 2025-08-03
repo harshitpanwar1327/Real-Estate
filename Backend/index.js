@@ -4,6 +4,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import { rateLimit } from 'express-rate-limit'
 import { checkConnection } from './config/Database.js'
+import { authMiddleware } from './middleware/AuthMiddlewares.js'
 import createAllTables from './utils/CreateTables.js'
 import AdminsRoutes from './routes/AdminsRoutes.js'
 import ProjectsRoutes from './routes/ProjectsRoutes.js'
@@ -45,7 +46,6 @@ app.use((err, req, res, next)=>{
     console.error(err.stack);
     return res.status(500).json({message: "Internal Server Error!"});
 });
-
 
 app.listen(PORT, async() => {
     console.log(`Listening to the port ${PORT}`);

@@ -13,8 +13,8 @@ import PropertyInfo from '../../modals/PropertyInfo.jsx'
 
 const Enquiries = () => {
   let [search, setSearch] = useState('');
-  let [openInfoModal, setOpenInfoModal] = useState(false);
-  let [selectedInfo ,setSelectedInfo] = useState('');
+  let [openModal, setOpenModal] = useState(false);
+  let [selectedPropertyId ,setSelectedPropertyId] = useState('');
   let [enquiryData, setEnquiryData] = useState([]);
   let [currentPage, setCurrentPage] = useState(1);
   let [totalData, setTotalData] = useState(1);
@@ -67,8 +67,8 @@ const Enquiries = () => {
   }
 
   let handleInfo = (id)=>{
-    setOpenInfoModal(true);
-    setSelectedInfo(id);
+    setOpenModal(true);
+    setSelectedPropertyId(id);
   }
 
   const handlePageChange = (event, value) => {
@@ -114,14 +114,14 @@ const Enquiries = () => {
                 <td className='p-2'>{data.phone}</td>
                 <td className='p-2'>{data.subject}</td>
                 <td className='p-2'>{data.message}</td>
-                <td className='p-2'><button className='border-2 border-blue-600 bg-blue-600 pl-5 pr-5 rounded hover:bg-blue-500'><InfoIcon className='text-white' onClick={()=>handleInfo(data.id)}/></button></td>
+                <td className='p-2'><InfoIcon className='cursor-pointer text-blue-500 hover:text-blue-700' onClick={()=>handleInfo(data.id)}/></td>
                 <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      {openInfoModal && <PropertyInfo setOpenInfoModal={setOpenInfoModal} selectedInfo={selectedInfo}/>}
+      {openModal && <PropertyInfo setOpenModal={setOpenModal} selectedPropertyId={selectedPropertyId}/>}
 
       <Stack spacing={2} className='pb-2'>
         <Pagination count={Math.ceil(totalData/itemsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />
