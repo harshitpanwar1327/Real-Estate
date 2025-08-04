@@ -114,7 +114,7 @@ const Enquiries = () => {
                 <td className='p-2'>{data.phone}</td>
                 <td className='p-2'>{data.subject}</td>
                 <td className='p-2'>{data.message}</td>
-                <td className='p-2'><InfoIcon className='cursor-pointer text-blue-500 hover:text-blue-700' onClick={()=>handleInfo(data.id)}/></td>
+                <td className='p-2'><InfoIcon className='cursor-pointer text-blue-500 hover:text-blue-700' onClick={()=>handleInfo(data.property_id)}/></td>
                 <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>
               </tr>
             ))}

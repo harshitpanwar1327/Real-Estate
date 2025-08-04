@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined'
 import RealEstateAgentOutlinedIcon from '@mui/icons-material/RealEstateAgentOutlined'
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined'
+import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded'
 
 const NavigationBar = () => {
   const getNavClass = ({ isActive }) =>
@@ -19,6 +20,9 @@ const NavigationBar = () => {
         </NavLink>
         <NavLink to="/enquiries" className={getNavClass}>
           <ContactSupportOutlinedIcon /> Enquiries
+        </NavLink>
+        <NavLink to="/recent-views" className={getNavClass}>
+          <ScheduleRoundedIcon /> Recent Views
         </NavLink>
       </div>
     </div>

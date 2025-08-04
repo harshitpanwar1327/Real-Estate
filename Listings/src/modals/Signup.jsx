@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 
 const Signup = ({setSwitchModal}) => {
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -19,6 +20,7 @@ const Signup = ({setSwitchModal}) => {
     try {
       let response = await API.post('/user/register', {
         email,
+        phone,
         password_hash: password
       });
       toast.success('Signup successfull');
@@ -36,7 +38,10 @@ const Signup = ({setSwitchModal}) => {
         <h2 className='text-xl font-semibold'>Create Account</h2>
         <p>Already have an account? <span className='text-blue-500 cursor-pointer' onClick={()=>setSwitchModal(false)}>Log in</span></p>
         <label htmlFor="email">Email</label>
-        <input type="email" placeholder='Enter your email' className='p-2 border border-[#cdcdcd] rounded' id='email' name='email' value={email} onChange={(e)=>setEmail(e.target.value)} required />
+        <input type="email" placeholder='Enter your email' className='p-2 border border-[#cdcdcd] rounded' id='email' name='email' value={email} onChange={(e)=>setEmail(e.target.value)} />
+        <p className='text-center text-sm text-[#7c7c7c]'>OR</p>
+        <label htmlFor="phone">Phone</label>
+        <input type="number" placeholder='Enter mobile number' className='p-2 border border-[#cdcdcd] rounded' name="phone" id="phone" value={phone} onChange={(e)=>setPhone(e.target.value)} />
         <label htmlFor="password">Password</label>
         <input type="password" placeholder='Enter your password' className='p-2 border border-[#cdcdcd] rounded' id='password' name='password' value={password} onChange={(e)=>setPassword(e.target.value)} required />
         <label htmlFor="confirmPassword">Confirm Password</label>

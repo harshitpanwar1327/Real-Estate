@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 
 const Login = ({setOpenModal}) => {
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [switchModal, setSwitchModal] = useState(false);
 
@@ -15,6 +16,7 @@ const Login = ({setOpenModal}) => {
     try {
       let response = await API.post('/user/login', {
         email,
+        phone,
         password_hash: password
       });
       toast.success('Login successfull');
@@ -32,7 +34,10 @@ const Login = ({setOpenModal}) => {
         <h2 className='text-xl font-semibold'>Log in</h2>
         <p>New User? <span className='text-blue-500 cursor-pointer' onClick={()=>{setSwitchModal(true)}}>Register Now</span></p>
         <label htmlFor="email">Email</label>
-        <input type="email" placeholder='Enter your email' className='p-2 border border-[#cdcdcd] rounded' id='email' name='email' value={email} onChange={(e)=>setEmail(e.target.value)} required />
+        <input type="email" placeholder='Enter your email' className='p-2 border border-[#cdcdcd] rounded' id='email' name='email' value={email} onChange={(e)=>setEmail(e.target.value)} />
+        <p className='text-center text-sm text-[#7c7c7c]'>OR</p>
+        <label htmlFor="phone">Phone</label>
+        <input type="number" placeholder='Enter mobile number' className='p-2 border border-[#cdcdcd] rounded' name="phone" id="phone" value={phone} onChange={(e)=>setPhone(e.target.value)} />
         <label htmlFor="password">Password</label>
         <input type="password" placeholder='Enter your password' className='p-2 border border-[#cdcdcd] rounded' id='password' name='password' value={password} onChange={(e)=>setPassword(e.target.value)} required />
         <button className='bg-[#106c50] text-white py-2 rounded cursor-pointer'>Sign in</button>

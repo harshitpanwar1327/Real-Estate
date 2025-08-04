@@ -2,13 +2,13 @@ import { UsersModels } from '../models/UsersModels.js'
 import { registerUserLogic, loginUserLogic } from '../services/UsersServices.js'
 
 export const registerUser = async (req, res) => {
-    const {email, password_hash} = req.body;
+    const {email, phone, password_hash} = req.body;
 
-    if(!email || !password_hash){
+    if((!email && !phone) || !password_hash){
         return res.status(400).json({success: false, message: "Fill all the required fields!"});
     }
     
-    const userData = new UsersModels({email, password_hash});
+    const userData = new UsersModels({email, phone, password_hash});
 
     try {
         const response = await registerUserLogic(userData);
@@ -24,13 +24,13 @@ export const registerUser = async (req, res) => {
 }
 
 export const loginUser = async(req,res)=>{
-    const {email, password_hash} = req.body;
+    const {email, phone, password_hash} = req.body;
 
-    if(!email || !password_hash){
+    if((!email && !phone) || !password_hash){
         return res.status(400).json({success: false, message: "Fill all the required fields!"});
     }
 
-    const userData = new UsersModels({email, password_hash});
+    const userData = new UsersModels({email, phone, password_hash});
 
     try {
         const response = await loginUserLogic(userData);
