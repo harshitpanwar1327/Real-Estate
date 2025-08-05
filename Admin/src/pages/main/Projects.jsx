@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import API from '../../util/Api.js'
+import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import ProjectGallery from '../../modals/ProjectGallery.jsx'
 import EditProject from '../../modals/EditProject.jsx'
 import Menubar from '../../components/Menubar.jsx'
 import Swal from 'sweetalert2'
@@ -15,6 +17,8 @@ const Projects = () => {
   let [projectsData, setProjectsData] = useState([]);
   let [search, setSearch] = useState('');
   let [openModal, setOpenModal] = useState(false);
+  let [openGallery, setOpenGallery] = useState(false);
+  let [selectedId, setSelectedId] = useState('');
   let [selectedProject, setSelectedProject] = useState({});
   let [currentPage, setCurrentPage] = useState(1);
   let [totalData, setTotalData] = useState(1);
@@ -38,7 +42,12 @@ const Projects = () => {
     fetchProjects(currentPage, itemsPerPage, search);
   },[currentPage]);
 
-  let handleEdit = (project)=>{
+  let handleGallery = (id) => {
+    setOpenGallery(true);
+    setSelectedId(id);
+  }
+
+  let handleEdit = (project) => {
     setOpenModal(true);
     setSelectedProject(project);
   }
@@ -101,6 +110,7 @@ const Projects = () => {
               <th className='text-start text-[#4a3f99] p-2'>Location</th>
               <th className='text-start text-[#4a3f99] p-2'>Status</th>
               <th className='text-start text-[#4a3f99] p-2'>Description</th>
+              <th className='text-start text-[#4a3f99] p-2'>Gallery</th>
               <th className='text-start text-[#4a3f99] p-2'>Edit</th>
               <th className='text-start text-[#4a3f99] p-2'>Delete</th>
             </tr>
@@ -112,6 +122,7 @@ const Projects = () => {
                 <td className='p-2'>{data.location}</td>
                 <td className='p-2'>{data.status}</td>
                 <td className='p-2'>{data.description}</td>
+                <td className='p-2'><PhotoCameraBackIcon className='cursor-pointer text-pink-500 hover:text-pink-700' onClick={()=>handleGallery(data.id)}/></td>
                 <td className='p-2'><ModeEditIcon className='cursor-pointer text-green-500 hover:text-green-700' onClick={()=>handleEdit(data)}/></td>
                 <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>
               </tr>
@@ -119,6 +130,8 @@ const Projects = () => {
           </tbody>
         </table>
       </div>
+      {openGallery && <ProjectGallery setOpenModal={setOpenGallery} selectedId={selectedId}/>}
+      
       {openModal && <EditProject setOpenModal={setOpenModal} selectedProject={selectedProject} fetchProjects={()=>fetchProjects(currentPage, itemsPerPage, search)} />}
 
       <Stack spacing={2} className='pb-2'>

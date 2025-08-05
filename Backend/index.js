@@ -21,6 +21,11 @@ let PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+app.use('/uploads', express.static('uploads', {
+  setHeaders: (res, path, stat) => {
+    res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+  }
+}));
 
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
@@ -31,7 +36,7 @@ app.use(limiter);
 app.use('/api/admin',AdminsRoutes);
 app.use('/api/user', UsersRoutes);
 
-// app.use(authMiddleware);
+app.use(authMiddleware);
 
 app.use('/api/project', ProjectsRoutes);
 app.use('/api/property', PropertiesRoutes);

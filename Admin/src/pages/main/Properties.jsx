@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import API from '../../util/Api.js'
 import Menubar from '../../components/Menubar'
+import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack'
 import ModeEditIcon from '@mui/icons-material/ModeEdit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditProperty from '../../modals/EditProperty.jsx'
@@ -109,6 +110,7 @@ const Properties = () => {
               <th className='text-start text-[#4a3f99] p-2'>Location</th>
               <th className='text-start text-[#4a3f99] p-2'>Property type</th>
               <th className='text-start text-[#4a3f99] p-2'>Price</th>
+              <th className='text-start text-[#4a3f99] p-2'>Gallery</th>
               <th className='text-start text-[#4a3f99] p-2'>Edit</th>
               <th className='text-start text-[#4a3f99] p-2'>Delete</th>
             </tr>
@@ -120,6 +122,7 @@ const Properties = () => {
                 <td className='p-2'>{data.location}</td>
                 <td className='p-2'>{data.property_type}</td>
                 <td className='p-2'>{data.price}</td>
+                <td className="p-2"><PhotoCameraBackIcon className='cursor-pointer text-pink-500 hover:text-pink-700'/></td>
                 <td className='p-2'><ModeEditIcon className='cursor-pointer text-green-500 hover:text-green-700' onClick={()=>handleEdit(data)}/></td>
                 <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>
               </tr>

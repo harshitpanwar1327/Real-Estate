@@ -1,19 +1,5 @@
 import { pool } from '../config/Database.js'
 
-export const addMediaLogic = async (mediaData) => {
-    try {
-        let query = `INSERT INTO media_files(type, property_id, project_id, url1, caption1, url2, caption2, url3, caption3, url4, caption4, url5, caption5) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);`;
-        let values = [mediaData.type, mediaData.propertyId, mediaData.projectId, mediaData.url1, mediaData.caption1, mediaData.url2, mediaData.caption2, mediaData.url3, mediaData.caption3, mediaData.url4, mediaData.caption4, mediaData.url5, mediaData.caption5];
-
-        await pool.query(query, values);
-
-        return {success: true, message: 'Media added successfully'};
-    } catch (error) {
-        console.log(error);
-        return {success: false, message: 'Media not added!'};
-    }
-}
-
 export const getMediaLogic = async (id, type) => {
     let [rows] = [];
 
@@ -21,7 +7,7 @@ export const getMediaLogic = async (id, type) => {
         if(type==='property') {
             [rows] = await pool.query(`SELECT * FROM media_files WHERE property_id = ?`, [id]);
         } else {
-            [rows] = await pool.query(`SELECT * FROM media_files WHERE property_id = ?`, [id]);
+            [rows] = await pool.query(`SELECT * FROM media_files WHERE project_id = ?`, [id]);
         }
 
         return {success: true, data: rows}
@@ -36,11 +22,11 @@ export const updateMediaLogic = async (id, mediaData) => {
 
     try {
         if(mediaData.type==='property') {
-            query = `UPDATE media_files SET type = ?, property_id = ?, project_id = ?, url1 = ?, caption1 = ?, url2 = ?, caption2 = ?, url3 = ?, caption3 = ?, url4 = ?, caption4 = ?, url5 = ?, caption5 = ? WHERE property_id = ?`;
+            query = `UPDATE media_files SET type = ?, property_id = ?, project_id = ?, cover = ?, area_plan = ?, images = ? WHERE property_id = ?`;
         } else {
-            query = `UPDATE media_files SET type = ?, property_id = ?, project_id = ?, url1 = ?, caption1 = ?, url2 = ?, caption2 = ?, url3 = ?, caption3 = ?, url4 = ?, caption4 = ?, url5 = ?, caption5 = ? WHERE project_id = ?`;
+            query = `UPDATE media_files SET type = ?, property_id = ?, project_id = ?, cover = ?, area_plan = ?, images = ? WHERE project_id = ?`;
         }
-        let values = [mediaData.type, mediaData.propertyId, mediaData.projectId, mediaData.url1, mediaData.caption1, mediaData.url2, mediaData.caption2, mediaData.url3, mediaData.caption3, mediaData.url4, mediaData.caption4, mediaData.url5, mediaData.caption5. id];
+        let values = [mediaData.type, mediaData.propertyId, mediaData.projectId, mediaData.cover, mediaData.areaPlan, JSON.stringify(mediaData.images), id];
 
         await pool.query(query, values);
 

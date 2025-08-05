@@ -1,6 +1,6 @@
 import { pool } from '../config/Database.js'
 
-export const allProjectsLogic = async ()=> {
+export const allProjectsLogic = async () => {
     try {
         let [rows] = await pool.query(`SELECT id, name FROM projects;`);
 
@@ -24,11 +24,13 @@ export const getProjectsLogic = async (limit, offset, search) => {
     }
 };
 
-export const postProjectsLogic = async(projectData)=>{
+export const postProjectsLogic = async (projectData) => {
     try {
         const query = `INSERT INTO projects (name, location, status, description) VALUES (?, ?, ?, ?);`;
         const values = [projectData.name, projectData.location, projectData.status, projectData.description];
-        await pool.query(query,values);
+        let [row] = await pool.query(query, values);
+
+        await pool.query(`INSERT INTO media_files (type, project_id) VALUES ('project', ?);`, [row.insertId]);
         
         return {success: true, message: "Project saved successfully."};
     } catch (error) {
@@ -37,7 +39,7 @@ export const postProjectsLogic = async(projectData)=>{
     }
 };
 
-export const updateProjectsLogic = async(id,projectData)=>{
+export const updateProjectsLogic = async (id, projectData) => {
     try {
         let query = `UPDATE projects SET name=?,location=?,status=?, description=? WHERE id=?;`;
         let values = [projectData.name, projectData.location, projectData.status, projectData.description, id];
@@ -51,7 +53,7 @@ export const updateProjectsLogic = async(id,projectData)=>{
     }
 };
 
-export const deleteProjectsLogic = async(id)=>{
+export const deleteProjectsLogic = async (id) => {
     try {
         let response = await pool.query(`DELETE FROM projects WHERE id= ?`,[id]);
         

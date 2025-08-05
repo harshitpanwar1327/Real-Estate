@@ -72,7 +72,9 @@ export const postPropertiesLogic = async (propertiesData) => {
         const query = `INSERT INTO properties (title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
         const values = [propertiesData.title, propertiesData.location, propertiesData.price, propertiesData.property_type, propertiesData.bedrooms, propertiesData.bathrooms, propertiesData.area_sqft, propertiesData.status, propertiesData.description, propertiesData.project_id];
 
-        await pool.query(query,values);
+        let [row] = await pool.query(query,values);
+
+        await pool.query(`INSERT INTO media_files (type, property_id) VALUES ('property', ?);`, [row.insertId]);
         
         return {success: true, message: "Property saved successfully"};
     } catch (error) {

@@ -1,5 +1,5 @@
 import express from 'express'
-import { addMedia, getMedia, updateMedia } from '../controllers/MediaControllers.js'
+import { getMedia, updateMedia } from '../controllers/MediaControllers.js'
 import multer from 'multer'
 import path from 'path'
 
@@ -15,22 +15,13 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage });
 
-router.post('/add-media', upload.fields([
-    {name: 'url1', maxCount: 1},
-    {name: 'url2', maxCount: 1},
-    {name: 'url3', maxCount: 1},
-    {name: 'url4', maxCount: 1},
-    {name: 'url5', maxCount: 1}
-]), addMedia);
 router.get('/get-media', getMedia);
 router.put('/update-media/:id', upload.fields([
-    {name: 'url1', maxCount: 1},
-    {name: 'url2', maxCount: 1},
-    {name: 'url3', maxCount: 1},
-    {name: 'url4', maxCount: 1},
-    {name: 'url5', maxCount: 1}
+    {name: 'cover', maxCount: 1},
+    {name: 'images'},
+    {name: 'area_plan', maxCount: 1}
 ]), updateMedia);
 
 export default router;
