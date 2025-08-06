@@ -21,14 +21,18 @@ const PropertyInfo = ({setOpenModal, selectedPropertyId}) => {
     <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a] z-1' onClick={()=>setOpenModal(false)}>
       <div className='w-1/4 bg-white py-2 px-6 rounded shadow-md flex flex-col gap-1' onClick={(e)=>e.stopPropagation()}>
         <h2 className='p-2 font-semibold text-xl text-[#fdc940] text-center'>Property Details</h2>
-        <p><strong>Title:</strong> {propertyData[0]?.title || ''}</p>
-        <p><strong>Location:</strong> {propertyData[0]?.location || ''}</p>
-        <p><strong>Price:</strong> ₹{propertyData[0]?.price || ''}</p>
-        <p><strong>Property Type:</strong> {propertyData[0]?.property_type || ''}</p>
-        <p><strong>Bedrooms:</strong> {propertyData[0]?.bedrooms || ''}</p>
-        <p><strong>Bathrooms:</strong> {propertyData[0]?.bathrooms || ''}</p>
-        <p><strong>Area Sq.Ft.:</strong> {propertyData[0]?.area_sqft || ''}</p>
-        <p><strong>Status:</strong> {propertyData[0]?.status || ''}</p>
+        <p><strong>Title:</strong> {propertyData[0]?.title || '--'}</p>
+        <p><strong>Location:</strong> {propertyData[0]?.location || '--'}</p>
+        <p><strong>Price:</strong> {`₹${propertyData[0]?.minPrice} - ₹${propertyData[0]?.maxPrice}` || '--'}</p>
+        <p><strong>Category:</strong> {propertyData[0]?.category || '--'}</p>
+        <p><strong>Property Type:</strong> {propertyData[0]?.property_type || '--'}</p>
+        <p><strong>Bedrooms:</strong> {propertyData[0]?.bedrooms || '--'}</p>
+        <p><strong>Bathrooms:</strong> {propertyData[0]?.bathrooms || '--'}</p>
+        <p><strong>Balcony:</strong> {propertyData[0]?.balcony || '--'}</p>
+        <p><strong>Store:</strong> {propertyData[0]?.store || '--'}</p>
+        <p><strong>Super Area:</strong> {propertyData[0]?.super_area || '--'}</p>
+        <p><strong>Carpet Area:</strong> {propertyData[0]?.carpet_area || '--'}</p>
+        <p><strong>Status:</strong> {propertyData[0]?.status || '--'}</p>
       </div>
     </div>
   )

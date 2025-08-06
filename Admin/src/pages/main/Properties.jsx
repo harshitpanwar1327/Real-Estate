@@ -27,9 +27,14 @@ const Properties = () => {
         page: currentPage,
         limit: itemsPerPage,
         search: search || '',
+        minPrice: '',
+        maxPrice: '',
+        category: '',
         propertyType: '',
         bedrooms: '',
-        bathrooms: ''
+        bathrooms: '',
+        balcony: '',
+        store: ''
       });
       setPropertyData(response.data.data);
       setTotalData(response.data.total);
@@ -108,8 +113,8 @@ const Properties = () => {
             <tr className='bg-[#f5f3ff] border-b border-[#434343]'>
               <th className='text-start text-[#4a3f99] p-2'>Title</th>
               <th className='text-start text-[#4a3f99] p-2'>Location</th>
-              <th className='text-start text-[#4a3f99] p-2'>Property type</th>
-              <th className='text-start text-[#4a3f99] p-2'>Price</th>
+              <th className='text-start text-[#4a3f99] p-2'>Category</th>
+              <th className='text-start text-[#4a3f99] p-2'>Status</th>
               <th className='text-start text-[#4a3f99] p-2'>Gallery</th>
               <th className='text-start text-[#4a3f99] p-2'>Edit</th>
               <th className='text-start text-[#4a3f99] p-2'>Delete</th>
@@ -120,8 +125,8 @@ const Properties = () => {
               <tr className='hover:bg-[#f8f7ff] border-b border-[#848484]' key={index}>
                 <td className='p-2'>{data.title}</td>
                 <td className='p-2'>{data.location}</td>
-                <td className='p-2'>{data.property_type}</td>
-                <td className='p-2'>{data.price}</td>
+                <td className='p-2'>{data.category}</td>
+                <td className='p-2'>{data.status}</td>
                 <td className="p-2"><PhotoCameraBackIcon className='cursor-pointer text-pink-500 hover:text-pink-700'/></td>
                 <td className='p-2'><ModeEditIcon className='cursor-pointer text-green-500 hover:text-green-700' onClick={()=>handleEdit(data)}/></td>
                 <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>

@@ -2,14 +2,26 @@ import { useEffect, useState } from 'react'
 import API from '../util/Api'
 import { toast } from 'react-toastify'
 
+const PropertyByCategory = {
+  residential: ['plot', 'villa', 'high rise apartment', 'low rise apartment'],
+  commercial: ['shops', 'seo'],
+  industrial: ['plot', 'built up'],
+  agricultural: ['land']
+}
+
 const AddProperty = ({setOpenAddModal, fetchProperties}) => {
   let [title, setTitle] = useState('');
   let [location, setLocation] = useState('');
-  let [price, setPrice] = useState('');
+  let [minPrice, setMinPrice] = useState('');
+  let [maxPrice, setMaxPrice] = useState('');
+  let [category, setCategory] = useState('');
   let [propertyType, setPropertyType] = useState('');
-  let [bathrooms, setBathrooms] = useState('');
   let [bedrooms, setBedrooms] = useState('');
-  let [areaSqft, setAreaSqft] = useState('');
+  let [bathrooms, setBathrooms] = useState('');
+  let [balcony, setBalcony] = useState('');
+  let [store, setStore] = useState('');
+  let [superArea, setSuperArea] = useState('');
+  let [carpetArea, setCarpetArea] = useState('');
   let [status, setStatus] = useState('');
   let [description, setDescription] = useState('');
   let [projectId, setProjectId] = useState('');
@@ -28,17 +40,26 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
     fetchAllProjects();
   },[]);
 
+  useEffect(()=>{
+    setPropertyType('');
+  },[category]);
+
   let handleAddProperty = async (e) => {
     e.preventDefault();
     try {
       let response = await API.post(`/property/properties`, {
         title,
         location,
-        price,
+        minPrice,
+        maxPrice,
+        category,
         property_type: propertyType,
         bedrooms,
         bathrooms,
-        area_sqft: areaSqft,
+        balcony,
+        store,
+        superArea,
+        carpetArea,
         status,
         description,
         project_id: projectId
@@ -54,9 +75,8 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
 
   return (
     <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a] z-1' onClick={()=>setOpenAddModal(false)} >
-      <form className='w-1/2 bg-white p-4 rounded shadow-md grid grid-cols-2 place-items-center gap-1' onSubmit={handleAddProperty} onClick={(e)=>e.stopPropagation()}>
-        <h2 className='p-2 font-semibold text-xl text-[#fdc940] col-span-2'>Let's add a Property</h2>
-
+      <form className='w-2/3 bg-white p-4 rounded shadow-md grid grid-cols-4 place-items-center gap-1' onSubmit={handleAddProperty} onClick={(e)=>e.stopPropagation()}>
+        <h2 className='p-2 font-semibold text-xl text-[#fdc940] col-span-4'>Let's add a Property</h2>
         <div className='w-full p-2 rounded shadow-md flex flex-col gap-1'>
           <label htmlFor="projectId">Project</label>
           <select name="projectId" id="projectId" value={projectId} onChange={(e)=>setProjectId(e.target.value)} className='p-1 border border-[#cdcdcd] rounded' required>
@@ -74,22 +94,6 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
           <label htmlFor="location">Location</label>
           <input type="text" name="location" id="location" value={location} onChange={(e)=>setLocation(e.target.value)} placeholder='Location' className='p-1 border border-[#cdcdcd] rounded' required/>
 
-          <label htmlFor="propertyType">Property Type</label>
-          <select name="propertyType" id="propertyType" value={propertyType} onChange={(e)=>setPropertyType(e.target.value)} className='p-1 border border-[#cdcdcd] rounded' required>
-            <option value="">Select Type</option>
-            <option value="apartment">Apartment</option>
-            <option value="villa">Villa</option>
-            <option value="plot">Plot</option>
-          </select>
-
-          <label htmlFor="price">Price</label>
-          <input type="number" name="price" id="price" value={price} onChange={(e)=>setPrice(e.target.value)} placeholder='Amount' className='p-1 border border-[#cdcdcd] rounded' required/>
-
-          <label htmlFor="areaSqft">Area Sqft</label>
-          <input type="number" name="areaSqft" id="areaSqft" value={areaSqft} onChange={(e)=>setAreaSqft(e.target.value)} placeholder='Area in sq.ft.' className='p-1 border border-[#cdcdcd] rounded' required/>
-        </div>
-        
-        <div className='w-full p-2 rounded shadow-md flex flex-col gap-1'>
           <label htmlFor="status">Status</label>
           <select name="status" id="status" value={status} onChange={(e)=>setStatus(e.target.value)} className='p-1 border border-[#cdcdcd] rounded' required>
             <option value="">Select Status</option>
@@ -97,18 +101,61 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
             <option value="sold">Sold</option>
             <option value="draft">Draft</option>
           </select>
+        </div>
+
+        <div className='w-full p-2 rounded shadow-md flex flex-col gap-1'>
+          <label htmlFor="category">Category</label>
+          <select name="category" id="category" value={category} onChange={(e)=>setCategory(e.target.value)} className='p-1 border border-[#cdcdcd] rounded' required>
+            <option value="">Select Category</option>
+            <option value="residential">Residential</option>
+            <option value="commercial">Commercial</option>
+            <option value="industrial">Industrial</option>
+            <option value="agricultural">Agricultural</option>
+          </select>
+
+          <label htmlFor="propertyType">Property Type</label>
+          <select name="propertyType" id="propertyType" value={propertyType} onChange={(e)=>setPropertyType(e.target.value)} className='p-1 border border-[#cdcdcd] rounded' required>
+            <option value="">Select Type</option>
+            {category &&
+              PropertyByCategory[category]?.map((type, index)=>(
+                <option value={type} key={index}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
+              ))
+            }
+          </select>
+
+          <label htmlFor="minPrice">Starting Price</label>
+          <input type="number" name="minPrice" id="minPrice" value={minPrice} onChange={(e)=>setMinPrice(e.target.value)} placeholder='Starting Amount' className='p-1 border border-[#cdcdcd] rounded'/>
+
+          <label htmlFor="maxPrice">Maximum Price</label>
+          <input type="number" name="maxPrice" id="maxPrice" value={maxPrice} onChange={(e)=>setMaxPrice(e.target.value)} placeholder='Starting Amount' className='p-1 border border-[#cdcdcd] rounded'/>
+        </div>
+        
+        <div className='w-full p-2 rounded shadow-md flex flex-col gap-1'>
+          <label htmlFor="superArea">Super Area</label>
+          <input type="number" name="superArea" id="superArea" value={superArea} onChange={(e)=>setSuperArea(e.target.value)} placeholder='Super Area' className='p-1 border border-[#cdcdcd] rounded'/>
+
+          <label htmlFor="carpetArea">Carpet Area</label>
+          <input type="number" name="carpetArea" id="carpetArea" value={carpetArea} onChange={(e)=>setCarpetArea(e.target.value)} placeholder='Carpet Area' className='p-1 border border-[#cdcdcd] rounded'/>
 
           <label htmlFor="bathrooms">Bathroom</label>
           <input type="number" name="bathrooms" id="bathrooms" value={bathrooms} onChange={(e)=>setBathrooms(e.target.value)} placeholder='Number of bathrooms' className='p-1 border border-[#cdcdcd] rounded'/>
 
           <label htmlFor="bedrooms">Bedroom</label>
           <input type="number" name="bedrooms" id="bedrooms" value={bedrooms} onChange={(e)=>setBedrooms(e.target.value)} placeholder='Number of bedrooms' className='p-1 border border-[#cdcdcd] rounded'/>
+        </div>
+
+        <div className='w-full p-2 rounded shadow-md flex flex-col gap-1'>
+          <label htmlFor="balcony">Balcony</label>
+          <input type="number" name="balcony" id="balcony" value={balcony} onChange={(e)=>setBalcony(e.target.value)} placeholder='Number of balcony' className='p-1 border border-[#cdcdcd] rounded'/>
+
+          <label htmlFor="store">Store</label>
+          <input type="number" name="store" id="store" value={store} onChange={(e)=>setStore(e.target.value)} placeholder='Number of store' className='p-1 border border-[#cdcdcd] rounded'/>
         
           <label htmlFor="description">Description</label>
-          <textarea name="description" id="description" rows={6} value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Write a description' className='p-1 border border-[#cdcdcd] rounded'></textarea>
+          <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Write a description' rows={3} className='p-1 border border-[#cdcdcd] rounded'></textarea>
         </div>
         
-        <button className='py-1 px-4 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded place-self-end col-span-2'>Add</button>
+        <button className='py-1 px-4 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded place-self-end col-span-4'>Add</button>
       </form>
     </div>
   )

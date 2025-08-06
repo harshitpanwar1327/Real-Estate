@@ -26,16 +26,17 @@ export const getProperties = async (req, res) => {
     let limit = parseInt(req.body.limit) || 15;
     let offset = (page - 1) * limit;
     let search = req.body.search || '';
+    let minPrice = parseInt(req.body.minPrice) || 0;
+    let maxPrice = parseInt(req.body.maxPrice) || 1000000000;
+    let category = req.body.category || '';
     let propertyType = req.body.propertyType || '';
     let bedrooms = parseInt(req.body.bedrooms) || '';
     let bathrooms = parseInt(req.body.bathrooms) || '';
-    let minPrice = parseInt(req.body.minPrice) || 0;
-    let maxPrice = parseInt(req.body.maxPrice) || 100000000;
-    let minArea = parseInt(req.body.minArea) || 0;
-    let maxArea = parseInt(req.body.maxArea) || 10000;
+    let balcony = parseInt(req.body.balcony) || '';
+    let store = parseInt(req.body.store) || '';
     
     try {
-        let response = await getPropertiesLogic(limit, offset, search, propertyType, bedrooms, bathrooms, minPrice, maxPrice, minArea, maxArea);
+        let response = await getPropertiesLogic(limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balcony, store);
         if(response.success){
             return res.status(200).json(response);
         }else{
@@ -48,15 +49,22 @@ export const getProperties = async (req, res) => {
 }
 
 export const postProperties = async (req, res) => {
-    const { title, location, price, property_type, area_sqft, status, description, project_id } = req.body;
+    const { title, location, category, property_type, status, description, project_id } = req.body;
+    const minPrice = req.body.minPrice || null;
+    const maxPrice = req.body.maxPrice || null;
     const bedrooms = req.body.bedrooms || null;
     const bathrooms = req.body.bathrooms || null;
+    const balcony = req.body.balcony || null;
+    const store = req.body.store || null;
+    const super_area = req.body.superArea || null;
+    const carpet_area = req.body.carpetArea || null;
+
     
-    if(!title || !location || !price || !property_type || !area_sqft || !status || !project_id){
-        return res.status(400).json({success: false, message: "All fields required!"});
+    if(!title || !location || !category || !property_type || !status || !project_id){
+        return res.status(400).json({success: false, message: "Fill all the required fields!"});
     }
     
-    const propertiesData = new PropertiesModels({title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id});
+    const propertiesData = new PropertiesModels({ title, location, minPrice, maxPrice, category, property_type, bedrooms, bathrooms, balcony, store, super_area, carpet_area, status, description, project_id });
     
     try {
         const response = await postPropertiesLogic(propertiesData);
@@ -73,15 +81,21 @@ export const postProperties = async (req, res) => {
 
 export const updateProperties = async (req, res) => {
     const id = req.params.id;
-    const {title, location, price, property_type, area_sqft, status, description, project_id} = req.body;
+    const {title, location, category, property_type, status, description, project_id} = req.body;
     const bedrooms = req.body.bedrooms || null;
     const bathrooms = req.body.bathrooms || null;
+    const balcony = req.body.balcony || null;
+    const store = req.body.store || null;
+    const minPrice = req.body.minPrice || null;
+    const maxPrice = req.body.maxPrice || null;
+    const super_area = req.body.maxPrice || null;
+    const carpet_area = req.body.maxPrice || null;
 
-    if(!id){
+    if(!id) {
         return res.status(400).json({success: false, message: "Property id not found!"});
     }
 
-    const propertiesData = new PropertiesModels({title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id});
+    const propertiesData = new PropertiesModels({ title, location, minPrice, maxPrice, category, property_type, bedrooms, bathrooms, balcony, store, super_area, carpet_area, status, description, project_id });
     
     try {
         let response = await updatePropertiesLogic(id, propertiesData);

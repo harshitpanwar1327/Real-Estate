@@ -2,7 +2,7 @@ import { pool } from '../config/Database.js'
 
 export const propertyDetailsLogic = async (id)=> {
     try {
-        let [rows] = await pool.query(`SELECT * FROM properties WHERE id = ?;`,[id]);
+        let [rows] = await pool.query(`SELECT * FROM properties WHERE id = ?;`, [id]);
 
         return {success: true, data: rows};
     } catch (error) {
@@ -11,7 +11,7 @@ export const propertyDetailsLogic = async (id)=> {
     }
 };
 
-export const getPropertiesLogic = async (limit, offset, search, propertyType, bedrooms, bathrooms, minPrice, maxPrice, minArea, maxArea) => {
+export const getPropertiesLogic = async (limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balcony, store) => {
     const searchQuery = `%${search}%`;
 
     const conditions = [];
@@ -20,6 +20,11 @@ export const getPropertiesLogic = async (limit, offset, search, propertyType, be
     if (search) {
         conditions.push(`(title LIKE ? OR location LIKE ?)`);
         params.push(searchQuery, searchQuery);
+    }
+
+    if (category) {
+        conditions.push(`category = ?`);
+        params.push(category);
     }
 
     if (propertyType) {
@@ -37,14 +42,14 @@ export const getPropertiesLogic = async (limit, offset, search, propertyType, be
         params.push(bathrooms);
     }
 
-    if (minPrice !== undefined && maxPrice !== undefined) {
-        conditions.push(`price BETWEEN ? AND ?`);
-        params.push(minPrice, maxPrice);
+    if (balcony) {
+        conditions.push(`balcony = ?`);
+        params.push(balcony);
     }
 
-    if (minArea !== undefined && maxArea !== undefined) {
-        conditions.push(`area_sqft BETWEEN ? AND ?`);
-        params.push(minArea, maxArea);
+    if (store) {
+        conditions.push(`store = ?`);
+        params.push(store);
     }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
@@ -69,8 +74,8 @@ export const getPropertiesLogic = async (limit, offset, search, propertyType, be
 
 export const postPropertiesLogic = async (propertiesData) => {
     try {
-        const query = `INSERT INTO properties (title, location, price, property_type, bedrooms, bathrooms, area_sqft, status, description, project_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
-        const values = [propertiesData.title, propertiesData.location, propertiesData.price, propertiesData.property_type, propertiesData.bedrooms, propertiesData.bathrooms, propertiesData.area_sqft, propertiesData.status, propertiesData.description, propertiesData.project_id];
+        const query = `INSERT INTO properties (title, location, minPrice, maxPrice, category, property_type, bedrooms, bathrooms, balcony, store, super_area, carpet_area, status, description, project_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+        const values = [propertiesData.title, propertiesData.location, propertiesData.minPrice, propertiesData.maxPrice, propertiesData.category, propertiesData.property_type, propertiesData.bedrooms, propertiesData.bathrooms, propertiesData.balcony, propertiesData.store, propertiesData.super_area, propertiesData.carpet_area, propertiesData.status, propertiesData.description, propertiesData.project_id];
 
         let [row] = await pool.query(query,values);
 
@@ -85,8 +90,8 @@ export const postPropertiesLogic = async (propertiesData) => {
 
 export const updatePropertiesLogic = async (id, propertiesData) => {
     try {
-        let query = `UPDATE properties SET title=?, location=?, price=?, property_type=?, bedrooms=?, bathrooms=?, area_sqft=?, status=?, description=?, project_id=? WHERE id=?;`;
-        let values = [propertiesData.title, propertiesData.location, propertiesData.price, propertiesData.property_type, propertiesData.bedrooms, propertiesData.bathrooms, propertiesData.area_sqft, propertiesData.status, propertiesData.description, propertiesData.project_id, id];
+        let query = `UPDATE properties SET title=?, location=?, minPrice=?, maxPrice=?, category=?, property_type=?, bedrooms=?, bathrooms=?, balcony=?, store=?, super_area=?, carpet_area=?, status=?, description=?, project_id=? WHERE id=?;`;
+        let values = [propertiesData.title, propertiesData.location, propertiesData.minPrice, propertiesData.maxPrice, propertiesData.category, propertiesData.property_type, propertiesData.bedrooms, propertiesData.bathrooms, propertiesData.balcony, propertiesData.store, propertiesData.super_area, propertiesData.carpet_area, propertiesData.status, propertiesData.description, propertiesData.project_id, id];
 
         await pool.query(query, values);
 
