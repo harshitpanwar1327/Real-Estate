@@ -6,7 +6,6 @@ import Login from './pages/authentication/Login.jsx'
 import Properties from './pages/main/Properties'
 import Projects from './pages/main/Projects.jsx'
 import Enquiries from './pages/main/Enquiries.jsx'
-import RecentViews from './pages/main/RecentViews.jsx'
 
 function App() {
   const location = useLocation();
@@ -28,7 +27,6 @@ function App() {
           <Route path='/projects' element={<Projects />}/>
           <Route path='/properties' element={<Properties />}/>
           <Route path='/enquiries' element={<Enquiries />}/>
-          <Route path='/recent-views' element={<RecentViews />}/>
         </Route>
 
         <Route path='*' element={<Navigate to='/' />}/>

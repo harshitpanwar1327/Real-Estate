@@ -1,24 +1,5 @@
 import { EnquiriesModels } from '../models/EnquiriesModels.js'
-import { getEnquiriesLogic, postEnquiriesLogic, deleteEnquiriesLogic} from '../services/EnquiriesServices.js'
-
-export const getEnquiries = async (req,res) => {
-    let page = parseInt(req.query.page) || 1;
-    let limit = parseInt(req.query.limit) || 15;
-    let offset = (page - 1) * limit;
-    let search = req.query.search || '';
-
-    try {
-        let response = await getEnquiriesLogic(limit, offset, search);
-        if(response.success){
-            return res.status(200).json(response);
-        }else{
-            return res.status(400).json(response);
-        }
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({success: false, message: "Internal Server Error!"});
-    }
-}
+import { postEnquiriesLogic, getEnquiriesLogic, deleteEnquiriesLogic} from '../services/EnquiriesServices.js'
 
 export const postEnquiries = async(req,res)=>{
     const { name, email, phone, subject, message, property_id } = req.body;
@@ -39,6 +20,25 @@ export const postEnquiries = async(req,res)=>{
     } catch (error) {
         console.log(error);
         return res.status(500).json({success: false, message: "Internal server error!"});
+    }
+}
+
+export const getEnquiries = async (req,res) => {
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 15;
+    let offset = (page - 1) * limit;
+    let search = req.query.search || '';
+
+    try {
+        let response = await getEnquiriesLogic(limit, offset, search);
+        if(response.success){
+            return res.status(200).json(response);
+        }else{
+            return res.status(400).json(response);
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
     }
 }
 

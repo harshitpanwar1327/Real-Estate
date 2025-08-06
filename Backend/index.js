@@ -4,7 +4,6 @@ import cors from 'cors'
 import helmet from 'helmet'
 import { rateLimit } from 'express-rate-limit'
 import { checkConnection } from './config/Database.js'
-import { authMiddleware } from './middleware/AuthMiddlewares.js'
 import createAllTables from './utils/CreateTables.js'
 import AdminsRoutes from './routes/AdminsRoutes.js'
 import ProjectsRoutes from './routes/ProjectsRoutes.js'
@@ -35,9 +34,6 @@ app.use(limiter);
 
 app.use('/api/admin',AdminsRoutes);
 app.use('/api/user', UsersRoutes);
-
-app.use(authMiddleware);
-
 app.use('/api/project', ProjectsRoutes);
 app.use('/api/property', PropertiesRoutes);
 app.use('/api/enquiry', EnquiriesRoutes);

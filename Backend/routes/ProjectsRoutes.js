@@ -1,10 +1,13 @@
 import express from 'express';
 import { allProjects, getProjects, postProjects, updateProjects, deleteProjects } from '../controllers/ProjectsControllers.js'
+import { authMiddleware } from '../middleware/AuthMiddlewares.js'
 
 let router = express.Router();
 
 router.get('/projects-name', allProjects);
 router.get('/projects', getProjects);
+
+router.use(authMiddleware);
 router.post('/projects', postProjects);
 router.put('/projects/:id', updateProjects);
 router.delete('/projects/:id', deleteProjects);
