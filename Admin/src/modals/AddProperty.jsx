@@ -3,10 +3,10 @@ import API from '../util/Api'
 import { toast } from 'react-toastify'
 
 const PropertyByCategory = {
-  residential: ['plot', 'villa', 'high rise apartment', 'low rise apartment'],
-  commercial: ['shops', 'seo'],
-  industrial: ['plot', 'built up'],
-  agricultural: ['land']
+  residential: ['Plot', 'Villa', 'High Rise Apartment', 'Low Rise Apartment'],
+  commercial: ['Shops', 'SEO'],
+  industrial: ['Plot', 'Built up'],
+  agricultural: ['Land']
 }
 
 const AddProperty = ({setOpenAddModal, fetchProperties}) => {
@@ -118,7 +118,7 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
             <option value="">Select Type</option>
             {category &&
               PropertyByCategory[category]?.map((type, index)=>(
-                <option value={type} key={index}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
+                <option value={type} key={index}>{type}</option>
               ))
             }
           </select>

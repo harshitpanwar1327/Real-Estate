@@ -34,9 +34,9 @@ const EditProject = ({setOpenModal, selectedProject, fetchProjects}) => {
         <label htmlFor="status">Status</label>
         <select name="status" id="status" value={status} onChange={(e)=>setStatus(e.target.value)} className='p-2 border border-[#cdcdcd] rounded' required>
           <option value="">Select Status</option>
-          <option value="ready for possession">Ready for Possession</option>
-          <option value="under construction">Under Construction</option>
-          <option value="upcoming">Upcoming</option>
+          <option value="Ready for Possession">Ready for Possession</option>
+          <option value="Under Construction">Under Construction</option>
+          <option value="Upcoming">Upcoming</option>
         </select>
         
         <label htmlFor="description">Description</label>

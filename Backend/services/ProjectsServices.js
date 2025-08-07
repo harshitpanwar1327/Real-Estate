@@ -30,7 +30,7 @@ export const postProjectsLogic = async (projectData) => {
         const values = [projectData.name, projectData.location, projectData.status, projectData.description];
         let [row] = await pool.query(query, values);
 
-        await pool.query(`INSERT INTO media_files (type, project_id) VALUES ('project', ?);`, [row.insertId]);
+        await pool.query(`INSERT INTO media_files (type, project_id) VALUES ('Project', ?);`, [row.insertId]);
         
         return {success: true, message: "Project saved successfully."};
     } catch (error) {
@@ -41,7 +41,7 @@ export const postProjectsLogic = async (projectData) => {
 
 export const updateProjectsLogic = async (id, projectData) => {
     try {
-        let query = `UPDATE projects SET name=?,location=?,status=?, description=? WHERE id=?;`;
+        let query = `UPDATE projects SET name=?,location=?,status=?, description=? WHERE id = ?;`;
         let values = [projectData.name, projectData.location, projectData.status, projectData.description, id];
 
         await pool.query(query, values);

@@ -8,12 +8,9 @@ import ContactUs from './pages/ContactUs.jsx'
 import Footer from './components/Footer.jsx'
 
 function App() {
-
-
   return (
     <>
-      <NavigationBar />
-
+      <NavigationBar/>
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/home' element={<Home />}/>
@@ -22,8 +19,7 @@ function App() {
         <Route path='/contact-us' element={<ContactUs />}/>
         <Route path='*' element={<Navigate to='/'/>}/>
       </Routes>
-
-      <Footer />
+      <Footer/>
     </>
   )
 }

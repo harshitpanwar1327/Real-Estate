@@ -79,7 +79,7 @@ export const postPropertiesLogic = async (propertiesData) => {
 
         let [row] = await pool.query(query,values);
 
-        await pool.query(`INSERT INTO media_files (type, property_id) VALUES ('property', ?);`, [row.insertId]);
+        await pool.query(`INSERT INTO media_files (type, property_id) VALUES ('Property', ?);`, [row.insertId]);
         
         return {success: true, message: "Property saved successfully"};
     } catch (error) {

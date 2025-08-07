@@ -4,7 +4,7 @@ export const getMediaLogic = async (id, type) => {
     let [rows] = [];
 
     try {
-        if(type==='property') {
+        if(type==='Property') {
             [rows] = await pool.query(`SELECT * FROM media_files WHERE property_id = ?`, [id]);
         } else {
             [rows] = await pool.query(`SELECT * FROM media_files WHERE project_id = ?`, [id]);
@@ -21,7 +21,7 @@ export const updateMediaLogic = async (id, mediaData) => {
     let query;
 
     try {
-        if(mediaData.type==='property') {
+        if(mediaData.type==='Property') {
             query = `UPDATE media_files SET type = ?, property_id = ?, project_id = ?, cover = ?, area_plan = ?, images = ? WHERE property_id = ?`;
         } else {
             query = `UPDATE media_files SET type = ?, property_id = ?, project_id = ?, cover = ?, area_plan = ?, images = ? WHERE project_id = ?`;

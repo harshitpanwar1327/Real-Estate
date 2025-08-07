@@ -1,29 +1,50 @@
+import React, {useState, useEffect} from "react"
 import logo from '../assets/logo.jpeg'
+import { NavLink } from 'react-router-dom'
+import API from '../utils/API'
 
 const NavigationBar = () => {
+  const [projectsData, setProjectsData] = useState([]);
+
+  const fetchProjects = async () => {
+    try {
+      let response = await API.get('/project/projects-name');
+      setProjectsData(response.data.data);
+    } catch (error) {
+      console.log(error.response?.data?.message || error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchProjects();
+  }, []);
+
   return (
     <div className="fixed top-0 left-0 w-full bg-white shadow-md z-10">
-      <div className="flex items-center justify-between px-10 py-4">
+      <div className="flex items-center justify-between px-8 py-2 font-semibold">
         <div className="flex items-center gap-8">
-          <a href="#" className="text-[#C89C51] font-bold">HOME</a>
-          <div className="group">
-            <button className="font-semibold flex items-center gap-1 hover:text-[#C89C51]"> PROJECTS <span>&#9660;</span> 
-            </button>
-            
-            <div className="absolute hidden group-hover:block bg-white shadow-md mt-1 rounded">
-              <a href="#" className="block px-6 py-2 hover:bg-gray-100 hover:text-[#C89C51]">Project 1</a>
-              <a href="#" className="block px-6 py-2 hover:bg-gray-100 hover:text-[#C89C51]">Project 2</a>
+          <NavLink to={'/home'}><h2 className="hover:text-[#8ec73f] transition-colors duration-300">HOME</h2></NavLink>
+          <div className="relative group">
+            <h2 className="hover:text-[#8ec73f] transition-colors duration-300 cursor-pointer">OUR PROJECTS <span className="inline-block text-sm group-hover:rotate-180 transition-rotate duration-600">&#9660;</span></h2>
+            <div className="absolute hidden group-hover:block bg-white border border-[#cdcdcd] shadow-md z-20 min-w-[180px]">
+              {projectsData.length > 0 ? (
+                projectsData.map((project, index) => (
+                  <NavLink to={`/projects/${project.name}`} key={index} className="block px-4 py-2 hover:bg-gray-100 hover:text-[#8ec73f] transition-colors duration-200">{project.name}</NavLink>
+                ))
+              ) : (
+                <p className="px-4 py-2 text-gray-400 italic">No projects</p>
+              )}
             </div>
           </div>
         </div>
 
         <div>
-          <img src={logo} alt="Logo" className="h-[5rem]" />
+          <img src={logo} alt="Logo" width={120} />
         </div>
 
         <div className="flex items-center gap-8">
-          <a href="#" className="font-semibold hover:text-[#C89C51]">ABOUT US</a>
-          <a href="#" className="font-semibold hover:text-[#C89C51]">CONTACT US</a>
+          <NavLink to={'/about-us'}><h2 className="hover:text-[#8ec73f] transition-colors duration-300">ABOUT US</h2></NavLink>
+          <NavLink to={'/contact-us'}><h2 className="hover:text-[#8ec73f] transition-colors duration-300">CONTACT US</h2></NavLink>
         </div>
       </div>
     </div>

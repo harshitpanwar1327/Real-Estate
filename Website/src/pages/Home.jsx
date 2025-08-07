@@ -1,5 +1,5 @@
-import p1 from '../assets/p1.png'
-import p2 from '../assets/p2.png'
+import p1 from '../assets/Project1.png'
+import p2 from '../assets/Project2.png'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
