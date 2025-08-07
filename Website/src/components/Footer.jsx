@@ -58,7 +58,7 @@ const Footer = () => {
             title="Old Seelampur Map"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14006.07240379927!2d77.26728935!3d28.6786729!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd85d1e5e98b%3A0x5c24c7e360482e42!2s9%2F4853%2C%20Old%20Seelampur%2C%20Shahdara%2C%20Delhi%2C%20110031!5e0!3m2!1sen!2sin!4v1692969000000!5m2!1sen!2sin"
             height={300}
-            className="w-full"
+            className="w-full rounded-xl"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
