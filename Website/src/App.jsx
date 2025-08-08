@@ -6,6 +6,7 @@ import Projects from './pages/Projects.jsx'
 import AboutUs from './pages/AboutUs.jsx'
 import ContactUs from './pages/ContactUs.jsx'
 import Footer from './components/Footer.jsx'
+import ChatSpeedDial from './components/ChatSpeedDial.jsx'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/contact-us' element={<ContactUs />}/>
         <Route path='*' element={<Navigate to='/'/>}/>
       </Routes>
+      <ChatSpeedDial />
       <Footer/>
     </>
   )
