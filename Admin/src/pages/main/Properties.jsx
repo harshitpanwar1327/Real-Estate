@@ -11,10 +11,13 @@ import Stack from '@mui/material/Stack'
 import { motion } from 'motion/react'
 import { toast } from 'react-toastify'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import PropertyGallery from '../../modals/PropertyGallery.jsx'
 
 const Properties = () => {
   let [propertyData, setPropertyData] = useState([]);
+  let [openGallery, setOpenGallery] = useState(false);
   let [openEditModal, setOpenEditModal] = useState(false);
+  let [selectedId, setSelectedId] = useState('');
   let [selectedProperty, setSelectedProperty] = useState({});
   let [search, setSearch] = useState('');
   let [totalData, setTotalData] = useState(1);
@@ -51,6 +54,11 @@ const Properties = () => {
   useEffect(()=>{
     fetchProperties(currentPage, itemsPerPage, search);
   }, [currentPage]);
+
+  let handleGallery = (id) => {
+    setOpenGallery(true);
+    setSelectedId(id);
+  }
 
   let handleEdit = (property)=>{
     setOpenEditModal(true);
@@ -127,7 +135,7 @@ const Properties = () => {
                 <td className='p-2'>{data.location}</td>
                 <td className='p-2'>{data.category}</td>
                 <td className='p-2'>{data.status}</td>
-                <td className="p-2"><PhotoCameraBackIcon className='cursor-pointer text-pink-500 hover:text-pink-700'/></td>
+                <td className="p-2"><PhotoCameraBackIcon className='cursor-pointer text-pink-500 hover:text-pink-700' onClick={()=>handleGallery(data.id)}/></td>
                 <td className='p-2'><ModeEditIcon className='cursor-pointer text-green-500 hover:text-green-700' onClick={()=>handleEdit(data)}/></td>
                 <td className='p-2'><DeleteIcon className='cursor-pointer text-red-500 hover:text-red-700' onClick={()=>handleDelete(data.id)}/></td>
               </tr>
@@ -135,6 +143,8 @@ const Properties = () => {
           </tbody>
         </table>
       </div>
+      {openGallery && <PropertyGallery setOpenModal={setOpenGallery} selectedId={selectedId}/>}
+    
       {openEditModal && <EditProperty setOpenEditModal={setOpenEditModal} selectedProperty={selectedProperty} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage, search)}/>}
 
       <Stack spacing={2} className='pb-2'>

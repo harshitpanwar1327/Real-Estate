@@ -1,69 +1,77 @@
-import p1 from '../assets/Project1.png'
-import p2 from '../assets/Project2.png'
+import p1 from '../assets/TechOpenSpace.jpg'
+import { useState, useEffect } from 'react'
+import LandingVideo from '../assets/LandingVideo.mp4'
+import { motion } from 'motion/react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/autoplay'
-import LandingVideo from '../assets/LandingVideo.mp4'
+import API from '../utils/API'
+import RoomRoundedIcon from '@mui/icons-material/RoomRounded'
 
 const Home = () => {
+  let [projectsData, setProjectsData] = useState([]);
+
+  const fetchProjects = async () => {
+    try {
+      let response = await API.get('/project/all-projects');
+      setProjectsData(response.data.data);
+    } catch (error) {
+      console.log(error.response?.data?.message || error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchProjects();
+  }, []);
+
   return (
     <>
       <div className='relative mt-15'>
         <video src={LandingVideo} autoPlay muted loop playsInline style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
       </div>
 
-      <div>
-        <section className="py-10 px-20 bg-white">
-          <h2 className="text-3xl font-bold text-center mb-2">Our Projects</h2>
-          <div className="w-[12rem] h-[2px] bg-yellow-500 mx-auto mb-6" />
-  
-          <p className="text-center mx-auto font-semibold text-gray-600 mb-12">
-            We specialize in offering top-tier real estate solutions in Mohali, Punjab. Whether you are seeking a commercial space, a residential haven, or an industrial plot, our diverse portfolio is designed to cater to all your property needs with excellence and integrity.
-          </p>
-  
-          <div className="grid grid-cols-2 gap-8 ">
-  
-            <div className="flex flex-col">
-              <img src={p1} alt="img" />
-              <div className="mt-4 border-l-4 border-yellow-500 pl-4">
-                <h3 className="text-lg font-semibold text-yellow-600">GMI IT Tower</h3>
-                <p className="text-sm text-gray-600">Office Spaces - Available for Lease</p>
-                <p className="text-sm text-gray-600">I-26 Sector 83 A, Mohali</p>
+      <div className="p-10 md:p-15 lg:p-20 min-h-[85vh]">
+        <div className="flex flex-col items-center gap-3 mb-15">
+          <h2 className="text-3xl font-bold text-center">Our Projects</h2>
+          <motion.div
+            initial={{ width: '45px' }}
+            whileInView={{ width: '180px' }}
+            transition={{
+              duration: 2,
+              ease: 'easeInOut'
+            }}
+            className="h-[3px] bg-[#8ec73f] rounded-full"
+          />
+          <p className="text-center font-semibold text-gray-600">From luxurious residences to vibrant commercial hubs, our projects embody elegance, innovation, and comfort — creating spaces where dreams find their address.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {projectsData.length > 0 ? (
+            projectsData.map((project, index) => (
+              <div className="flex flex-col gap-4" key={index}>
+                <img src={p1} alt="img" className='grayscale hover:grayscale-0 cursor-pointer'/>
+                <div className="border-l-4 border-[#8ec73f] pl-4">
+                  <h3 className="text-lg font-semibold text-[#8ec73f]">{project.name || 'N/A'}</h3>
+                  <p className='text-sm flex items-center gap-1'><RoomRoundedIcon sx={{color: 'red', fontSize: '16px'}}/> {project.location || 'N/A'}</p>
+                </div>
               </div>
-            </div>
-  
-            <div className="flex flex-col">
-              <img src={p2} alt="img" />
-              <div className="mt-4 border-l-4 border-yellow-500 pl-4">
-                <h3 className="text-lg font-semibold text-yellow-600">GMI Business Park</h3>
-                <p className="text-sm text-gray-600">PBRERA-SAS81-PMO168</p>
-                <p className="text-sm text-gray-600">COMMERCIAL | INDUSTRIAL</p>
-                <p className="text-sm text-gray-600">Sector 102 A, IT City Road, Mohali</p>
-              </div>
-            </div>
-  
-            <div className="flex flex-col">
-              <img src={p2} alt="img" />
-              <div className="mt-4 border-l-4 border-yellow-500 pl-4">
-                <h3 className="text-lg font-semibold text-yellow-600">GMI Business Park</h3>
-                <p className="text-sm text-gray-600">PBRERA-SAS81-PMO168</p>
-                <p className="text-sm text-gray-600">COMMERCIAL | INDUSTRIAL</p>
-                <p className="text-sm text-gray-600">Sector 102 A, IT City Road, Mohali</p>
-              </div>
-            </div>
-            
-            <div className="flex flex-col">
-              <img src={p2} alt="img" />
-              <div className="mt-4 border-l-4 border-yellow-500 pl-4">
-                <h3 className="text-lg font-semibold text-yellow-600">GMI Business Park</h3>
-                <p className="text-sm text-gray-600">PBRERA-SAS81-PMO168</p>
-                <p className="text-sm text-gray-600">COMMERCIAL | INDUSTRIAL</p>
-                <p className="text-sm text-gray-600">Sector 102 A, IT City Road, Mohali</p>
-              </div>
-            </div>
-          </div>
-        </section>
+            ))
+          ) : (
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: [0.5, 1, 0.5], scale: [0.8, 1, 0.8] }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="col-span-2 text-center"
+            >
+              Coming Soon...
+            </motion.h1>
+          )}
+        </div>
       </div>
       
       <div>

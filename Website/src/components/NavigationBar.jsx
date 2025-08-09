@@ -12,7 +12,7 @@ const NavigationBar = () => {
 
   const fetchProjects = async () => {
     try {
-      let response = await API.get('/project/projects-name');
+      let response = await API.get('/project/all-projects');
       setProjectsData(response.data.data);
     } catch (error) {
       console.log(error.response?.data?.message || error);

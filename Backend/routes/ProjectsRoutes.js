@@ -4,7 +4,7 @@ import { authMiddleware } from '../middleware/AuthMiddlewares.js'
 
 let router = express.Router();
 
-router.get('/projects-name', allProjects);
+router.get('/all-projects', allProjects);
 router.get('/projects', getProjects);
 
 router.use(authMiddleware);

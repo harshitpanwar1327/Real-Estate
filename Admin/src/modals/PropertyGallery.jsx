@@ -27,7 +27,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const ProjectGallery = ({setOpenModal, selectedId}) => {
+const PropertyGallery = ({setOpenModal, selectedId}) => {
   let [cover, setCover] = useState(null);
   let [coverPreview, setCoverPreview] = useState(null);
 
@@ -70,8 +70,8 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
     if (areaPlan) formData.append('area_plan', areaPlan);
     images.forEach(img => formData.append('images', img));
 
-    formData.append('projectId', selectedId);
-    formData.append('type', 'Project');
+    formData.append('propertyId', selectedId);
+    formData.append('type', 'Property');
 
     try {
       let response = await API.put(`/media/update-media/${selectedId}`, formData, {
@@ -186,4 +186,4 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
   )
 }
 
-export default ProjectGallery
+export default PropertyGallery
