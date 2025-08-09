@@ -63,8 +63,8 @@ const EditProperty = ({setOpenEditModal, selectedProperty, fetchProperties}) => 
 
   return (
     <div className='fixed w-screen h-screen top-0 left-0 flex justify-center items-center bg-[#0000005a] z-1' onClick={()=>setOpenEditModal(false)}>
-      <form className='w-2/3 bg-white p-4 rounded shadow-md grid grid-cols-4 place-items-center gap-1' onSubmit={handleEditProperty} onClick={(e)=>e.stopPropagation()}>
-        <h2 className='p-2 font-semibold text-xl text-[#fdc940] col-span-4'>Edit Property</h2>
+      <form className='max-w-[85vw] bg-white p-4 rounded shadow-md grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 place-items-center gap-4 max-h-[85vh] overflow-auto' onSubmit={handleEditProperty} onClick={(e)=>e.stopPropagation()}>
+        <h2 className='p-2 font-semibold text-xl text-[#fdc940] md:col-span-2 lg:col-span-4'>Edit Property</h2>
         <div className='w-full p-2 rounded shadow-md flex flex-col gap-1'>
           <label htmlFor="projectId">Project Id</label>
           <input type="number" name="projectId" id="projectId" value={projectId} onChange={(e)=>setProjectId(e.target.value)} className='p-1 border border-[#cdcdcd] rounded opacity-40 cursor-not-allowed' disabled/>
@@ -99,7 +99,7 @@ const EditProperty = ({setOpenEditModal, selectedProperty, fetchProperties}) => 
             <option value="">Select Type</option>
             {category &&
               PropertyByCategory[`${category}`].map((type, index)=>(
-                <option value={type}>{type}</option>
+                <option value={type} key={index}>{type}</option>
               ))
             }
           </select>
@@ -136,7 +136,7 @@ const EditProperty = ({setOpenEditModal, selectedProperty, fetchProperties}) => 
           <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} rows={3} placeholder='Write a description' className='p-1 border border-[#cdcdcd] rounded'/>
         </div>
         
-        <button className='py-1 px-4 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded place-self-end col-span-4'>Update</button>
+        <button className='py-1 px-4 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded place-self-end md:col-span-2 lg:col-span-4'>Update</button>
       </form>
     </div>
   )

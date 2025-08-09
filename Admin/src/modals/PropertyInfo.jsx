@@ -19,7 +19,7 @@ const PropertyInfo = ({setOpenModal, selectedPropertyId}) => {
 
   return (
     <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a] z-1' onClick={()=>setOpenModal(false)}>
-      <div className='w-1/4 bg-white py-2 px-6 rounded shadow-md flex flex-col gap-1' onClick={(e)=>e.stopPropagation()}>
+      <div className='md:w-1/2 lg:w-1/4 bg-white py-2 px-6 rounded shadow-md flex flex-col gap-1' onClick={(e)=>e.stopPropagation()}>
         <h2 className='p-2 font-semibold text-xl text-[#fdc940] text-center'>Property Details</h2>
         <p><strong>Title:</strong> {propertyData[0]?.title || '--'}</p>
         <p><strong>Location:</strong> {propertyData[0]?.location || '--'}</p>

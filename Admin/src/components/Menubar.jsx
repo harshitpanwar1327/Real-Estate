@@ -3,13 +3,17 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { useNavigate } from 'react-router-dom'
 import AddProject from '../modals/AddProject'
 import Swal from 'sweetalert2'
-import { ClimbingBoxLoader } from "react-spinners";
+import { ClimbingBoxLoader } from "react-spinners"
 import AddProperty from '../modals/AddProperty'
+import MenuIcon from '@mui/icons-material/Menu'
+import CloseIcon from '@mui/icons-material/Close'
+import MobileNavigation from './MobileNavigation'
 
 const Menubar = ({heading, projectButton, propertyButton, fetchProjects, fetchProperties}) => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,18 +50,27 @@ const Menubar = ({heading, projectButton, propertyButton, fetchProjects, fetchPr
           <ClimbingBoxLoader />
         </div>
       )}
-        <h2 className='font-semibold text-xl'>{heading}</h2>
-        <div className='flex gap-4'>
-          {projectButton && 
-            <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenModal(true)}>+ New Project</button>
-          }
-          {propertyButton &&
-            <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenAddModal(true)}>+ New Property</button>
-          }
-          <button className='bg-red-500 text-white text-sm font-semibold p-2 rounded flex items-center border-2 border-red-500 hover:scale-105 transition-all duration-300 ease-in-out' onClick={handleLogout}><LogoutOutlinedIcon sx={{fontSize: '16px'}}/>Logout</button>
+
+      {isOpen && <MobileNavigation />}
+
+      <div className='flex gap-2'>
+        <div className='lg:hidden' onClick={()=>setIsOpen(!isOpen)}>
+          {!isOpen ? <MenuIcon /> : <CloseIcon />}
         </div>
-        {openModal && <AddProject setOpenModal={setOpenModal} fetchProjects={fetchProjects}/>}
-        {openAddModal && <AddProperty setOpenAddModal={setOpenAddModal}  fetchProperties={fetchProperties}/>}
+        <h2 className='font-semibold text-xl'>{heading}</h2>
+      </div>
+
+      <div className='flex gap-2'>
+        {projectButton && 
+          <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenModal(true)}>+ New Project</button>
+        }
+        {propertyButton &&
+          <button className='bg-[#fdc940] text-sm font-semibold p-2 border-2 border-[#fdc940] rounded hover:scale-105 transition-all duration-300 ease-in-out' onClick={(e)=>setOpenAddModal(true)}>+ New Property</button>
+        }
+        <button className='bg-red-500 text-white text-sm font-semibold p-2 rounded flex items-center border-2 border-red-500 hover:scale-105 transition-all duration-300 ease-in-out' onClick={handleLogout}><LogoutOutlinedIcon sx={{fontSize: '16px'}}/>Logout</button>
+      </div>
+      {openModal && <AddProject setOpenModal={setOpenModal} fetchProjects={fetchProjects}/>}
+      {openAddModal && <AddProperty setOpenAddModal={setOpenAddModal}  fetchProperties={fetchProperties}/>}
     </div>
   )
 }

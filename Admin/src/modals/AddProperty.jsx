@@ -75,8 +75,8 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
 
   return (
     <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-[#0000005a] z-1' onClick={()=>setOpenAddModal(false)} >
-      <form className='w-2/3 bg-white p-4 rounded shadow-md grid grid-cols-4 place-items-center gap-1' onSubmit={handleAddProperty} onClick={(e)=>e.stopPropagation()}>
-        <h2 className='p-2 font-semibold text-xl text-[#fdc940] col-span-4'>Let's add a Property</h2>
+      <form className='max-w-[85vw] bg-white p-4 rounded shadow-md grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 place-items-center gap-4 max-h-[85vh] overflow-auto' onSubmit={handleAddProperty} onClick={(e)=>e.stopPropagation()}>
+        <h2 className='p-2 font-semibold text-xl text-[#fdc940] md:col-span-2 lg:col-span-4'>Let's add a Property</h2>
         <div className='w-full p-2 rounded shadow-md flex flex-col gap-1'>
           <label htmlFor="projectId">Project</label>
           <select name="projectId" id="projectId" value={projectId} onChange={(e)=>setProjectId(e.target.value)} className='p-1 border border-[#cdcdcd] rounded' required>
@@ -155,7 +155,7 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
           <textarea name="description" id="description" value={description} onChange={(e)=>setDescription(e.target.value)} placeholder='Write a description' rows={3} className='p-1 border border-[#cdcdcd] rounded'></textarea>
         </div>
         
-        <button className='py-1 px-4 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded place-self-end col-span-4'>Add</button>
+        <button className='py-1 px-4 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded place-self-end md:col-span-2 lg:col-span-4'>Add</button>
       </form>
     </div>
   )

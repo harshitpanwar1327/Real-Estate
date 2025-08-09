@@ -44,7 +44,7 @@ const Login = () => {
           <ClimbingBoxLoader />
         </div>
       )}
-      <form className = "flex flex-col items-center w-1/4 backdrop-blur bg-white/30 rounded p-5 shadow-lg gap-2" onSubmit={handleLogin}>
+      <form className = "flex flex-col items-center md:w-2/5 lg:w-1/4 backdrop-blur bg-white/30 rounded p-5 shadow-lg gap-2" onSubmit={handleLogin}>
         <h2 className="mb-2 text-2xl font-semibold">Login</h2>
         <div className="flex flex-col w-full">
           <label htmlFor="email">Email:</label>

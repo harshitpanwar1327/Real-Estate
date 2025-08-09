@@ -89,15 +89,15 @@ const Properties = () => {
   }
 
   return (
-    <div className='grow flex flex-col gap-2'>
+    <div className='grow flex flex-col gap-2 overflow-x-hidden'>
       <Menubar heading='Properties' projectButton={false} propertyButton={true} fetchProperties={()=>fetchProperties(currentPage, itemsPerPage, search)}/>
 
       <div className='mx-2 flex gap-2'>
-        <div className='w-1/3 py-1 bg-white rounded-md rounded-tr-4xl flex justify-center items-center gap-2'>
+        <div className='w-full md:w-1/3 py-1 bg-white rounded-md rounded-tr-4xl flex justify-center items-center gap-2'>
           <input type="text" placeholder='Search here...' name='search' id='search' value={search} onChange={(e)=>setSearch(e.target.value)} className='w-1/2 p-1 border border-[#cdcdcd] rounded focus-visible:outline-0'/>
           <button className='bg-blue-500 hover:bg-blue-700 text-white p-1 rounded'><SearchRoundedIcon/></button>
         </div>
-        <div className='w-2/3 bg-[#fdc940] rounded-md rounded-bl-4xl flex justify-center items-center font-semibold'>
+        <div className='w-2/3 bg-[#fdc940] rounded-md rounded-bl-4xl hidden md:flex justify-center items-center font-semibold'>
           <motion.p
             animate={{ x: ['-50px', '50px', '-50px'] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
@@ -107,7 +107,7 @@ const Properties = () => {
         </div>
       </div>
 
-      <div className='mx-2 p-2 bg-white rounded-md grow overflow-auto'>
+      <div className='mx-2 p-2 bg-white rounded-md grow overflow-x-auto'>
         <table className='w-full'>
           <thead>
             <tr className='bg-[#f5f3ff] border-b border-[#434343]'>
