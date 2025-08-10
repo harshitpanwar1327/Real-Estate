@@ -1,5 +1,6 @@
 import p1 from '../assets/TechOpenSpace.jpg'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import LandingVideo from '../assets/LandingVideo.mp4'
 import { motion } from 'motion/react'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -8,9 +9,11 @@ import 'swiper/css'
 import 'swiper/css/autoplay'
 import API from '../utils/API'
 import RoomRoundedIcon from '@mui/icons-material/RoomRounded'
+import DefaultCover from '../assets/DefaultCover.jpg'
 
 const Home = () => {
   let [projectsData, setProjectsData] = useState([]);
+  const navigate = useNavigate();
 
   const fetchProjects = async () => {
     try {
@@ -50,7 +53,7 @@ const Home = () => {
           {projectsData.length > 0 ? (
             projectsData.map((project, index) => (
               <div className="flex flex-col gap-4" key={index}>
-                <img src={p1} alt="img" className='grayscale hover:grayscale-0 cursor-pointer'/>
+                <img src={project?.cover ? `${import.meta.env.VITE_IMG_BASE_URL}/${project.cover}` : DefaultCover} alt="img" className='grayscale hover:grayscale-0 cursor-pointer' onClick={()=>navigate(`/projects/${project.name}`)}/>
                 <div className="border-l-4 border-[#8ec73f] pl-4">
                   <h3 className="text-lg font-semibold text-[#8ec73f]">{project.name || 'N/A'}</h3>
                   <p className='text-sm flex items-center gap-1'><RoomRoundedIcon sx={{color: 'red', fontSize: '16px'}}/> {project.location || 'N/A'}</p>

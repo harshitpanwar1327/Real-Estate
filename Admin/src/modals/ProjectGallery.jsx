@@ -99,7 +99,7 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
               </TabList>
             </Box>
             <TabPanel value="1" className='flex flex-col items-start gap-2'>
-              <div className='border border-[#cdcdcd] rounded w-full h-65 flex justify-center items-center'>
+              <div className='border border-[#cdcdcd] rounded w-70 h-50 md:w-85 md:h-65 flex justify-center items-center'>
                 {coverPreview ? (
                   <img src={coverPreview} alt="Cover Image" />
                 ) : (
@@ -122,7 +122,7 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
               </Button>
             </TabPanel>
             <TabPanel value="2" className='flex flex-col items-start gap-2'>
-              <div className='border border-[#cdcdcd] rounded w-full h-65 flex justify-center items-center'>
+              <div className='border border-[#cdcdcd] rounded w-70 h-50 md:w-85 md:h-65 flex justify-center items-center'>
                 {areaPlanPreview ? (
                   <img src={areaPlanPreview} alt="Area Plan Image" />
                 ) : (
@@ -151,7 +151,7 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
                 }}
                 navigation={true}
                 modules={[Pagination, Navigation]}
-                className='border border-[#cdcdcd] rounded w-full h-65'
+                className='border border-[#cdcdcd] rounded w-70 h-50 md:w-85 md:h-65'
               >
                 {imagePreviews.length > 0 ? (
                   imagePreviews.map((url, index)=>(
