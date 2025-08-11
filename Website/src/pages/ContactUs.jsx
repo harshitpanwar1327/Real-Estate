@@ -32,16 +32,16 @@ const ContactUs = () => {
   return (
     <div className='mt-25'>
       <h2 className='text-center text-4xl font-bold tracking-wide'>Get in Touch</h2>
-      <div className='flex justify-center gap-8 m-10'>
-        <div className='w-[35vw] flex flex-col items-center gap-4'>
+      <div className='flex flex-col md:flex-row justify-center gap-8 m-10'>
+        <div className='md:w-[35vw] flex flex-col items-center gap-4'>
           <h2 className='font-semibold text-xl'>Speak with Our Team</h2>
-          <div className='flex flex-col items-center gap-2 bg-white border border-[#cdcdcd] rounded-lg shadow-md p-2 min-w-[65%]'>
+          <div className='flex flex-col items-center gap-2 bg-white border border-[#cdcdcd] rounded-lg shadow-md p-2 w-[70%] md:w-[80%] lg:w-[65%]'>
             <MailOutlinedIcon/>
             <h3 className='font-bold'>Email</h3>
             <p className='text-sm text-gray-500'>harshitpanwar1327@gmail.com</p>
             <a href="mailto:harshitpanwar1327@gmail.com"><p className='text-sm text-gray-500 font-semibold cursor-pointer'>Mail <ArrowForwardIcon sx={{fontSize: '14px'}}/></p></a>
           </div>
-          <div className='flex flex-col items-center gap-2 bg-white border border-[#cdcdcd] rounded-lg shadow-md p-2 min-w-[65%]'>
+          <div className='flex flex-col items-center gap-2 bg-white border border-[#cdcdcd] rounded-lg shadow-md p-2 w-[70%] md:w-[80%] lg:w-[65%]'>
             <WhatsAppIcon/>
             <h3 className='font-bold'>Whatsapp</h3>
             <p className='text-sm text-gray-500'>+91 8595994381</p>
@@ -49,12 +49,12 @@ const ContactUs = () => {
           </div>
         </div>
 
-        <form className='w-[45vw] flex flex-col items-center gap-4' ref={form} onSubmit={handleSendMessage}>
+        <form className='md:w-[45vw] flex flex-col items-center gap-4' ref={form} onSubmit={handleSendMessage}>
           <h2 className='font-semibold text-xl'>Submit Your Query</h2>
-          <input type="text" name='user_name' id='name' placeholder='Enter your name' className='border border-[#7c7c7c] rounded-lg p-2 w-[50%]'/>
-          <input type="email" name='user_email' id='email' placeholder='Enter your email' className='border border-[#7c7c7c] rounded-lg p-2 w-[50%]'/>
-          <input type="number" name="user_phone" id="phone" placeholder='Enter your phone number*' className='border border-[#7c7c7c] rounded-lg p-2 w-[50%]' required/>
-          <textarea name="message" id="message" placeholder='Enter your message*' className='border border-[#7c7c7c] rounded-lg p-2 w-[50%]' required></textarea>
+          <input type="text" name='user_name' id='name' placeholder='Enter your name' className='border border-[#7c7c7c] rounded-lg p-2 w-[75%] md:w-[50%]'/>
+          <input type="email" name='user_email' id='email' placeholder='Enter your email' className='border border-[#7c7c7c] rounded-lg p-2 w-[75%] md:w-[50%]'/>
+          <input type="number" name="user_phone" id="phone" placeholder='Enter your phone number*' className='border border-[#7c7c7c] rounded-lg p-2 w-[75%] md:w-[50%]' required/>
+          <textarea name="message" id="message" placeholder='Enter your message*' className='border border-[#7c7c7c] rounded-lg p-2 w-[75%] md:w-[50%]' required></textarea>
           <button className='bg-black text-white p-2 flex items-center gap-2 rounded cursor-pointer'>Send Message <SendRoundedIcon sx={{fontSize: '16px', transform: 'rotate(-45deg)'}}/></button>
         </form>
       </div>
