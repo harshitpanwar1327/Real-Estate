@@ -53,7 +53,7 @@ const Home = () => {
           {projectsData.length > 0 ? (
             projectsData.map((project, index) => (
               <div className="flex flex-col gap-4" key={index}>
-                <img src={project?.cover ? `${import.meta.env.VITE_IMG_BASE_URL}/${project.cover}` : DefaultCover} alt="img" className='grayscale hover:grayscale-0 cursor-pointer' onClick={()=>navigate(`/projects/${project.name}`)}/>
+                <img src={project?.cover ? `${import.meta.env.VITE_IMG_BASE_URL}/${project.cover}` : DefaultCover} alt="img" className='grayscale hover:grayscale-0 cursor-pointer' onClick={()=>navigate(`/projects/${project.id}`)}/>
                 <div className="border-l-4 border-[#8ec73f] pl-4">
                   <h3 className="text-lg font-semibold text-[#8ec73f]">{project.name || 'N/A'}</h3>
                   <p className='text-sm flex items-center gap-1'><RoomRoundedIcon sx={{color: 'red', fontSize: '16px'}}/> {project.location || 'N/A'}</p>

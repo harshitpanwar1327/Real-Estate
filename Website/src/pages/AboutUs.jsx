@@ -12,21 +12,21 @@ const AboutUs = () => {
             <h2 className="text-3xl font-bold">CREATING BETTER</h2>
             <h2 className="text-[#8ec73f] text-3xl font-bold">COMMUNITIES</h2>
           </div>
-          <p className="text-gray-500 text-justify">Property Shell has been one of the most premium real estate developers in India with more than 5 years of experience in this business. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi assumenda nostrum ex. Quam neque sit hic nemo magnam excepturi dolorum eligendi impedit aut, porro cumque voluptas provident culpa ab nobis recusandae, commodi maxime sed suscipit possimus. Dignissimos voluptatum eaque, exercitationem numquam ratione eveniet quidem pariatur minus asperiores enim aut laborum cum architecto deserunt debitis sed voluptas voluptatibus, molestias possimus beatae error? Cupiditate consequuntur repellat at nulla error vitae nam saepe, dolorem ad in excepturi, itaque, laborum quae quo suscipit fugiat corrupti explicabo ut eius doloremque velit dicta! Odit iste voluptatum, quos nisi sunt veritatis. Recusandae animi aliquid nulla esse doloribus.</p>
+          <p className="text-gray-500 text-justify">At <span className="font-semibold">Property Shell</span>, we believe that real estate is more than just buildings—it’s about creating vibrant communities where people can thrive. Over the last 5+ years, we have delivered premium residential and commercial spaces that blend innovative design, world-class amenities, and sustainable practices. Our developments are not just structures; they are thoughtfully crafted environments that inspire better living and foster meaningful connections. With a deep understanding of modern lifestyles and evolving business needs, we are redefining urban living one project at a time.</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <img src={MissionImg} alt="Property Shell" className="w-full rounded shadow-md"/>
           <div className='flex flex-col gap-4'>
             <h2 className="text-[#8ec73f] text-3xl font-bold">OUR MISSION</h2>
-            <p className="text-gray-500 text-justify">At <span className="text-red-500 font-semibold">Property Shell</span>, Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi quam incidunt aliquid nemo ea voluptates illum beatae, autem recusandae dolore delectus! Doloremque, ipsa dicta. Voluptatibus, sequi ad a itaque natus sunt magnam culpa optio non id est minima nesciunt accusamus dolores. Laudantium debitis repellat aperiam corrupti voluptatem quia ut odit neque consequuntur earum velit amet voluptates provident, iste voluptatum, rerum soluta omnis ex dolore eius ab quis odio eaque magni. Saepe voluptates, sit, enim provident facilis voluptas quod veritatis neque iure pariatur nisi, architecto a placeat ullam odit non unde deleniti adipisci aliquid dolores ad. Dolorum sunt quas expedita! Aliquam deserunt ab cumque, dignissimos nisi sapiente, itaque dolores, quisquam similique provident reprehenderit? Veritatis dolorem obcaecati, eum tempora veniam saepe hic tenetur, praesentium at enim quisquam tempore doloribus error libero, consectetur</p>
+            <p className="text-gray-500 text-justify">Our mission is simple yet powerful — to create spaces that enrich lives and empower businesses. At <span className="text-red-500 font-semibold">Property Shell</span>, we are committed to developing projects that balance functionality, aesthetics, and sustainability. We strive to understand the unique aspirations of our clients, translating them into tailor-made spaces that reflect quality, innovation, and trust. From residential homes that nurture families to commercial hubs that boost economic growth, every project we undertake is built with integrity and a long-term vision.</p>
           </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className='flex flex-col gap-4'>
             <h2 className="text-[#8ec73f] text-3xl font-bold">OUR VISSION</h2>
-            <p className="text-gray-500 text-justify">At Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi quam incidunt aliquid nemo ea voluptates illum beatae, autem recusandae dolore delectus! Doloremque, ipsa dicta. Voluptatibus, sequi ad a itaque natus sunt magnam culpa optio non id est minima nesciunt accusamus dolores. Laudantium debitis repellat aperiam corrupti voluptatem quia ut odit neque consequuntur earum velit amet voluptates provident, iste voluptatum, rerum soluta omnis ex dolore eius ab quis odio eaque magni. Saepe voluptates, sit, enim provident facilis voluptas quod veritatis neque iure pariatur nisi, architecto a placeat ullam odit non unde deleniti adipisci aliquid dolores ad. Dolorum sunt quas expedita! Aliquam deserunt ab cumque, dignissimos nisi sapiente, itaque dolores, quisquam similique provident reprehenderit? Veritatis dolorem obcaecati, eum tempora veniam saepe hic tenetur, praesentium at enim quisquam tempore doloribus error libero, consectetur </p>
+            <p className="text-gray-500 text-justify">Our vision is to be recognized as a leading force in shaping modern urban landscapes, where people and businesses can flourish in harmony. We aspire to expand our footprint across India and beyond, delivering developments that set new benchmarks in quality and design. By embracing cutting-edge technology, green building practices, and community-driven planning, we aim to create a legacy of sustainable, future-ready spaces that not only meet today’s needs but also anticipate tomorrow’s possibilities.</p>
           </div>
           <img src={VissionImg} alt="Property Shell Project" className="w-full rounded shadow-md"/>
         </div>
@@ -34,19 +34,19 @@ const AboutUs = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-center">
           <div className='flex flex-col gap-4 md:col-span-2 lg:col-span-4'>
             <h2 className="text-2xl font-bold text-center">INNOVATING SPACES <span className='text-[#8ec73f]'>FOR A BETTER FUTURE</span></h2>
-            <p className="text-gray-500 text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur quas cupiditate molestiae nemo nam blanditiis! Aliquam dolor facere obcaecati, voluptatibus consequuntur sed eveniet animi voluptates fuga. Enim delectus ex alias libero est cum quaerat placeat nulla nesciunt expedita neque cumque voluptatum, facilis vitae. Eum possimus sequi deleniti commodi dolorem dolor.</p>
+            <p className="text-gray-500 text-justify">We believe that great spaces go beyond walls and ceilings—they inspire progress, foster collaboration, and promote well-being. Our designs combine architectural excellence with sustainable solutions, ensuring that every square foot serves a greater purpose. From prime city locations to eco-conscious construction, our focus remains on delivering lasting value to our customers and communities.</p>
           </div>
 
-          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/prime.png)] bg-cover bg-center rounded hover:items-center group">
+          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/Location.jpg)] bg-cover bg-center rounded hover:items-center group">
             <h2 className='text-white lg:text-xl group-hover:text-3xl font-bold text-center'>PRIME LOCATION</h2>
           </div>
-          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/global.png)] bg-cover bg-center rounded hover:items-center group">
+          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/BusinessHub.jpg)] bg-cover bg-center rounded hover:items-center group">
             <h2 className='text-white lg:text-xl group-hover:text-3xl font-bold text-center'>GLOBAL BUSINESS HUB</h2>
           </div>
-          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/comprehensive.png)] bg-cover bg-center rounded hover:items-center group">
+          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/Infrastructure.png)] bg-cover bg-center rounded hover:items-center group">
             <h2 className='text-white lg:text-xl group-hover:text-3xl font-bold text-center'>CONPREHENSIVE INFRASTRUCTURE</h2>
           </div>
-          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/sustainability.png)] bg-cover bg-center rounded hover:items-center group">
+          <div className="flex items-end justify-center p-2 h-[70vh] md:h-[40vh] lg:h-[70vh] bg-[url(/src/assets/Innovation.jpg)] bg-cover bg-center rounded hover:items-center group">
             <h2 className='text-white lg:text-xl group-hover:text-3xl font-bold text-center'>SUSTAINABILITY AND INNOVATION</h2>
           </div>
         </div>

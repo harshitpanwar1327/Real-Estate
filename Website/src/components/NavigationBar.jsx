@@ -33,7 +33,7 @@ const NavigationBar = () => {
           <div className="absolute hidden group-hover:block bg-white border border-[#cdcdcd] shadow-md z-20 min-w-[180px]">
             {projectsData.length > 0 ? (
               projectsData.map((project, index) => (
-                <NavLink to={`/projects/${project.name}`} key={index} className="block px-4 py-2 hover:bg-gray-100 hover:text-[#8ec73f] transition-colors duration-200">{project.name}</NavLink>
+                <NavLink to={`/projects/${project.id}`} key={index} className="block px-4 py-2 hover:bg-gray-100 hover:text-[#8ec73f] transition-colors duration-200">{project.name}</NavLink>
               ))
             ) : (
               <p className="px-4 py-2 text-gray-400 italic">No projects</p>
