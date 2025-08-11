@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import API from '../utils/API'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
-import {motion} from 'motion/react'
+import {hover, motion} from 'motion/react'
 
 const NavigationBar = () => {
   const [projectsData, setProjectsData] = useState([]);
@@ -13,7 +13,8 @@ const NavigationBar = () => {
   const fetchProjects = async () => {
     try {
       let response = await API.get('/project/all-projects');
-      setProjectsData(response.data.data);
+      const projects = Array.isArray(response.data?.data) ? response.data.data : [];
+      setProjectsData(projects);
     } catch (error) {
       console.log(error.response?.data?.message || error);
     }
@@ -51,7 +52,7 @@ const NavigationBar = () => {
       </div>
 
       <div className="md:hidden" onClick={()=>setIsOpen(!isOpen)}>
-        {!isOpen ? <MenuIcon sx={{fontSize: '32px'}} /> : <CloseIcon sx={{fontSize: '32px'}} />}
+        {!isOpen ? <MenuIcon sx={{fontSize: '32px', cursor:"pointer"}} /> : <CloseIcon sx={{fontSize: '32px', cursor:"pointer"}} />}
       </div>
       {isOpen && 
         <motion.div className='flex md:hidden flex-col bg-white w-full absolute top-20 left-0'
@@ -59,9 +60,9 @@ const NavigationBar = () => {
           animate={{opacity: 1, y: 0}}
           transition={{type: 'spring', stiffness: 100, damping: 15, delay: 0.2}}
         >
-          <NavLink to='/home' className="!text-black p-4 border-b">Users</NavLink>
-          <NavLink to='/about-us' className="!text-black p-4 border-b">Generate</NavLink>
-          <NavLink to='/contact-us' className="!text-black p-4 border-b">Licenses</NavLink>
+          <NavLink to='/home' className="!text-black p-4 border-b hover:!text-[#8ec73f]">Home</NavLink>
+          <NavLink to='/about-us' className="!text-black p-4 border-b hover:!text-[#8ec73f]">About Us</NavLink>
+          <NavLink to='/contact-us' className="!text-black p-4 border-b hover:!text-[#8ec73f]">Contact Us</NavLink>
         </motion.div>
       }
     </div>

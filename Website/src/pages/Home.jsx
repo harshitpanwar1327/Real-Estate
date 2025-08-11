@@ -1,4 +1,3 @@
-import p1 from '../assets/TechOpenSpace.jpg'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LandingVideo from '../assets/LandingVideo.mp4'
@@ -18,7 +17,8 @@ const Home = () => {
   const fetchProjects = async () => {
     try {
       let response = await API.get('/project/all-projects');
-      setProjectsData(response.data.data);
+      const projects = Array.isArray(response.data?.data) ? response.data.data : [];
+      setProjectsData(projects);
     } catch (error) {
       console.log(error.response?.data?.message || error);
     }
