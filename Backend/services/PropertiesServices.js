@@ -11,7 +11,7 @@ export const propertyDetailsLogic = async (id)=> {
     }
 };
 
-export const getPropertiesLogic = async (limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balcony, store) => {
+export const getPropertiesLogic = async (limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea) => {
     const searchQuery = `%${search}%`;
 
     const conditions = [];
@@ -42,14 +42,14 @@ export const getPropertiesLogic = async (limit, offset, search, minPrice, maxPri
         params.push(bathrooms);
     }
 
-    if (balcony) {
+    if (balconies) {
         conditions.push(`balcony = ?`);
-        params.push(balcony);
+        params.push(balconies);
     }
 
-    if (store) {
+    if (stores) {
         conditions.push(`store = ?`);
-        params.push(store);
+        params.push(stores);
     }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';

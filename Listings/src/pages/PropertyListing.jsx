@@ -14,7 +14,7 @@ const PropertyListing = () => {
   const [totalData, setTotalData] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
-  const [filters, setFilters] = useState({propertyType: '', bedrooms: '', bathrooms: '', minPrice: 0, maxPrice: 100000000, minArea: 0, maxArea: 10000});
+  const [filters, setFilters] = useState({category: '', propertyType: '', bedrooms: '', bathrooms: '', balconies: '', stores: '', minPrice: 0, maxPrice: 1000000000, minSuperArea: 0, maxSuperArea: 100000, minCarpetArea: 0, maxCarpetArea: 100000});
 
   const fetchProperties = async (currentPage, itemsPerPage, search, filters = {}) => {
     try {
@@ -22,13 +22,18 @@ const PropertyListing = () => {
         page: currentPage,
         limit: itemsPerPage,
         search,
+        category: filters.category || '',
         propertyType: filters.propertyType || '',
         bedrooms: filters.bedrooms || '',
         bathrooms: filters.bathrooms || '',
+        balconies: filters.balconies || '',
+        stores: filters.stores || '',
         minPrice: filters.minPrice,
         maxPrice: filters.maxPrice,
-        minArea: filters.minArea,
-        maxArea: filters.maxArea
+        minSuperArea: filters.minSuperArea,
+        maxSuperArea: filters.maxSuperArea,
+        minCarpetArea: filters.minCarpetArea,
+        maxCarpetArea: filters.maxCarpetArea
       });
       setPropertiesData(response.data.data);
       setTotalData(response.data.total);

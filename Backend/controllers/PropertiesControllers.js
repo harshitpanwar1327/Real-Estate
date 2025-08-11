@@ -32,11 +32,15 @@ export const getProperties = async (req, res) => {
     let propertyType = req.body.propertyType || '';
     let bedrooms = parseInt(req.body.bedrooms) || '';
     let bathrooms = parseInt(req.body.bathrooms) || '';
-    let balcony = parseInt(req.body.balcony) || '';
-    let store = parseInt(req.body.store) || '';
+    let balconies = parseInt(req.body.balconies) || '';
+    let stores = parseInt(req.body.stores) || '';
+    let minSuperArea = parseInt(req.body.minSuperArea) || '';
+    let maxSuperArea = parseInt(req.body.maxSuperArea) || '';
+    let minCarpetArea = parseInt(req.body.minCarpetArea) || '';
+    let maxCarpetArea = parseInt(req.body.maxCarpetArea) || '';
     
     try {
-        let response = await getPropertiesLogic(limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balcony, store);
+        let response = await getPropertiesLogic(limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea);
         if(response.success){
             return res.status(200).json(response);
         }else{
