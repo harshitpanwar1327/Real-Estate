@@ -4,7 +4,7 @@ import VissionImg from '../assets/TechOpenSpace.jpg'
 const AboutUs = () => {
   return (
     <>
-      <div className="flex items-center justify-center h-[50vh] bg-[url(/src/assets/about-us.webp)] bg-cover bg-center mt-20"></div>
+      <div className="flex items-center justify-center h-[50vh] bg-[url(/src/assets/AboutUs.jpg)] bg-cover bg-center mt-20"></div>
 
       <div className="px-6 md:px-16 py-16 bg-white flex flex-col gap-16">
         <div className="flex flex-col gap-4">

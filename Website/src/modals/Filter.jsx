@@ -85,8 +85,8 @@ const Filter = ({setOpenModal, applyFilter}) => {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-screen h-screen bg-white/90 z-100 flex justify-center overflow-y-auto'>
-      <form className='w-2/3 p-4 flex flex-col gap-5' onSubmit={handleFilter}>
+    <div className='fixed top-0 left-0 w-screen h-screen bg-white/95 z-100 flex justify-center overflow-y-auto'>
+      <form className='w-full md:w-2/3 p-8 flex flex-col gap-5' onSubmit={handleFilter}>
         <p className='cursor-pointer self-end' onClick={()=>setOpenModal(false)}>Close X</p>
 
         <h2 className='font-semibold'>Categories</h2>

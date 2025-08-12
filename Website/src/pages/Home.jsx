@@ -36,7 +36,7 @@ const Home = () => {
 
       <div className="p-10 md:p-15 lg:p-20 min-h-[85vh]">
         <div className="flex flex-col items-center gap-3 mb-15">
-          <h2 className="text-3xl font-bold text-center">Our Projects</h2>
+          <h2 className="text-3xl font-bold">Our Projects</h2>
           <motion.div
             initial={{ width: '45px' }}
             whileInView={{ width: '180px' }}
