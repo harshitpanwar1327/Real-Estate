@@ -1,5 +1,16 @@
 import { pool } from '../config/Database.js'
 
+export const getProjectsByIdLogic = async (id) => {
+    try {
+        let [rows] = await pool.query(`SELECT projects.*, media_files.* FROM projects LEFT JOIN media_files ON projects.id = media_files.project_id WHERE projects.id=?;`,[id]);
+
+        return {success: true, data: rows};
+    } catch (error) {
+        console.log(error);
+        return {success: false, message: "Projects not found!"};
+    }
+};
+
 export const allProjectsLogic = async () => {
     try {
         let [rows] = await pool.query(`SELECT projects.id, projects.name, projects.location, media_files.cover FROM projects LEFT JOIN media_files ON projects.id = media_files.project_id;`);

@@ -1,9 +1,10 @@
 import express from 'express';
-import { allProjects, getProjects, postProjects, updateProjects, deleteProjects } from '../controllers/ProjectsControllers.js'
+import { getProjectsById, allProjects, getProjects, postProjects, updateProjects, deleteProjects } from '../controllers/ProjectsControllers.js'
 import { authMiddleware } from '../middleware/AuthMiddlewares.js'
 
 let router = express.Router();
 
+router.get('/projects/:id', getProjectsById);
 router.get('/all-projects', allProjects);
 router.get('/projects', getProjects);
 

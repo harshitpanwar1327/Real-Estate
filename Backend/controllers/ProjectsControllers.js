@@ -1,5 +1,25 @@
 import { ProjectsModels } from '../models/ProjectsModels.js'
-import { allProjectsLogic, getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic } from '../services/ProjectsServices.js'
+import {getProjectsByIdLogic, allProjectsLogic, getProjectsLogic, postProjectsLogic, updateProjectsLogic, deleteProjectsLogic } from '../services/ProjectsServices.js'
+
+export const getProjectsById = async (req,res) => {
+    const id = req.params.id;
+
+    if(!id){
+        return res.status(400).json({success: false, message: "Project id not found!"});
+    }
+
+    try {
+        let response = await getProjectsByIdLogic(id);
+        if(response.success){
+            return res.status(200).json(response);
+        }else{
+            return res.status(400).json(response);
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
+    }
+}
 
 export const allProjects = async (req,res) => {
     try {
