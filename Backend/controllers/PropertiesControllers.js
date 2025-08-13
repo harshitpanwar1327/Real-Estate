@@ -22,6 +22,7 @@ export const propertyDetails = async (req,res) => {
 }
 
 export const getProperties = async (req, res) => {
+    let {id} = req.params;
     let page = parseInt(req.body.page) || 1;
     let limit = parseInt(req.body.limit) || 15;
     let offset = (page - 1) * limit;
@@ -40,7 +41,7 @@ export const getProperties = async (req, res) => {
     let maxCarpetArea = parseInt(req.body.maxCarpetArea) || '';
     
     try {
-        let response = await getPropertiesLogic(limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea);
+        let response = await getPropertiesLogic(id, limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea);
         if(response.success){
             return res.status(200).json(response);
         }else{

@@ -6,8 +6,10 @@ import API from '../utils/API'
 import Filter from '../modals/Filter'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
+import { useParams } from 'react-router-dom'
 
 const PropertyListing = () => {
+  let {id} = useParams();
   const [propertiesData, setPropertiesData] = useState([]);
   const [search, setSearch] = useState('');
   const [openModal, setOpenModal] = useState(false);
@@ -18,7 +20,7 @@ const PropertyListing = () => {
 
   const fetchProperties = async (currentPage, itemsPerPage, search, filters = {}) => {
     try {
-      let response = await API.post(`/property/get-properties`, {
+      let response = await API.post(`/property/get-properties/${id}`, {
         page: currentPage,
         limit: itemsPerPage,
         search,

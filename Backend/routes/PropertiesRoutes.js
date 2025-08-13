@@ -5,7 +5,7 @@ import { authMiddleware } from '../middleware/AuthMiddlewares.js'
 let router = express.Router();
 
 router.get('/property-details/:id', propertyDetails);
-router.post('/get-properties', getProperties);
+router.post('/get-properties/:id', getProperties);
 
 router.use(authMiddleware);
 router.post('/properties', postProperties);

@@ -11,15 +11,24 @@ export const propertyDetailsLogic = async (id)=> {
     }
 };
 
-export const getPropertiesLogic = async (limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea) => {
-    const searchQuery = `%${search}%`;
-
+export const getPropertiesLogic = async (id, limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea) => {
     const conditions = [];
     const params = [];
 
+    if (id) {
+        conditions.push(`(project_id = ?)`);
+        params.push(id);
+    }
+
     if (search) {
+        const searchQuery = `%${search}%`;
         conditions.push(`(title LIKE ? OR location LIKE ?)`);
         params.push(searchQuery, searchQuery);
+    }
+
+    if (minPrice !== undefined && maxPrice !== undefined) {
+        conditions.push(`(minPrice >= ? AND maxPrice <= ?)`);
+        params.push(minPrice, maxPrice);
     }
 
     if (category) {
@@ -50,6 +59,16 @@ export const getPropertiesLogic = async (limit, offset, search, minPrice, maxPri
     if (stores) {
         conditions.push(`store = ?`);
         params.push(stores);
+    }
+
+    if (minSuperArea !== undefined && maxSuperArea !== undefined) {
+        conditions.push(`(super_area BETWEEN ? AND ?)`);
+        params.push(minSuperArea, maxSuperArea);
+    }
+
+    if (minCarpetArea !== undefined && maxCarpetArea !== undefined) {
+        conditions.push(`(carpet_area BETWEEN ? AND ?)`);
+        params.push(minCarpetArea, maxCarpetArea);
     }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
