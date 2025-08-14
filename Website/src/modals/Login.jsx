@@ -19,6 +19,7 @@ const Login = ({setOpenModal}) => {
         phone,
         password_hash: password
       });
+      sessionStorage.setItem('isAuthenticated', true);
       toast.success('Login successfull');
       setOpenModal(false);
     } catch (error) {
@@ -42,7 +43,7 @@ const Login = ({setOpenModal}) => {
         <input type="password" placeholder='Enter your password' className='p-2 border border-[#cdcdcd] rounded' id='password' name='password' value={password} onChange={(e)=>setPassword(e.target.value)} required />
         <button className='bg-[#106c50] text-white py-2 rounded cursor-pointer'>Sign in</button>
       </form>
-      {switchModal && <Signup setSwitchModal={setSwitchModal} />}
+      {switchModal && <Signup setSwitchModal={setSwitchModal} setOpenModal={setOpenModal}/>}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import API from '../utils/API'
 import ClearIcon from '@mui/icons-material/Clear'
 import { toast } from 'react-toastify'
 
-const Signup = ({setSwitchModal}) => {
+const Signup = ({setSwitchModal, setOpenModal}) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +34,10 @@ const Signup = ({setSwitchModal}) => {
   return (
     <div className='fixed top-0 left-0 w-screen h-screen flex justify-center items-center z-100' onClick={()=>setSwitchModal(false)}>
       <form onSubmit={handleSignup} className='bg-white w-1/3 rounded-md py-2 px-4 flex flex-col gap-2' onClick={(e)=>e.stopPropagation()}>
-        <ClearIcon className='text-[#7c7c7c] cursor-pointer' onClick={()=>setSwitchModal(false)} />
+        <ClearIcon className='text-[#7c7c7c] cursor-pointer' onClick={()=>{
+          setSwitchModal(false);
+          setOpenModal(false);
+        }} />
         <h2 className='text-xl font-semibold'>Create Account</h2>
         <p>Already have an account? <span className='text-blue-500 cursor-pointer' onClick={()=>setSwitchModal(false)}>Log in</span></p>
         <label htmlFor="email">Email</label>

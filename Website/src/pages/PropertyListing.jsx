@@ -20,7 +20,7 @@ const PropertyListing = () => {
 
   const fetchProperties = async (currentPage, itemsPerPage, search, filters = {}) => {
     try {
-      let response = await API.post(`/property/get-properties/${id}`, {
+      let response = await API.post(`/property/properties/${id}`, {
         page: currentPage,
         limit: itemsPerPage,
         search,

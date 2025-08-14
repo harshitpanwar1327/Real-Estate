@@ -19,7 +19,7 @@ function App() {
         <Route path='/home' element={<Home />}/>
         <Route path='/projects/:id' element={<Projects />}/>
         <Route path='/property-listing/:id' element={<PropertyListing />}/>
-        <Route path='/property-detail' element={<PropertyDetail />}/>
+        <Route path='/property-detail/:id' element={<PropertyDetail />}/>
         <Route path='/about-us' element={<AboutUs />}/>
         <Route path='/contact-us' element={<ContactUs />}/>
         <Route path='*' element={<Navigate to='/'/>}/>

@@ -1,5 +1,5 @@
 import { PropertiesModels } from '../models/PropertiesModels.js'
-import { propertyDetailsLogic, getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
+import { propertyDetailsLogic, getPropertiesByIdLogic, getPropertiesLogic, postPropertiesLogic, updatePropertiesLogic, deletePropertiesLogic } from '../services/PropertiesServices.js'
 
 export const propertyDetails = async (req,res) => {
     const {id} = req.params;
@@ -21,7 +21,7 @@ export const propertyDetails = async (req,res) => {
     }
 }
 
-export const getProperties = async (req, res) => {
+export const getPropertiesById = async (req, res) => {
     let {id} = req.params;
     let page = parseInt(req.body.page) || 1;
     let limit = parseInt(req.body.limit) || 15;
@@ -41,7 +41,26 @@ export const getProperties = async (req, res) => {
     let maxCarpetArea = parseInt(req.body.maxCarpetArea) || '';
     
     try {
-        let response = await getPropertiesLogic(id, limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea);
+        let response = await getPropertiesByIdLogic(id, limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea);
+        if(response.success){
+            return res.status(200).json(response);
+        }else{
+            return res.status(400).json(response);
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({success: false, message: "Internal Server Error!"});
+    }
+}
+
+export const getProperties = async (req, res) => {
+    let page = parseInt(req.body.page) || 1;
+    let limit = parseInt(req.body.limit) || 15;
+    let offset = (page - 1) * limit;
+    let search = req.body.search || '';
+    
+    try {
+        let response = await getPropertiesLogic(limit, offset, search);
         if(response.success){
             return res.status(200).json(response);
         }else{

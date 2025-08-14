@@ -11,63 +11,63 @@ export const propertyDetailsLogic = async (id)=> {
     }
 };
 
-export const getPropertiesLogic = async (id, limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea) => {
+export const getPropertiesByIdLogic = async (id, limit, offset, search, minPrice, maxPrice, category, propertyType, bedrooms, bathrooms, balconies, stores, minSuperArea, maxSuperArea, minCarpetArea, maxCarpetArea) => {
     const conditions = [];
     const params = [];
 
     if (id) {
-        conditions.push(`(project_id = ?)`);
+        conditions.push(`properties.project_id = ?`);
         params.push(id);
     }
 
     if (search) {
         const searchQuery = `%${search}%`;
-        conditions.push(`(title LIKE ? OR location LIKE ?)`);
+        conditions.push(`(properties.title LIKE ? OR properties.location LIKE ?)`);
         params.push(searchQuery, searchQuery);
     }
 
     if (minPrice !== undefined && maxPrice !== undefined) {
-        conditions.push(`(minPrice >= ? AND maxPrice <= ?)`);
-        params.push(minPrice, maxPrice);
+        conditions.push(`(properties.minPrice <= ? AND properties.maxPrice >= ?)`);
+        params.push(maxPrice, minPrice);
     }
 
     if (category) {
-        conditions.push(`category = ?`);
+        conditions.push(`properties.category = ?`);
         params.push(category);
     }
 
     if (propertyType) {
-        conditions.push(`property_type = ?`);
+        conditions.push(`properties.property_type = ?`);
         params.push(propertyType);
     }
 
     if (bedrooms) {
-        conditions.push(`bedrooms = ?`);
+        conditions.push(`properties.bedrooms = ?`);
         params.push(bedrooms);
     }
 
     if (bathrooms) {
-        conditions.push(`bathrooms = ?`);
+        conditions.push(`properties.bathrooms = ?`);
         params.push(bathrooms);
     }
 
     if (balconies) {
-        conditions.push(`balcony = ?`);
+        conditions.push(`properties.balcony = ?`);
         params.push(balconies);
     }
 
     if (stores) {
-        conditions.push(`store = ?`);
+        conditions.push(`properties.store = ?`);
         params.push(stores);
     }
 
     if (minSuperArea !== undefined && maxSuperArea !== undefined) {
-        conditions.push(`(super_area BETWEEN ? AND ?)`);
+        conditions.push(`(properties.super_area BETWEEN ? AND ?)`);
         params.push(minSuperArea, maxSuperArea);
     }
 
     if (minCarpetArea !== undefined && maxCarpetArea !== undefined) {
-        conditions.push(`(carpet_area BETWEEN ? AND ?)`);
+        conditions.push(`(properties.carpet_area BETWEEN ? AND ?)`);
         params.push(minCarpetArea, maxCarpetArea);
     }
 
@@ -75,14 +75,34 @@ export const getPropertiesLogic = async (id, limit, offset, search, minPrice, ma
 
     try {
         const [rows] = await pool.query(
-            `SELECT * FROM properties ${whereClause} LIMIT ? OFFSET ?`,
+            `SELECT properties.*, media_files.*
+             FROM properties
+             LEFT JOIN media_files ON properties.id = media_files.property_id
+             ${whereClause}
+             LIMIT ? OFFSET ?`,
             [...params, limit, offset]
         );
 
         const [totalCount] = await pool.query(
-            `SELECT COUNT(*) AS total FROM properties ${whereClause}`,
+            `SELECT COUNT(*) AS total
+             FROM properties
+             ${whereClause}`,
             params
         );
+
+        return { success: true, data: rows, total: totalCount[0].total };
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: "Property not found!" };
+    }
+};
+
+export const getPropertiesLogic = async (limit, offset, search) => {
+    const searchQuery = `%${search}%`;
+
+    try {
+        const [rows] = await pool.query(`SELECT * FROM properties WHERE title LIKE ? OR location LIKE ? OR category LIKE ? OR property_type LIKE ? OR status LIKE ? LIMIT ? OFFSET ?`, [searchQuery, searchQuery, searchQuery, searchQuery, searchQuery, limit, offset]);
+        const [totalCount] = await pool.query(`SELECT COUNT(*) AS total FROM properties WHERE title LIKE ? OR location LIKE ? OR category LIKE ? OR property_type LIKE ? OR status LIKE ?`, [searchQuery, searchQuery, searchQuery, searchQuery, searchQuery]);
 
         return { success: true, data: rows, total: totalCount[0].total };
     } catch (error) {
