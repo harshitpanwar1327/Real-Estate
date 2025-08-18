@@ -2,7 +2,7 @@ import { pool } from '../config/Database.js'
 
 export const propertyDetailsLogic = async (id)=> {
     try {
-        let [rows] = await pool.query(`SELECT * FROM properties WHERE id = ?;`, [id]);
+        let [rows] = await pool.query(`SELECT properties.*, media_files.* FROM properties LEFT JOIN media_files ON properties.id = media_files.property_id WHERE properties.id = ?;`, [id]);
 
         return {success: true, data: rows};
     } catch (error) {

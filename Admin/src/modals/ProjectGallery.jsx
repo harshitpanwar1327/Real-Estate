@@ -101,7 +101,7 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
             <TabPanel value="1" className='flex flex-col items-start gap-2'>
               <div className='border border-[#cdcdcd] rounded w-70 h-50 md:w-85 md:h-65 flex justify-center items-center'>
                 {coverPreview ? (
-                  <img src={coverPreview} alt="Cover Image" />
+                  <img src={coverPreview} alt="Cover Image" className='w-full h-full' />
                 ) : (
                   <p className='text-gray-500'>No Image Uploaded</p>
                 )}
@@ -124,7 +124,7 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
             <TabPanel value="2" className='flex flex-col items-start gap-2'>
               <div className='border border-[#cdcdcd] rounded w-70 h-50 md:w-85 md:h-65 flex justify-center items-center'>
                 {areaPlanPreview ? (
-                  <img src={areaPlanPreview} alt="Area Plan Image" />
+                  <img src={areaPlanPreview} alt="Area Plan Image" className='w-full h-full' />
                 ) : (
                   <p className='text-gray-500'>No Image Uploaded</p>
                 )}
@@ -155,7 +155,7 @@ const ProjectGallery = ({setOpenModal, selectedId}) => {
               >
                 {imagePreviews.length > 0 ? (
                   imagePreviews.map((url, index)=>(
-                    <SwiperSlide key={index}><img src={url} alt={`Image ${index}`} /></SwiperSlide>
+                    <SwiperSlide key={index}><img src={url} alt={`Image ${index}`} className='w-full h-full' /></SwiperSlide>
                   ))
                 ) : (
                   <SwiperSlide>
