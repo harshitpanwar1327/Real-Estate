@@ -46,9 +46,9 @@ const Projects = () => {
         <NavLink to={`/property-listing/${id}`}><button className='bg-[#8ec73f] text-white p-2 rounded hover:scale-105 transition-transform duration-500 ease-in'>View Properties</button></NavLink>
       </div>
 
-      <div className='mx-6 md:mx-16 bg-[#8ec73f] flex items-center gap-6'>
-        <img src={projectDetails[0]?.area_plan ? `${import.meta.env.VITE_IMG_BASE_URL}/${projectDetails[0].area_plan}` : DefaultCover} alt="Area Plan" className='w-full md:w-1/2' />
-        <h2 className='hidden md:block text-center text-white font-bold text-5xl w-1/2'>Area Plan</h2>
+      <div className='mx-6 md:mx-16 bg-[#8ec73f] flex flex-col items-center gap-6 p-6'>
+        <h2 className='text-center text-white font-bold text-3xl md:text-5xl w-1/2'>Area Plan</h2>
+        <img src={projectDetails[0]?.area_plan ? `${import.meta.env.VITE_IMG_BASE_URL}/${projectDetails[0].area_plan}` : DefaultCover} alt="Area Plan" className='h-[65vh]'/>
       </div>
 
       <div className='px-6 md:px-16 flex flex-col items-center gap-4'>
@@ -83,12 +83,12 @@ const Projects = () => {
             clickable: true,
           }}
           modules={[Pagination, Autoplay]}
-          className="w-full"
+          className="w-full h-[40vh] lg:h-[65vh]"
         >
           {imagesArray?.length > 0 ? 
             (imagesArray.map((img, index)=>(
               <SwiperSlide key={index}>
-                <img src={`${import.meta.env.VITE_IMG_BASE_URL}/${img}` || DefaultCover} alt="Images" />
+                <img src={`${import.meta.env.VITE_IMG_BASE_URL}/${img}` || DefaultCover} alt="Images" className='w-full h-full' />
               </SwiperSlide>
             ))) : (
               <div className='text-center'>
