@@ -29,7 +29,7 @@ const AddProperty = ({setOpenAddModal, fetchProperties}) => {
 
   let fetchAllProjects = async () => {
     try {
-      let response = await API.get('/project/projects-name');
+      let response = await API.get('/project/all-projects');
       setAllProjects(response.data.data);
     } catch (error) {
       console.log(error.response?.data?.message || error);

@@ -21,7 +21,7 @@ const PropertyCard = ({data}) => {
 
   return (
     <div className='bg-white shadow-md rounded flex flex-col'>
-      <img src={data?.cover ? `${import.meta.env.VITE_IMG_BASE_URL}/${data.cover}` : DefaultCover} alt={data?.title || "Property Image"} className='grow rounded cursor-pointer' onClick={()=>handlePropertyClick(data.id)}/>
+      <img src={data?.cover ? `${import.meta.env.VITE_IMG_BASE_URL}/${data.cover}` : DefaultCover} alt={data?.title || "Property Image"} className='grow rounded cursor-pointer' onClick={()=>handlePropertyClick(data.property_id)}/>
       <div className='p-2 text-[#5c5c5c] flex flex-col gap-1'>
         <div className='flex gap-2'>
           <div className='flex gap-1'>
