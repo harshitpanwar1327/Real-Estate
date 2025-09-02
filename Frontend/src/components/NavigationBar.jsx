@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import logo from '../assets/logo.jpeg'
+import logo from '../assets/logo1.png'
 import { NavLink } from 'react-router-dom'
 import API from '../utils/API'
 import MenuIcon from '@mui/icons-material/Menu'

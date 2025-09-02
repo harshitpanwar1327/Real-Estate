@@ -9,7 +9,7 @@ const NavigationBar = () => {
 
   return (
     <div className="h-screen min-w-[220px] hidden lg:flex flex-col items-center py-8 bg-black text-white">
-      <h2 className="w-full px-6 font-semibold italic text-2xl">PS</h2>
+      <h2 className="w-full px-6 font-semibold italic text-2xl">RE</h2>
       <div className="grow w-full">
         <NavLink to="/projects" className={getNavClass}>
           <AddCircleOutlineOutlinedIcon /> Projects

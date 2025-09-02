@@ -88,7 +88,7 @@ const Enquiries = () => {
             animate={{ x: ['-50px', '50px', '-50px'] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            PROPERTY SHELL
+            REAL ESTATE
           </motion.p>
         </div>
       </div>
