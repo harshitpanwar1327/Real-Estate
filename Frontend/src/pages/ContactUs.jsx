@@ -30,7 +30,7 @@ const ContactUs = () => {
   }
 
   return (
-    <div className='mt-25'>
+    <div className='mt-30'>
       <h2 className='text-center text-4xl font-bold tracking-wide'>Get in Touch</h2>
       <div className='flex flex-col md:flex-row justify-center gap-8 m-10'>
         <div className='md:w-[35vw] flex flex-col items-center gap-4'>
