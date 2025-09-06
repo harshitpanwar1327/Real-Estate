@@ -1,4 +1,4 @@
-import logo from '../assets/logo1.png'
+import logo from '../assets/logo.png'
 import { NavLink } from 'react-router-dom'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import YouTubeIcon from '@mui/icons-material/YouTube'

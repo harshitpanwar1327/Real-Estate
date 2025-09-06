@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react"
-import logo from '../assets/logo1.png'
+import logo from '../assets/logo.png'
 import { NavLink } from 'react-router-dom'
 import API from '../utils/API'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
-import {hover, motion} from 'motion/react'
+import {motion} from 'motion/react'
 
 const NavigationBar = () => {
   const [projectsData, setProjectsData] = useState([]);
