@@ -33,7 +33,7 @@ const PropertyCard = ({data}) => {
             <BathtubOutlinedIcon />
           </div>
           <div className='flex gap-1'>
-            <p className='font-semibold'>{data.area_sqft || '--'} sq.ft.</p>
+            <p className='font-semibold'>{data.super_area || '--'} sq.ft.</p>
           </div>
         </div>
         <h2 className='font-semibold'>{data.title}</h2>

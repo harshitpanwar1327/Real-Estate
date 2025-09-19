@@ -14,7 +14,7 @@ const Login = ({setOpenModal}) => {
     e.preventDefault();
 
     try {
-      let response = await API.post('/user/login', {
+      await API.post('/user/login', {
         email,
         phone,
         password_hash: password
@@ -30,7 +30,7 @@ const Login = ({setOpenModal}) => {
 
   return (
     <div className='fixed top-0 left-0 w-screen h-screen bg-[#000000aa] flex justify-center items-center z-100' onClick={()=>setOpenModal(false)}>
-      <form onSubmit={handleLogin} className='bg-white w-1/3 rounded-md py-2 px-4 flex flex-col gap-2' onClick={(e)=>e.stopPropagation()}>
+      <form onSubmit={handleLogin} className='bg-white w-4/5 md:w-1/2 lg:w-1/3 rounded-md py-2 px-4 flex flex-col gap-2' onClick={(e)=>e.stopPropagation()}>
         <ClearIcon className='text-[#7c7c7c] cursor-pointer' onClick={()=>setOpenModal(false)} />
         <h2 className='text-xl font-semibold'>Log in</h2>
         <p>New User? <span className='text-blue-500 cursor-pointer' onClick={()=>{setSwitchModal(true)}}>Register Now</span></p>
